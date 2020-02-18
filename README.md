@@ -20,7 +20,6 @@ According to the feedback from [RDAP Pilot WG](https://www.icann.org/en/system/f
 Such a feeling is not limited to RDAP implementers but is also shared by most of APIs producers and consumers dealing with jCard.
 [JSContact](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact) includes a contact representation that is able to represent the same information as jCard more efficiently. In particular, it meets the requirements from RDAP implementers about representing multilingual information and unstructured data. Therefore, jCard might be deprecated and replaced by the contact card defined by JSContact in the RDAP responses.
 
-This project describes a roadmap for achieving the transition from jCard to JSContact contact card.
 
 <a name="converting-jcard-into-jscard"></a>
 ## 2. Converting jCard into JSCard
