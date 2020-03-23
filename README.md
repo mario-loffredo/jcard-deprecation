@@ -208,7 +208,6 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
   "kind": "individual",
   "addresses": [
                  {
-                   "context": "work",
                    "fullAddress": {
                     "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
                    }
