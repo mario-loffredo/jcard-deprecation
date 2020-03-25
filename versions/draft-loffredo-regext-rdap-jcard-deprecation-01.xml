@@ -80,7 +80,7 @@
 
   <middle>
     <section title="Introduction">
-      <t>This document specifies how RDAP servers can use JSContact (<xref target="draft-ietf-jmap-jscontact"/>) to represent the contact information associated with entities in RDAP responses, instead of jCard (<xref target="RFC7095"/>). It also describes the process by which an RDAP server can migrate from jCard to JSContact.</t>
+      <t>This document specifies how RDAP servers can use JSContact (<xref target="draft-ietf-jmap-jscontact"/>) to represent the contact information associated with entities in RDAP responses, instead of jCard (<xref target="RFC7095"/>). It also describes the process by which an RDAP server can migrate from jCard to JSContact. RDAP query and response extensions are defined to accomplish the migration.</t>
 
       <section title="Rationale">
         <t>According to the feedback from RDAP Pilot Working Group (<xref target="RDAP-PILOT-WG"/>, a group of RDAP server implementers representing registries and registrars of generic TLDs), the most commonly raised implementation concern, for both servers and clients related to the use of jCard (<xref target="RFC7095"/>) to represent the contact information associated with entities. Working Group members reported jCard to be unintuitive, complicated to implement for both clients and servers, and incompatible with best practices for RESTful APIs.</t>
@@ -114,9 +114,14 @@
 
     <section anchor="using-jscontact" title="Using JSCard objects in RDAP Responses">
       <t>Entity objects in RDAP responses MAY include a "jscard" property whose value is a JSCard object instead of the "vCardArray" property defined in RFC 7483.</t>
-      <t>Example of an entity object containing a "jscard" property:</t>
-<figure><artwork><![CDATA[
+      <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard_level_0&quot; in the rdapConformance array.</t>
+      <t>An example of an RDAP response containing a "jscard" property is shown in <xref target="jscard-example"/>.</t>
+<figure anchor="jscard-example" title="Example of &quot;jscard&quot; in RDAP response"><artwork><![CDATA[
    {
+      "rdapConformance": [
+         "rdap_level_0",
+         "jscard_level_0"
+      ],
       "objectClassName" : "entity",
       "handle":"XXXX",
       "jscard":{
@@ -150,8 +155,14 @@
                        }
         ],
         "phones": [
-                    { "type": "voice",
+                    {
                       "context": "work",
+                      "type": "voice",
+                      "labels": {
+                        "cell": true,
+                        "video": true,
+                        "text": true
+                      },
                       "isPreferred": true,
                       "value": "tel:+1-555-555-1234;ext=102"
                     }
@@ -166,13 +177,13 @@
                     {
                       "context": "work",
                       "type": "uri",
-                      "labels": { "key" : true },
+                      "labels": { "key": true },
                       "value": "http://www.example.com/joe.user/joe.asc"
                     },
                     {
                       "context": "private",
                       "type": "uri",
-                      "labels": { "url" : true },
+                      "labels": { "url": true },
                       "value": "http://example.org"
                     }
         ]
@@ -215,10 +226,6 @@
    }
 ]]></artwork></figure>
 
-      <section anchor="rdap-conformance" title="RDAP Conformance">
-        <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard_level_0&quot; in the rdapConformance array.</t>
-      </section>
-
     <section anchor="rdap-query-parameters-specification" title="RDAP Query Parameters Specification">
 
       <t>Two new query parameters are defined for the purpose of this document.</t>
@@ -226,11 +233,11 @@
       <t>The query parameters are OPTIONAL extensions of path segments defined in RFC 7482 <xref target="RFC7482"/>. They are as follows:</t>
 
       <t><list style="symbols">
-        <t>&quot;jscard&quot;: a boolean value that allows a client to obtain the &quot;jscard&quot; property in the RDAP response;<vspace blankLines='1'/></t>
+        <t>&quot;jscard&quot;: a boolean value that allows a client to obtain the &quot;jscard&quot; property in the RDAP response;</t>
         <t>&quot;jcard&quot;: a boolean value that allows a client to obtain the &quot;vcardArray&quot; property in the RDAP response.</t>
       </list></t>
 
-      <t>The use of the above parameters is furtherly explained in section <xref target="transition"/>.</t>
+      <t>The use of the above parameters is furtherly explained in <xref target="transition"/>.</t>
     </section>
 
     </section>
@@ -270,7 +277,7 @@
           <t>Here in the following the four stages are reported in detail:</t>
 
           <t><list style="empty">
-            <t>Stage 1 - jCard only provided</t>
+            <t>Stage 1 - only jCard provided</t>
             <t>This stage corresponds to providing jCard as default contact card (<xref target="RFC7483" />). The RDAP server is not able to provide an alternate contact card. The rdapConformance array does not contain the "jscard_level_0" tag.<vspace blankLines='1' /></t>
 
             <t>Stage 2 - jCard sunset</t>
@@ -489,11 +496,12 @@
       <section title="Change from 00 to 01">
         <t><list style="numbers">
           <t>Changed category from &quot;Best Current Practice&quot; to &quot;Standards Track&quot;</t>
-          <t>Changed title of the &quot;Migration from JCard to JSCard&quot; section to &quot;Transition Considerations&quot;</t>
-          <t>Added the &quot;RDAP Conformance&quot; section</t>
-          <t>Updated the &quot;IANA Considerations&quot; section</t>
-          <t>Updated the &quot;Security Considerations&quot; section</t>
-          <t>Replaced the example of the &quot;Using JSCard objects in RDAP Responses&quot; section with one taken from RFC7483</t>
+          <t>Replaced the example of <xref target="jscard-example"/></t>
+          <t>Changed the title of the &quot;Migration from JCard to JSCard&quot; section to &quot;Transition Considerations&quot;</t>
+          <t>Added <xref target="rdap-query-parameters-specification"/></t>
+          <t>Updated <xref target="IANA-considerations"/></t>
+          <t>Updated <xref target="security-considerations"/></t>
+          <t>Rearranged the description of stage 1 in <xref target="jcard-deprecation-procedure-stages"/></t>
           <t>Changed the names of the transition stages 1 and 2</t>
           <t>Corrected <xref target="stage2-example1"/>, <xref target="stage3-example1"/>, <xref target="stage3-example2"/></t>
          </list></t>
