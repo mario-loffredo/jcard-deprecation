@@ -113,9 +113,9 @@
     </section>
 
     <section anchor="using-jscontact" title="Using JSCard objects in RDAP Responses">
-      <t>Entity objects in RDAP responses MAY include a "jscard" property whose value is a JSCard object instead of the "vCardArray" property defined in RFC 7483.</t>
+      <t>Entity objects in RDAP responses MAY include a "jscard" property whose value is a JSCard object instead of the "vCardArray" property defined in <xref target="RFC7483"/>.</t>
       <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard_level_0&quot; in the rdapConformance array.</t>
-      <t>An example of an RDAP response containing a "jscard" property is shown in <xref target="jscard-example"/>.</t>
+      <t>An example of an RDAP response containing a "jscard" property is shown in <xref target="jscard-example"/>. It is obtained by converting the example included in section 5.1 of <xref target="RFC7483"/>.</t>
 <figure anchor="jscard-example" title="Example of &quot;jscard&quot; in RDAP response"><artwork><![CDATA[
    {
       "rdapConformance": [
@@ -230,7 +230,7 @@
 
       <t>Two new query parameters are defined for the purpose of this document.</t>
 
-      <t>The query parameters are OPTIONAL extensions of path segments defined in RFC 7482 <xref target="RFC7482"/>. They are as follows:</t>
+      <t>The query parameters are OPTIONAL extensions of path segments defined in <xref target="RFC7482"/>. They are as follows:</t>
 
       <t><list style="symbols">
         <t>&quot;jscard&quot;: a boolean value that allows a client to obtain the &quot;jscard&quot; property in the RDAP response;</t>
@@ -398,7 +398,7 @@
           <t>
             <list style="symbols">
               <t>only one contact representation would be included in the response;</t>
-              <t>the response would always be compliant to RFC7483;</t>
+              <t>the response would always be compliant to <xref target="RFC7483"/>;</t>
               <t>clients would be informed about the transition timeline;</t>
               <t>the backward compatibility would be guaranteed throughout the transition;</t>
               <t>servers and clients could execute their transitions independently.</t>
@@ -441,7 +441,7 @@
    </section>
 
    <section anchor="security-considerations" title="Security Considerations">
-  	<t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required in JSCard. The only mandatory property, namely &quot;uid&quot; is usually an opaque string. Therefore, redacted properties can be merely excluded without using placeholder values.</t>
+  	<t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required in JSCard. The only mandatory property, namely &quot;uid&quot;, is usually an opaque string. Therefore, redacted properties can be merely excluded without using placeholder values.</t>
    </section>
 
   </middle>
