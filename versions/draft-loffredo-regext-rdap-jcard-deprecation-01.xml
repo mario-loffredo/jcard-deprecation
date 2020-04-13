@@ -114,13 +114,13 @@
 
     <section anchor="using-jscontact" title="Using JSCard objects in RDAP Responses">
       <t>Entity objects in RDAP responses MAY include a "jscard" property whose value is a JSCard object instead of the "vCardArray" property defined in <xref target="RFC7483"/>.</t>
-      <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard_level_0&quot; in the rdapConformance array.</t>
+      <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard&quot; in the rdapConformance array.</t>
       <t>An example of an RDAP response containing a "jscard" property is shown in <xref target="jscard-example"/>. It is obtained by converting the example included in section 5.1 of <xref target="RFC7483"/>.</t>
 <figure anchor="jscard-example" title="Example of &quot;jscard&quot; in RDAP response"><artwork><![CDATA[
    {
       "rdapConformance": [
          "rdap_level_0",
-         "jscard_level_0"
+         "jscard"
       ],
       "objectClassName" : "entity",
       "handle":"XXXX",
@@ -271,17 +271,17 @@
       </section>
 
       <section anchor="jcard-deprecation-procedure" title="jCard Deprecation Procedure">
-        <t>The procedure for jCard to JSCard migration consists of four contiguous stages, each one corresponding to as many alternatives in providing the contact card. During the procedure, the presence of "jscard_level_0" tag in the rdapConformance array means that JSCard is returned instead of jCard. The time format used in notifying clients about this procedure is defined in <xref target="RFC3339" />.</t>
+        <t>The procedure for jCard to JSCard migration consists of four contiguous stages, each one corresponding to as many alternatives in providing the contact card. During the procedure, the presence of "jscard" tag in the rdapConformance array means that JSCard is returned instead of jCard. The time format used in notifying clients about this procedure is defined in <xref target="RFC3339" />.</t>
 
         <section anchor="jcard-deprecation-procedure-stages" title="Stages">
           <t>Here in the following the four stages are reported in detail:</t>
 
           <t><list style="empty">
             <t>Stage 1 - only jCard provided</t>
-            <t>This stage corresponds to providing jCard as default contact card (<xref target="RFC7483" />). The RDAP server is not able to provide an alternate contact card. The rdapConformance array does not contain the "jscard_level_0" tag.<vspace blankLines='1' /></t>
+            <t>This stage corresponds to providing jCard as default contact card (<xref target="RFC7483" />). The RDAP server is not able to provide an alternate contact card. The rdapConformance array does not contain the "jscard" tag.<vspace blankLines='1' /></t>
 
             <t>Stage 2 - jCard sunset</t>
-            <t>This stage corresponds to providing jCard as default contact card but the RDAP server is able to alternatively return JSCard if the client sets the query parameter "jscard" to 1/true/yes. The rdapConformance array contains the "jscard_level_0" tag if JSCard is requested.</t>
+            <t>This stage corresponds to providing jCard as default contact card but the RDAP server is able to alternatively return JSCard if the client sets the query parameter "jscard" to 1/true/yes. The rdapConformance array contains the "jscard" tag if JSCard is requested.</t>
 
             <t>The RDAP server is recommended to return a notice titled "jCard sunset end". Such a notice should include a description reporting the jCard sunset end time and two links:
 
@@ -330,7 +330,7 @@
 ]]></artwork></figure>
           <t><list style="empty">
             <t>Stage 3 - jCard deprecation</t>
-            <t>This stage corresponds to the provisioning of JSCard as default contact card but the RDAP server is able to alternatively return jCard if the client sets the query parameter "jcard" to 1/true/yes. The rdapConformance array contains the "jscard_level_0" tag unless jCard is requested. The "jscard" query parameter is ignored.</t>
+            <t>This stage corresponds to the provisioning of JSCard as default contact card but the RDAP server is able to alternatively return jCard if the client sets the query parameter "jcard" to 1/true/yes. The rdapConformance array contains the "jscard" tag unless jCard is requested. The "jscard" query parameter is ignored.</t>
             <t>The RDAP server is recommended to return a notice titled "jCard deprecation end". Such a notice should include a description reporting the jCard deprecation end time and two links: 
             <list style="symbols">
               <t>"deprecation": a link to a URI-identified resource documenting the jCard deprecation;</t>
@@ -384,7 +384,7 @@
           <t>
             <list style="empty">
               <t>Stage 4 - jCard deprecated</t>
-              <t>This stage corresponds to providing JSCard as default contact card. The RDAP server is not able to provide an alternate contact card. The rdapConformance array always contains "jscard_level_0" tag. The RDAP server doesn't include any notice about the jCard deprecation process. Both "jscard" and "jcard" query parameters are ignored.</t>
+              <t>This stage corresponds to providing JSCard as default contact card. The RDAP server is not able to provide an alternate contact card. The rdapConformance array always contains "jscard" tag. The RDAP server doesn't include any notice about the jCard deprecation process. Both "jscard" and "jcard" query parameters are ignored.</t>
             </list>
           </t>
         </section>
