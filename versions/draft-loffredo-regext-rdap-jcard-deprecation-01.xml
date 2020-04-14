@@ -504,6 +504,7 @@
           <t>Rearranged the description of stage 1 in <xref target="jcard-deprecation-procedure-stages"/></t>
           <t>Changed the names of the transition stages 1 and 2</t>
           <t>Corrected <xref target="stage2-example1"/>, <xref target="stage3-example1"/>, <xref target="stage3-example2"/></t>
+          <t>Changed the rdapConformance tag &quot;jscard_level_0&quot; to &quot;jscard&quot;</t>
          </list></t>
       </section>
 
