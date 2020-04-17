@@ -314,6 +314,9 @@
           indicates that JSCard is returned instead of jCard. The time format used to notify
           clients about this procedure is defined in <xref target="RFC3339" />.</t>
 
+        <t>Some elements of the following procedure are based on the best practices in <xref
+          target="API-DEPRECATION"/>.</t>
+
         <section anchor="jcard-deprecation-procedure-stages" title="Transition Stages">
 
             <section title="Stage 1: only jCard provided">
@@ -584,6 +587,14 @@
           <date year='2019' month='April' />		
         </front>
       </reference>
+      <reference anchor='API-DEPRECATION'
+        target='https://web.archive.org/web/20200417084255/https://nordicapis.com/how-to-smartly-sunset-and-deprecate-apis/'>
+        <front>
+          <title>How to Smartly Sunset and Deprecate APIs</title>
+          <author initials="K." surname="Sandoval" fullname="Kristopher Sandoval" />
+          <date year='2019' month='August' />
+        </front>
+      </reference>
     </references>
 
     <section title="Change Log">
@@ -603,7 +614,8 @@
           <t>Corrected <xref target="stage2-example1"/>, <xref target="stage3-example1"/>,
           <xref target="stage3-example2"/></t>
           <t>Changed the rdapConformance tag &quot;jscard_level_0&quot; to &quot;jscard&quot;</t>
-          <t>Removed the &quot;Best Practices for deprecating a REST API features&quot; section</t>
+          <t>Removed the &quot;Best Practices for deprecating a REST API features&quot; section,
+            but added a useful reference.</t>
         </list></t>
       </section>
 
