@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd"
+[
+  <!ENTITY RFC2119 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
+  <!ENTITY RFC3339 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.3339.xml'>
+  <!ENTITY RFC6350 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6350.xml'>
+  <!ENTITY RFC7095 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7095.xml'>
+  <!ENTITY RFC7480 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7480.xml'>
+  <!ENTITY RFC7482 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7482.xml'>
+  <!ENTITY RFC7483 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7483.xml'>
+  <!ENTITY RFC7942 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml'>
+  <!ENTITY RFC8288 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8288.xml'>
+]>
+<?xml-stylesheet type="text/xsl" href="rfc2629.xslt"?>
+
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<?rfc sortrefs="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc iprnotified="no"?>
+
+<rfc category="std" docName="draft-loffredo-regext-rdap-jcard-deprecation-01" ipr="trust200902">
+  <front>
+    <title abbrev="Using JSContact in RDAP">Using JSContact in Registration Data Access Protocol
+    (RDAP) JSON Responses</title>
+       
+    <author fullname="Mario Loffredo" initials="M." surname="Loffredo">
+      <organization>IIT-CNR/Registro.it</organization>
+      <address>
+        <postal>
+          <street>Via Moruzzi,1</street>
+          <city>Pisa</city>
+          <country>IT</country>
+          <code>56124</code>
+        </postal>
+        <email>mario.loffredo@iit.cnr.it</email>
+        <uri>http://www.iit.cnr.it</uri>
+      </address>
+    </author>
+
+    <author fullname="Gavin Brown" initials="G" surname="Brown">
+      <organization>CentralNic Group plc</organization>
+      <address>
+        <postal>
+        <street>Saddlers House, 44 Gutter Lane</street>
+        <city>London</city>
+        <region>England</region>
+        <code>EC2V 6BR</code>
+        <country>GB</country>
+        </postal>
+        <phone>+44 20 33 88 0600</phone>
+        <email>gavin.brown@centralnic.com</email>
+        <uri>https://www.centralnic.com</uri>
+      </address>
+    </author>
+
+    <date/>
+    <area>Applications and Real-Time</area>
+    <workgroup>Registration Protocols Extensions</workgroup>
+    <keyword>RDAP</keyword>
+    <keyword>jCard</keyword>
+    <keyword>JSContact</keyword>
+    
+    <abstract>
+      <t>This document describes an RDAP extension which represents entity contact information in
+      JSON responses using JSContact.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>This document specifies an extension to the Registration Data Access Protocol (RDAP)
+      that allows RDAP servers to use JSContact (<xref target="draft-ietf-jmap-jscontact"/>)
+      to represent the contact information associated with entities in RDAP responses, instead
+      of jCard (<xref target="RFC7095"/>). It also describes the process by which an RDAP server
+      can transition from jCard to JSContact. RDAP query and response extensions are defined to
+      facilitate the transition process.</t>
+
+      <section title="Rationale">
+        <t>According to the feedback from RDAP Pilot Working Group (<xref target="RDAP-PILOT-WG"/>,
+        a group of RDAP server implementers representing registries and registrars of generic
+        TLDs), the most commonly raised implementation concern, for both servers and client
+        implementers, related to the use of jCard (<xref target="RFC7095"/>) to represent the
+        contact information associated with entities. Working Group members reported jCard to be
+        unintuitive, complicated to implement for both clients and servers, and incompatible
+        with best practices for RESTful APIs.</t>
+
+        <t>JSContact (<xref target="draft-ietf-jmap-jscontact"/>) provides a simpler and more
+        efficient representation for contact information. In addition, it provides a means to
+        represent internationalised and unstructured contact information which cannot be
+        represented using jCard. Support for internationalised contact information has been
+        recognised being necessary to facilitate the future internationalisation of registration
+        data directory services.</t>
+      </section>
+
+      <section title="Conventions Used in This Document">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD
+          NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+          described in <xref target="RFC2119"/>.</t>
+      </section>
+    </section>
+      
+    <section anchor="JSContact" title="JSContact">
+      <t>The JSContact specification defines a data model and JSON representation of contact
+        information that can be used for data storage and exchange in address book or directory
+        applications. It aims to be an alternative to the vCard data format (<xref target="RFC6350"/>)
+        and to be unambiguous, extendable and simple to process. In contrast with jCard, it is
+        not a direct mapping from the vCard data model and expands semantics where appropriate.</t>
+
+      <t>The JSContact specification declares two main object types: &quot;JSCard&quot;, which
+        represents a single contact "card", and &quot;JSCardGroup&quot; which represents a
+        collection of JSCard objects. For the purpose of this document, only JSCard objects are
+        considered.</t>
+
+      <t>JSCard differs from jCard in that it:</t>
+
+      <t><list style="symbols">
+        <t>follows an object-oriented rather than array-oriented approach;</t>
+        <t>is simple to process;</t>
+        <t>requires no extra work in serialization/deserialization from/to a data model;</t>
+        <t>includes no "jagged" arrays;</t>
+        <t>prefers maps rather than arrays to implement collections;</t>
+        <t>is able to represent redacted contacts (both &quot;name&quot; and&quot;fullName&quot;
+          properties are optional).</t>
+      </list></t>
+
+      <t><xref target="draft-loffredo-jmap-jscontact-vcard"/> provides informational guidance on
+      the conversion of jCard objects into JSCard objects, and vice versa.</t>
+
+    </section>
+
+    <section anchor="using-jscontact" title="Using JSCard objects in RDAP Responses">
+      <t>Entity objects in RDAP responses MAY include a "jscard" property whose value is a
+        JSCard object instead of the "vCardArray" property defined in <xref target="RFC7483"/>.</t>
+      <t>Servers returning the &quot;jscard&quot; property in their response MUST include
+        &quot;jscard&quot; in the "rdapConformance" array.</t>
+      <t>An example of an RDAP response containing a "jscard" property is shown in <xref target="jscard-example"/>.
+      The "jscard" object in this example has been converted from the example included in section
+      5.1 of <xref target="RFC7483"/>.</t>
+
+<figure anchor="jscard-example" title="Example of &quot;jscard&quot; in RDAP response"><artwork><![CDATA[
+   {
+      "rdapConformance": [
+         "rdap_level_0",
+         "jscard"
+      ],
+      "objectClassName" : "entity",
+      "handle":"XXXX",
+      "jscard":{
+        "uid": "XXXX",
+        "fullName": { "value": "Joe User" },
+        "kind": "individual",
+        "preferredContactLanguages": {
+          "fr": { "preference": 1 },
+          "en": { "preference": 2 }
+        },
+        "organization": [ { "value": "Example" } ],
+        "jobTitle": [ { "value": "Research Scientist" } ],
+        "role": [ { "value": "Project Lead" } ],
+        "addresses": [
+                       {
+                         "context": "work",
+                         "extension": "Suite 1234",
+                         "street": "4321 Rue Somewhere",
+                         "locality": "Quebec",
+                         "region": "QC",
+                         "postcode": "G1V 2M2",
+                         "country": "Canada",
+                         "coordinates": "geo:46.772673,-71.282945",
+                         "timeZone": "Canada/Eastern"
+                       },
+                       {
+                         "context": "private",
+                         "fullAddress": {
+                           "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+                         }
+                       }
+        ],
+        "phones": [
+                    {
+                      "context": "work",
+                      "type": "voice",
+                      "labels": {
+                        "cell": true,
+                        "video": true,
+                        "text": true
+                      },
+                      "isPreferred": true,
+                      "value": "tel:+1-555-555-1234;ext=102"
+                    }
+        ],
+        "emails": [
+                    {
+                      "context": "work",
+                      "value": "joe.user@example.com"
+                    }
+        ],
+        "online": [
+                    {
+                      "context": "work",
+                      "type": "uri",
+                      "labels": { "key": true },
+                      "value": "http://www.example.com/joe.user/joe.asc"
+                    },
+                    {
+                      "context": "private",
+                      "type": "uri",
+                      "labels": { "url": true },
+                      "value": "http://example.org"
+                    }
+        ]
+      }
+      "roles":[ "registrar" ],
+      "publicIds":[
+        {
+          "type":"IANA Registrar ID",
+          "identifier":"1"
+        }
+      ],
+      "remarks":[
+        {
+          "description":[
+            "She sells sea shells down by the sea shore.",
+            "Originally written by Terry Sullivan."
+          ]
+        }
+      ],
+      "links":[
+        {
+          "value":"http://example.com/entity/XXXX",
+          "rel":"self",
+          "href":"http://example.com/entity/XXXX",
+          "type" : "application/rdap+json"
+        }
+      ],
+      "events":[
+        {
+          "eventAction":"registration",
+          "eventDate":"1990-12-31T23:59:59Z"
+        }
+      ],
+      "asEventActor":[
+        {
+          "eventAction":"last changed",
+          "eventDate":"1991-12-31T23:59:59Z"
+        }
+      ]
+   }
+]]></artwork></figure>
+
+    <section anchor="rdap-query-parameters-specification" title="RDAP Query Parameters">
+
+      <t>Two new query parameters are defined for the purpose of this document.</t>
+
+      <t>The query parameters are OPTIONAL extensions of path segments defined in <xref
+        target="RFC7482"/>. They are as follows:</t>
+
+      <t><list style="symbols">
+        <t>&quot;jscard&quot;: a boolean value that allows a client to request the
+          &quot;jscard&quot; property in the RDAP response;</t>
+        <t>&quot;jcard&quot;: a boolean value that allows a client to request the
+          &quot;vcardArray&quot; property in the RDAP response.</t>
+      </list></t>
+
+      <t>These parameters are furtherly explained in <xref target="transition"/>.</t>
+    </section>
+
+    </section>
+
+    <section anchor="transition" title="Transition Considerations">
+
+      <section anchor="rdap-features-supporting-transition" title="RDAP Features Supporting a Transition Process">
+        <section title="Notices and Link Relationships">
+          <t>RDAP allows servers to communicate service information to clients through notices.
+          An RDAP response may contain one or more notice objects (<xref target="RFC7483"/>, Section
+          4.3), each of which may include a set of link objects, which can be used to provide clients
+          with references and documentation. These link objects may have a "rel" property which defines
+          the relationship type, as described in <xref target="RFC8288"/>, Section 4. The transition
+          process outlined in this document uses two types of link relation:</t>
+
+          <t><list style="symbols">
+            <t>"deprecation", as described in <xref target="draft-dalal-deprecation-header" />;</t>
+            <t>"alternate", as described in <xref target="RFC8288" />.</t>
+          </list></t>
+        </section>
+
+        <section title="rdapConformance Property">
+          <t>The information about the specifications used in the construction of the response is
+            also described by the strings which appear in the "rdapConformance" property of the RDAP
+            response.</t>
+        </section>
+
+        <section title="Query Parameters">
+          <t>Clients are able to ask servers to use specific RDAP features by using appropriate query
+            parameters as described in <xref target="RFC7482" />.</t>
+        </section>
+      </section>
+
+      <section anchor="jcard-transition-procedure" title="Transition Procedure">
+        <t>The procedure for jCard to JSCard transition consists of four contiguous stages.
+          During the procedure, the presence of "jscard" tag in the rdapConformance array
+          indicates that JSCard is returned instead of jCard. The time format used to notify
+          clients about this procedure is defined in <xref target="RFC3339" />.</t>
+
+        <t>Some elements of the following procedure are based on the best practices in <xref
+          target="API-DEPRECATION"/>.</t>
+
+        <section anchor="jcard-deprecation-procedure-stages" title="Transition Stages">
+
+            <section title="Stage 1: only jCard provided">
+              <t>This stage corresponds to providing jCard as default contact card (<xref
+                target="RFC7483" />). The RDAP server is not able to provide an alternate contact
+                card. The rdapConformance array MUST NOT contain the "jscard" tag.</t>
+            </section>
+
+            <section title="Stage 2: jCard sunset">
+              <t>During this stage, the server uses jCard by default, but the RDAP server will
+                return JSCard if the client sets the query parameter "jscard" to a true value.
+                The rdapConformance array MUST contain the "jscard" tag if JSCard is
+                requested.</t>
+
+              <t>The RDAP server SHOULD include a notice titled "jCard sunset end". Such
+                a notice should include a description reporting the jCard sunset end time and two
+                links:</t>
+
+              <t><list style="symbols">
+                <t>"deprecation": a link to a URI-identified resource documenting the jCard
+                  deprecation;</t>
+                <t>"alternate": if JSCard is not requested, a link to the JSCard version of same
+                  resource as identified by the current query string plus the parameter "jscard"
+                  set to a true value (<xref target="stage2-example1" />); otherwise, only the
+                  "deprecation" link is provided (<xref target="stage2-example2" />).</t>
+              </list></t>
+
+             <figure anchor="stage2-example1" title="jCard sunset - JSCard not requested"><artwork xml:space="preserve">
+<![CDATA["notices": [
+  {
+    "title": "jCard sunset end",
+    "description": ["2020-07-01T00:00:00Z"],
+    "links": [{
+        "value": "http://example.net/entity/XXXX",
+        "rel": "deprecation",
+        "type": "text/html",
+        "href": "http://www.example.com/jcard_deprecation.html"
+      },
+      {
+        "value": "http://example.net/entity/XXXX",
+        "rel": "alternate",
+        "type": "application/rdap+json",
+        "href": " http://example.net/entity/XXXX?jscard=1"
+      }
+    ]
+  }
+]
+]]></artwork></figure>
+             <figure anchor="stage2-example2" title="jCard sunset - JSCard requested"><artwork xml:space="preserve">
+<![CDATA["notices": [
+  {
+    "title": "jCard sunset end",
+    "description": ["2020-07-01T00:00:00Z"],
+    "links": [
+      {
+        "value": "http://example.net/entity/XXXX?jscard=1",
+        "rel": "deprecation",
+        "type": "text/html",
+        "href": "http://www.example.com/jcard_deprecation.html"
+      }
+    ]
+  }
+]
+]]></artwork></figure>
+          </section>
+
+          <section title="Stage 3: jCard deprecation">
+            <t>This stage corresponds to the provisioning of JSCard by default, but
+              the RDAP will return jCard if the client sets the query parameter "jcard" to a
+              true value. The rdapConformance array contains the "jscard" tag unless
+              jCard is requested. The "jscard" query parameter is ignored.</t>
+
+            <t>The RDAP server SHOULD to return a notice titled "jCard deprecation end".
+              Such a notice should include a description reporting the jCard deprecation end
+              time and two links:</t>
+
+            <t><list style="symbols">
+              <t>"deprecation": a link to a URI-identified resource documenting the jCard
+                deprecation;</t>
+              <t>"alternate": if jCard is not requested, a link to the jCard version of the same
+                resource as identified by the current query string plus the parameter "jcard"
+                set to 1/true/yes (<xref target="stage3-example1" />); otherwise, a link to the
+                JSCard version of the same resource as identified by the current query string
+                without the parameter "jcard" (<xref target="stage3-example2" />).</t>
+            </list></t>
+
+            <figure anchor="stage3-example1" title="jCard deprecation - jCard not requested"><artwork xml:space="preserve">
+<![CDATA["notices": [
+  {
+    "title": "jCard deprecation end",
+    "description": ["2020-12-31T23:59:59Z"],
+    "links": [
+      {
+        "value": "http://example.net/entity/XXXX",
+        "rel": "deprecation",
+        "type": "text/html",
+        "href": "http://www.example.com/jcard_deprecation.html"
+      },
+      {
+        "value": "http://example.net/entity/XXXX",
+        "rel": "alternate",
+        "type": "application/rdap+json",
+        "href": " http://example.net/entity/XXXX?jcard=1"
+      }
+    ]
+  }
+]
+]]></artwork></figure>
+          <figure anchor="stage3-example2" title="jCard deprecation - jCard requested"><artwork xml:space="preserve">
+<![CDATA["notices": [
+  {
+    "title": "jCard deprecation end",
+    "description": ["2020-12-31T23:59:59Z"],
+    "links": [
+      {
+        "value": "http://example.net/entity/XXXX?jcard=1",
+        "rel": "deprecation",
+        "type": "text/html",
+        "href": "http://www.example.com/jcard_deprecation.html"
+      },
+      {
+        "value": "http://example.net/entity/XXXX?jcard=1",
+        "rel": "alternate",
+        "type": "application/rdap+json",
+        "href": " http://example.net/entity/XXXX"
+      }
+    ]
+  }
+]
+]]></artwork></figure>
+        </section>
+
+        <section title="Stage 4: jCard deprecated">
+          <t>This stage corresponds to providing JSCard as default contact card. The RDAP
+            server is not able to provide an alternate contact card. The rdapConformance
+            array always contains "jscard" tag. The RDAP server doesn't include any
+            notice about the jCard deprecation process. Both "jscard" and "jcard" query
+            parameters are ignored.</t>
+        </section>
+
+        <section anchor="jcard-deprecation-procedure-length" title="Length">
+          <t>The length of both jCard sunset and jCard deprecation periods are not fixed by this
+            specification. Best practices in REST API deprecation suggest that, depending on the
+            deprecated API's reach, user base and service offering, a convenient time could be
+            anywhere between 3 - 8 months. Anyway, RDAP providers are recommended to monitor the
+            server log to figure out whether declared times need to be changed to meet client
+            requirements.</t>
+        </section>
+
+
+        <section anchor="jcard-deprecation-procedure-goals" title="Goals">
+          <t>The procedure described in this document achieves the following goals:</t>
+          <t><list style="symbols">
+            <t>only one contact representation would be included in the response;</t>
+            <t>the response would always be compliant to <xref target="RFC7483"/>;</t>
+            <t>clients would be informed about the transition timeline;</t>
+            <t>the backward compatibility would be guaranteed throughout the transition;</t>
+            <t>servers and clients could execute their transitions independently.</t>
+            </list></t>
+        </section>
+      </section>
+    </section>
+  </section>
+
+    <section anchor="impl-status" title="Implementation Status">
+      <t>NOTE: Please remove this section and the reference to RFC 7942 prior to publication as
+        an RFC.</t>
+      
+      <t>This section records the status of known implementations of the protocol defined by
+        this specification at the time of posting of this Internet-Draft, and is based on a
+        proposal described in RFC 7942 <xref target="RFC7942"/>. The description of
+        implementations in this section is intended to assist the IETF in its decision processes
+        in progressing drafts to RFCs. Please note that the listing of any individual
+        implementation here does not imply endorsement by the IETF. Furthermore, no effort has
+        been spent to verify the information presented here that was supplied by IETF
+        contributors. This is not intended as, and must not be construed to be, a catalog of
+        available implementations or their features. Readers are advised to note that other
+        implementations may exist.</t>
+      
+      <t>According to RFC 7942, &quot;this will allow reviewers and working groups to assign due
+        consideration to documents that have the benefit of running code, which may serve as
+        evidence of valuable experimentation and feedback that have made the implemented
+        protocols more mature. It is up to the individual working groups to use this information
+        as they see fit&quot;.</t>
+      
+      <section anchor="iit-cnr-registro-it" title="IIT-CNR/Registro.it">
+        <t><list style="none">
+    	  <t>Responsible Organization: Institute of Informatics and Telematics of National
+          Research Council (IIT-CNR)/Registro.it</t>
+    	  <t>Location: https://rdap.pubtest.nic.it/</t>
+    	  <t>Description: This implementation includes support for RDAP queries using data from
+          the public test environment of .it ccTLD.</t>
+    	  <t>Level of Maturity: This is a &quot;proof of concept&quot; research implementation.</t>
+    	  <t>Coverage: This implementation includes all of the features described in this
+          specification.</t>
+    	  <t>Contact Information: Mario Loffredo, mario.loffredo@iit.cnr.it</t>
+    	</list></t>
+      </section>
+    </section>
+
+   <section anchor="IANA-considerations" title="IANA Considerations">
+     <t>IANA is requested to register the following values in the RDAP Extensions Registry:</t>
+
+     <t><list style="none">
+       <t>Extension identifier: jscard</t>
+       <t>Registry operator: Any</t>
+       <t>Published specification: This document.</t>
+       <t>Contact: IESG &lt;iesg@ietf.org&gt;</t>
+       <t>Intended usage: This extension represents a contact card provided in an RDAP response
+         according to the JSContact specification (<xref target="draft-ietf-jmap-jscontact"/>).</t>
+     </list></t>
+
+   </section>
+
+   <section anchor="security-considerations" title="Security Considerations">
+  	<t>Unlike jCard, the formatted name as well as any other personally identifiable information
+      is not required in JSCard. The only mandatory property, namely &quot;uid&quot;, is usually
+      an opaque string. Therefore, redacted properties can be merely excluded without using
+      placeholder values.</t>
+   </section>
+
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      &RFC2119;
+      &RFC3339;
+      &RFC6350;
+      &RFC7095;
+      &RFC7482;
+      &RFC7483;
+      &RFC7942;
+      &RFC8288;
+    </references>
+
+    <references title="Informative References">
+      <reference anchor="draft-ietf-jmap-jscontact"
+        target="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">
+        <front><title>JSContact: A JSON representation of contact data</title>
+          <author initials="R." surname="Stepanek" fullname="Robert Stepanek" />
+          <author initials="M." surname="Loffredo" fullname="Mario Loffredo" />
+          <date/>
+        </front>
+      </reference>
+      <reference anchor="draft-loffredo-jmap-jscontact-vcard"
+        target="https://datatracker.ietf.org/doc/draft-loffredo-jmap-jscontact-vcard/">
+        <front><title>JSContact: Converting from and to vCard</title>
+          <author initials="M." surname="Loffredo" fullname="Mario Loffredo" />
+          <author initials="R." surname="Stepanek" fullname="Robert Stepanek" />
+          <date/>
+        </front>
+      </reference>
+      <reference anchor="draft-dalal-deprecation-header"
+        target="https://datatracker.ietf.org/doc/draft-dalal-deprecation-header/">
+        <front><title>The Deprecation HTTP Header Field</title>
+          <author initials="S." surname="Dalal" fullname="Sanjay Dalal" />
+          <author initials="E." surname="Wilde" fullname="Erik Wilde" />
+          <date/>
+        </front>
+      </reference>
+      <reference anchor='RDAP-PILOT-WG'
+        target='https://www.icann.org/en/system/files/files/rdap-pilot-report-25apr19-en.pdf'>
+        <front>
+          <title>RDAP Pilot Report</title>
+          <author>
+            <organization>ICANN RDAP Pilot WG</organization>
+          </author>
+          <date year='2019' month='April' />		
+        </front>
+      </reference>
+      <reference anchor='API-DEPRECATION'
+        target='https://web.archive.org/web/20200417084255/https://nordicapis.com/how-to-smartly-sunset-and-deprecate-apis/'>
+        <front>
+          <title>How to Smartly Sunset and Deprecate APIs</title>
+          <author initials="K." surname="Sandoval" fullname="Kristopher Sandoval" />
+          <date year='2019' month='August' />
+        </front>
+      </reference>
+    </references>
+
+    <section title="Change Log">
+
+      <section title="Change from 00 to 01">
+        <t><list style="numbers">
+          <t>Changed category from &quot;Best Current Practice&quot; to &quot;Standards
+            Track&quot;</t>
+          <t>Replaced the example of <xref target="jscard-example"/></t>
+          <t>Changed the title of the &quot;Migration from JCard to JSCard&quot; section to
+            &quot;Transition Considerations&quot;</t>
+          <t>Added <xref target="rdap-query-parameters-specification"/></t>
+          <t>Updated <xref target="IANA-considerations"/></t>
+          <t>Updated <xref target="security-considerations"/></t>
+          <t>Rearranged the description of stage 1 in <xref target="jcard-deprecation-procedure-stages"/></t>
+          <t>Changed the names of the transition stages 1 and 2</t>
+          <t>Corrected <xref target="stage2-example1"/>, <xref target="stage3-example1"/>,
+          <xref target="stage3-example2"/></t>
+          <t>Changed the rdapConformance tag &quot;jscard_level_0&quot; to &quot;jscard&quot;</t>
+          <t>Removed the &quot;Best Practices for deprecating a REST API features&quot; section,
+            but added a useful reference.</t>
+        </list></t>
+      </section>
+
+    </section>
+  </back>
+</rfc>
