@@ -245,7 +245,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
        "text",
        "Taiwan Fixed Network CO.,LTD."
     ],
-    [ "kind", {}, "text", "individual" ],
+    [ "kind", {}, "text", "org" ],
     [ "adr",
        { "label": "8F., No.172-1, Sec.2, Ji-Lung Rd," },
        "text",
@@ -266,7 +266,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
       "zh-Hant-TW": "台灣固網股份有限公司"
     }
   },
-  "kind": "individual",
+  "kind": "org",
   "addresses": [
                  {
                    "fullAddress": {
