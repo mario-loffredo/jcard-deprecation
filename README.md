@@ -112,8 +112,8 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
     "fullName": { "value": "Joe User" },
     "kind": "individual",
     "preferredContactLanguages": {
-      "fr": { "preference": 1 },
-      "en": { "preference": 2 }
+      "fr": [{ "preference": 1 }],
+      "en": [{ "preference": 2 }]
     },
     "organization": [ { "value": "Example" } ],
     "jobTitle": [ { "value": "Research Scientist" } ],
@@ -222,8 +222,8 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
   ],
   "kind": "individual",
   "preferredContactLanguages": {
-     "ja": { "preference": 1 },
-     "en": { "preference": 2 }
+     "ja": [{ "preference": 1 }],
+     "en": [{ "preference": 2 }]
   }
 }
 ```
