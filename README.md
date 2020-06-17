@@ -91,17 +91,25 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
        "joe.user@example.com"
      ],
      ["geo", {
-       "type":"work"
-     }, "uri", "geo:46.772673,-71.282945"],
+       "type":"work"}, 
+       "uri", 
+       "geo:46.772673,-71.282945"
+     ],
      ["key",
        { "type":"work" },
        "uri",
        "http://www.example.com/joe.user/joe.asc"
      ],
-     ["tz", {},
-       "utc-offset", "-05:00"],
-     ["url", { "type":"home" },
-       "uri", "http://example.org"]
+     ["tz", 
+       {},
+       "text", 
+       "Canada/Eastern"
+     ],
+     ["url", 
+       { "type":"home" },
+       "uri", 
+       "http://example.org"
+     ]
    ]
  ]
 ```
