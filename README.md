@@ -102,8 +102,8 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
      ],
      ["tz", 
        {},
-       "text", 
-       "Canada/Eastern"
+       "utc-offset", 
+       "-05:00"
      ],
      ["url", 
        { "type":"home" },
@@ -136,7 +136,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
                      "postcode": "G1V 2M2",
                      "country": "Canada",
                      "coordinates": "geo:46.772673,-71.282945",
-                     "timeZone": "Canada/Eastern"
+                     "timeZone": "Etc/GMT+5"
                    },
                    {
                      "context": "private",
