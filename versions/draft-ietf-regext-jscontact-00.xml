@@ -33,7 +33,7 @@
 <?rfc symrefs="yes"?>
 <?rfc iprnotified="no"?>
 
-<rfc category="std" docName="draft-ietf-regext-rdap-jscontact-00" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-regext-jscontact-00" ipr="trust200902">
   <front>
     <title abbrev="Using JSContact in RDAP">Using JSContact in Registration Data Access Protocol
     (RDAP) JSON Responses</title>
@@ -639,7 +639,7 @@
       </section>
       <section title="Initial WG version">
       <t><list style="numbers">
-        <t>Ported from draft-loffredo-regext-rdap-jcard-deprecation-04 renamed to draft-ietf-regext-rdap-jscontact-00.</t>
+        <t>Ported from draft-loffredo-regext-rdap-jcard-deprecation-04 renamed to draft-ietf-regext-jscontact-00.</t>
       </list></t>
     </section>
     </section>

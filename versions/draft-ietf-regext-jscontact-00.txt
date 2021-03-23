@@ -11,7 +11,7 @@ Expires: September 23, 2021                         CentralNic Group plc
 
     Using JSContact in Registration Data Access Protocol (RDAP) JSON
                                Responses
-                  draft-ietf-regext-rdap-jscontact-00
+                     draft-ietf-regext-jscontact-00
 
 Abstract
 
@@ -863,7 +863,7 @@ A.4.  Change from 03 to 04
 A.5.  Initial WG version
 
    1.  Ported from draft-loffredo-regext-rdap-jcard-deprecation-04
-       renamed to draft-ietf-regext-rdap-jscontact-00.
+       renamed to draft-ietf-regext-jscontact-00.
 
 Authors' Addresses
 
