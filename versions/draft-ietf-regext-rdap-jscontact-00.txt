@@ -5,13 +5,13 @@
 Registration Protocols Extensions                            M. Loffredo
 Internet-Draft                                       IIT-CNR/Registro.it
 Intended status: Standards Track                                G. Brown
-Expires: September 23, 2021                         CentralNic Group plc
-                                                          March 22, 2021
+Expires: September 24, 2021                         CentralNic Group plc
+                                                          March 23, 2021
 
 
     Using JSContact in Registration Data Access Protocol (RDAP) JSON
                                Responses
-                     draft-ietf-regext-jscontact-00
+                  draft-ietf-regext-rdap-jscontact-00
 
 Abstract
 
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 23, 2021.
+   This Internet-Draft will expire on September 24, 2021.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 1]
+Loffredo & Brown       Expires September 24, 2021               [Page 1]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 2]
+Loffredo & Brown       Expires September 24, 2021               [Page 2]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -165,7 +165,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 3]
+Loffredo & Brown       Expires September 24, 2021               [Page 3]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -221,7 +221,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 4]
+Loffredo & Brown       Expires September 24, 2021               [Page 4]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -277,7 +277,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 5]
+Loffredo & Brown       Expires September 24, 2021               [Page 5]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -333,7 +333,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 6]
+Loffredo & Brown       Expires September 24, 2021               [Page 6]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -389,7 +389,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 7]
+Loffredo & Brown       Expires September 24, 2021               [Page 7]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -445,7 +445,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 8]
+Loffredo & Brown       Expires September 24, 2021               [Page 8]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -501,7 +501,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021               [Page 9]
+Loffredo & Brown       Expires September 24, 2021               [Page 9]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -557,7 +557,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021              [Page 10]
+Loffredo & Brown       Expires September 24, 2021              [Page 10]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -613,7 +613,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021              [Page 11]
+Loffredo & Brown       Expires September 24, 2021              [Page 11]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -669,7 +669,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021              [Page 12]
+Loffredo & Brown       Expires September 24, 2021              [Page 12]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -725,7 +725,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021              [Page 13]
+Loffredo & Brown       Expires September 24, 2021              [Page 13]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -781,7 +781,7 @@ Internet-Draft           Using JSContact in RDAP              March 2021
 
 
 
-Loffredo & Brown       Expires September 23, 2021              [Page 14]
+Loffredo & Brown       Expires September 24, 2021              [Page 14]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -837,7 +837,7 @@ A.2.  Change from 01 to 02
 
 
 
-Loffredo & Brown       Expires September 23, 2021              [Page 15]
+Loffredo & Brown       Expires September 24, 2021              [Page 15]
 
 Internet-Draft           Using JSContact in RDAP              March 2021
 
@@ -863,7 +863,7 @@ A.4.  Change from 03 to 04
 A.5.  Initial WG version
 
    1.  Ported from draft-loffredo-regext-rdap-jcard-deprecation-04
-       renamed to draft-ietf-regext-jscontact-00.
+       renamed to draft-ietf-regext-rdap-jscontact-00.
 
 Authors' Addresses
 
@@ -893,4 +893,4 @@ Authors' Addresses
 
 
 
-Loffredo & Brown       Expires September 23, 2021              [Page 16]
+Loffredo & Brown       Expires September 24, 2021              [Page 16]
