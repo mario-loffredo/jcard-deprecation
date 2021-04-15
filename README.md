@@ -29,6 +29,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
 ### Use case taken from RFC7483
 
 ```
+ ...      
  "vcardArray":[
    "vcard",
    [
@@ -111,75 +112,96 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
        "http://example.org"
      ]
    ]
- ]
+ ],
+ ...      
+
 ```
 
 ```
-  "jscard":{
-    "uid": "XXXX",
-    "fullName": { "value": "Joe User" },
-    "kind": "individual",
-    "preferredContactLanguages": {
-      "fr": [{ "preference": 1 }],
-      "en": [{ "preference": 2 }]
-    },
-    "organization": [ { "value": "Example" } ],
-    "jobTitle": [ { "value": "Research Scientist" } ],
-    "role": [ { "value": "Project Lead" } ],
-    "addresses": [
-                   {
-                     "context": "work",
-                     "extension": "Suite 1234",
-                     "street": "4321 Rue Somewhere",
-                     "locality": "Quebec",
-                     "region": "QC",
-                     "postcode": "G1V 2M2",
-                     "country": "Canada",
-                     "coordinates": "geo:46.772673,-71.282945",
-                     "timeZone": "Etc/GMT+5"
-                   },
-                   {
-                     "context": "private",
-                     "fullAddress": {
-                       "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
-                     }
-                   }
-    ],
-    "phones": [
-                {
-                  "context": "work",
-                  "type": "voice",
-                  "labels": { "cell" : true, "video" : true, "text" : true},
-                  "isPreferred": true,
-                  "value": "tel:+1-555-555-1234;ext=102"
-                }
-    ],
-    "emails": [
-                {
-                  "context": "work",
-                  "value": "joe.user@example.com"
-                }
-    ],
-    "online": [
-                {
-                  "context": "work",
-                  "type": "uri",
-                  "labels": { "key" : true },
-                  "value": "http://www.example.com/joe.user/joe.asc"
-                },
-                {
-                  "context": "private",
-                  "type": "uri",
-                  "labels": { "url" : true },
-                  "value": "http://example.org"
-                }
-    ]
-  }
+      ...      
+      "jscard":{
+        "uid": "XXXX",
+        "fullName": { "value": "Joe User" },
+        "name": [
+          { "value":"Joe", "type": "personal" },
+          { "value":"User", "type": "surname" },
+          { "value":"ing. jr", "type": "suffix" },
+          { "value":"M.Sc.", "type": "suffix" }
+        ],
+        "kind": "individual",
+        "preferredContactLanguages": {
+          "fr": { "pref": 1 },
+          "en": { "pref": 2 }
+        },
+        "organizations": {
+          "org": {
+            "name": { "value": "Example" }
+          }
+        },
+        "titles": {
+          "title-1": {
+            "title": { "value": "Research Scientist" }
+          },
+          "title-2": {
+            "title": { "value": "Project Lead" }
+          }
+        },
+        "addresses": {
+          "int": {
+            "contexts": { "work": true },
+            "extension": "Suite 1234",
+            "street": "4321 Rue Somewhere",
+            "locality": "Quebec",
+            "region": "QC",
+            "postcode": "G1V 2M2",
+            "country": "Canada",
+            "coordinates": "geo:46.772673,-71.282945",
+            "timeZone": "Canada/Eastern"
+          },
+          "home": {
+            "contexts": { "private": true },
+            "fullAddress": {
+              "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+            }
+          }
+        },
+        "phones": {
+          "voice" : {
+            "contexts": { "work": true },
+            "features": { "voice": true },
+            "label": "cell,video,text",
+            "pref": 1,
+            "phone": "tel:+1-555-555-1234;ext=102"
+          }
+        },
+        "emails": {
+          "email": {
+            "contexts": { "work": true },
+            "email": "joe.user@example.com"
+          }
+        },
+        "online": {
+          "key": {
+            "contexts": { "work": true },
+            "type": "uri",
+            "label": "key",
+            "resource": "http://www.example.com/joe.user/joe.asc"
+          },
+          "url": {
+            "contexts": { "private": true },
+            "type": "uri",
+            "label": "url",
+            "resource": "http://example.org"
+          }
+        }
+      },
+      ...      
 ```
 
 ### Multilingual Information
 
 ```
+...
 "vcardArray": [
   "vcard",
   [
@@ -208,10 +230,14 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
     [ "lang", { "pref": "1" }, "language-tag", "ja" ],
     [ "lang", { "pref": "2" }, "language-tag", "en" ]
   ]
-]
+],
+...
+```
 
+```
+...
 "jscard":{
-  "uid": <handle value>,
+  "uid": "XXXX",
   "fullName": {
     "value": "大久保 正仁",
     "language": "ja",
@@ -219,26 +245,28 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
       "en": "Okubo Masahito"
     }
   },
-  "jobTitle": [
-                {
-                  "value": "事務局長",
-                  "language": "ja",
-                  "localizations": {
-                    "en": "Secretary General"
-                  }
-                }
-  ],
+  "titles": {
+    "a-title": {
+      "value": "事務局長",
+      "language": "ja",
+      "localizations": {
+        "en": "Secretary General"
+      }
+    }
+  },
   "kind": "individual",
   "preferredContactLanguages": {
-     "ja": [{ "preference": 1 }],
-     "en": [{ "preference": 2 }]
+    "ja": [{ "pref": 1 }],
+    "en": [{ "pref": 2 }]
   }
-}
+},
+...
 ```
 
 ### Unstructured Data
 
 ```
+...
 "vcardArray": [
   "vcard",
   [
@@ -258,15 +286,15 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
        { "label": "8F., No.172-1, Sec.2, Ji-Lung Rd," },
        "text",
        [ "", "", "", "", "", "", "" ]
-    ],
-    [ "tel", { "type": "voice" }, "text", "" ],
-    [ "tel", { "type": "fax" }, "text", "" ],
-    [ "email", {}, "text", "" ]
-  ]
-]
+    ]
+],
+...
+```
 
+```
+...
 "jscard":{
-  "uid": <handle value>,
+  "uid": "XXXX",
   "fullName": {
     "value": "Taiwan Fixed Network CO.,LTD.",
     "language": "en",
@@ -275,27 +303,13 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
     }
   },
   "kind": "org",
-  "addresses": [
-                 {
-                   "fullAddress": {
-                    "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
-                   }
-                 }
-  ],
-  "phones": [
-              {
-                "type": "voice",
-                "value": ""
-              },
-              {
-                "type": "fax",
-                "value": ""
-              }
-  ],
-  "emails": [
-              {
-                "value": ""
-              }
-  ]
-}
+  "addresses": {
+    "my-address": {
+      "fullAddress": {
+        "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
+      }
+    }
+  }
+},
+...
 ```
