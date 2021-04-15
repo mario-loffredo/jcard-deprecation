@@ -145,7 +145,7 @@
       <t>Entity objects in RDAP responses MAY include a "jscard" property whose value is a JSCard object instead of the "vCardArray" property defined in <xref target="RFC7483"/>.</t>
       <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard&quot; in the "rdapConformance" array.</t>
       <t>The JSCard &quot;uid&quot; property SHOULD contain the same value as the RDAP &quot;handle&quot; property.</t>
-      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  To facilitate interoperability among implementations, RDAP providers are RECOMMENDED to use as map keys the string values and labels defined in <xref target="RFC5733"/> while mapping mostly used contact information in registries' context:
+      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  To aid interoperability, RDAP providers are RECOMMENDED to use as map keys the string values and labels defined in <xref target="RFC5733"/> while mapping mostly used contact information in registries' context:
         <list style="symbols">
           <t>&quot;org&quot; for the internationalized organization in the &quot;organizations&quot; map.  The localized version can be represented through the &quot;localizations&quot; member;</t>
           <t>&quot;int&quot; for the internationalized postal address in the &quot;addresses&quot; map;</t>

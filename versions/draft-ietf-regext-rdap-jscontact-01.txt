@@ -196,10 +196,10 @@ Internet-Draft           Using JSContact in RDAP              April 2021
    "handle" property.
 
    Since most of the JSCard collections are represented as maps, map
-   keys must be defined.  To facilitate interoperability among
-   implementations, RDAP providers are RECOMMENDED to use as map keys
-   the string values and labels defined in [RFC5733] while mapping
-   mostly used contact information in registries' context:
+   keys must be defined.  To aid interoperability, RDAP providers are
+   RECOMMENDED to use as map keys the string values and labels defined
+   in [RFC5733] while mapping mostly used contact information in
+   registries' context:
 
    o  "org" for the internationalized organization in the
       "organizations" map.  The localized version can be represented
