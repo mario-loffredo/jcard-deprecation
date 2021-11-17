@@ -614,6 +614,34 @@
     	  <t>Contact Information: Mario Loffredo, mario.loffredo@iit.cnr.it</t>
     	</list></t>
       </section>
+
+      <section anchor="client-rdap-org" title="client.rdap.org">
+        <t><list style="none">
+    	  <t>Location: https://client.rdap.org/</t>
+    	  <t>Description: This is a web-based "single page" RDAP client. RDAP responses are
+          retrieved from RDAP servers by the browser, and parsed into an HTML represenation.
+          RDAP responses containing JSCard objects are handled identically to those containing
+          jCard objects.</t>
+    	  <t>Level of Maturity: This is a &quot;proof of concept&quot; research implementation.</t>
+    	  <t>Coverage: This implementation implements client support for parsing JSCard objects
+          in RDAP responses.</t>
+    	  <t>Contact Information: Gavin Brown, feedback@rdap.org</t>
+    	</list></t>
+      </section>
+
+      <section anchor="cnic" title="CentralNic Registry">
+        <t><list style="none">
+    	  <t>Responsible Organization: CentralNic Group PLC</t>
+    	  <t>Location: https://rdap.centralnic.com/{tld}</t>
+    	  <t>Description: This server is the product RDAP service for all top-level domains on the
+          CentralNic registry platform.</t>
+    	  <t>Level of Maturity: Production quality.</t>
+    	  <t>Coverage: This implementation includes all of the features described in this
+          specification.</t>
+    	  <t>Contact Information: support@centralnic.com</t>
+    	</list></t>
+      </section>
+
     </section>
 
    <section anchor="IANA-considerations" title="IANA Considerations">
