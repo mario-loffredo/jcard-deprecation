@@ -132,8 +132,7 @@
         <t>is simple to process;</t>
         <t>requires no extra work in serialization/deserialization from/to a data model;</t>
         <t>includes no "jagged" arrays;</t>
-        <t>prefers maps rather than arrays to implement collections;</t>
-        <t>is able to represent redacted contacts (both &quot;name&quot; and&quot;fullName&quot; properties are optional).</t>
+        <t>prefers maps rather than arrays to implement collections.</t>
       </list></t>
 
       <t><xref target="draft-ietf-jmap-jscontact-vcard"/> provides informational guidance on
@@ -147,8 +146,8 @@
       <t>The JSCard &quot;uid&quot; property SHOULD contain the same value as the RDAP &quot;handle&quot; property.</t>
       <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  To aid interoperability, RDAP providers are RECOMMENDED to use as map keys the following string values and labels defined in <xref target="RFC5733"/>:
         <list style="symbols">
-          <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element. If both internationalized and localized forms exist, the key MUST be used for the internationalized form;</t>
-          <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element. If both internationalized and localized forms exist, the key MUST be used for the internationalized form;</t>
+          <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element. If both internationalised and localized forms exist, the key MUST be used for the internationalised form;</t>
+          <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element. If both internationalised and localized forms exist, the key MUST be used for the internationalised form;</t>
           <t>&quot;email&quot; in the &quot;emails&quot; map for the &lt;contact:email&gt; element;</t>
           <t>&quot;voice&quot; in the &quot;phones&quot; map for the &lt;contact:voice&gt; element;</t>
           <t>&quot;fax&quot; in the &quot;phones&quot; map for the &lt;contact:fax&gt; element.</t>
@@ -156,7 +155,7 @@
       </t>
       <t>If present, the localized version of name, organization and postal address MUST be inserted into the &quot;localizations&quot; map (<xref target="localizations-example"/>).</t>
 
-<figure anchor="localizations-example" title="Example of &quot;jscard&quot; including localizations"><artwork><![CDATA[
+<figure anchor="localizations-example" title="JSCard instance including localizations"><artwork><![CDATA[
 ...
 {
   "@type" : "Card",
@@ -212,12 +211,12 @@
 ]]></artwork></figure>
 
 
-      <t>Implementers MAY use different mapping schemes to define keys for additional entries of the aforementioned maps or others.  For example, a mapping scheme consists in using a trivial sequential number (e.g. &quot;url-1&quot;, &quot;url-2&quot;, etc.)</t>
+      <t>Implementers MAY use different mapping schemes to define keys for additional entries of the aforementioned maps or others.  For example, a mapping scheme may consist in using a trivial sequential number (e.g. &quot;url-1&quot;, &quot;url-2&quot;, etc.)</t>
       <t>An example of an RDAP response containing a "jscard" property is shown in <xref target="jscard-example"/>.
       The "jscard" object in this example has been converted from the example included in section
       5.1 of <xref target="RFC9083"/>.</t>
 
-<figure anchor="jscard-example" title="Example of RDAP response including the &quot;jscard&quot; object"><artwork><![CDATA[
+<figure anchor="jscard-example" title="Example of RDAP response including the JSCard object"><artwork><![CDATA[
    {
       "rdapConformance": [
          "rdap_level_0",
@@ -396,25 +395,25 @@
         </section>
 
         <section title="Query Parameters">
-          <t>Clients are able to ask servers to use specific RDAP features by using appropriate query
-            parameters as described in <xref target="RFC9082" />.</t>
+          <t>Clients are able to ask servers to use the query parameters defined in <xref target="rdap-query-parameters-specification"/> in accordance with <xref target="RFC9082" />.</t>
         </section>
       </section>
 
       <section anchor="jcard-transition-procedure" title="Transition Procedure">
-        <t>The procedure for jCard to JSCard transition consists of four contiguous stages.
+
+        <t>The principles of the procedure for jCard to JSCard transition are based on the best practices in <xref
+                target="API-DEPRECATION"/>.</t>
+
+        <t>The procedure consists of four contiguous stages.
           During the procedure, the presence of "jscard" tag in the rdapConformance array
           indicates that JSCard is returned instead of jCard.  The date and time format used to notify
-          clients about this procedure is defined in <xref target="RFC3339" />.</t>
-
-        <t>Some elements of the following procedure are based on the best practices in <xref
-          target="API-DEPRECATION"/>.</t>
+          clients about the stages of this procedure is defined in <xref target="RFC3339" />.</t>
 
         <section anchor="jcard-deprecation-procedure-goals" title="Goals">
-          <t>The procedure described in this document achieves the following goals:</t>
+          <t>The procedure described in this document aims to achieve the following goals:</t>
           <t><list style="symbols">
             <t>only one contact representation would be included in the response;</t>
-            <t>the response would always be compliant to <xref target="RFC9083"/> for two reasons:
+            <t>the response would always be compliant to <xref target="RFC9083"/> because:
               <list style="symbols">
                 <t>being the &quot;jscard&quot; property a response extension, its presence would be signaled by the &quot;jscard_0&quot; conformance tag;</t>
                 <t>being &quot;vcardArray&quot; property optional in a response, its absence would be allowed;</t>
@@ -457,7 +456,7 @@
 <![CDATA["notices": [
   {
     "title": "jCard sunset end",
-    "description": ["2020-07-01T00:00:00Z"],
+    "description": ["2022-07-01T00:00:00Z"],
     "links": [{
         "value": "http://example.net/entity/XXXX",
         "rel": "deprecation",
@@ -478,7 +477,7 @@
 <![CDATA["notices": [
   {
     "title": "jCard sunset end",
-    "description": ["2020-07-01T00:00:00Z"],
+    "description": ["2022-07-01T00:00:00Z"],
     "links": [
       {
         "value": "http://example.net/entity/XXXX?jscard=1",
@@ -494,8 +493,7 @@
 
           <section title="Stage 3: jCard deprecation">
             <t>This stage corresponds to the provisioning of JSCard by default, but
-              the RDAP will return jCard if the client sets the query parameter &quot;jcard&quot; to a
-              true value.  The rdapConformance array contains the &quot;jscard_0&quot; tag unless
+              the RDAP will return jCard if the client sets the query parameter &quot;jcard&quot; to 1/true/yes.  The rdapConformance array contains the &quot;jscard_0&quot; tag unless
               jCard is requested.  The &quot;jscard&quot; query parameter is ignored.</t>
 
             <t>The RDAP server SHOULD to return a notice titled &quot;jCard deprecation end&quot;.
@@ -516,7 +514,7 @@
 <![CDATA["notices": [
   {
     "title": "jCard deprecation end",
-    "description": ["2020-12-31T23:59:59Z"],
+    "description": ["2022-12-31T23:59:59Z"],
     "links": [
       {
         "value": "http://example.net/entity/XXXX",
@@ -538,7 +536,7 @@
 <![CDATA["notices": [
   {
     "title": "jCard deprecation end",
-    "description": ["2020-12-31T23:59:59Z"],
+    "description": ["2022-12-31T23:59:59Z"],
     "links": [
       {
         "value": "http://example.net/entity/XXXX?jcard=1",
@@ -570,7 +568,7 @@
           <t>The length of both jCard sunset and jCard deprecation periods are not fixed by this
             specification.  Best practices in REST API deprecation suggest that, depending on the
             deprecated API's reach, user base and service offering, a convenient time could be
-            anywhere between 3 - 8 months.  Anyway, RDAP providers are recommended to monitor the
+            anywhere between 3 - 8 months.  Anyway, RDAP providers are RECOMMENDED to monitor the
             server log to figure out whether declared times need to be changed to meet client
             requirements.</t>
         </section>
@@ -601,28 +599,44 @@
         protocols more mature.  It is up to the individual working groups to use this information
         as they see fit&quot;.</t>
       
-      <section anchor="iit-cnr-registro-it" title="IIT-CNR/Registro.it">
+      <section anchor="registro-it-rdap-server" title="IIT-CNR/Registro.it RDAP Server">
         <t><list style="none">
     	  <t>Responsible Organization: Institute of Informatics and Telematics of National
           Research Council (IIT-CNR)/Registro.it</t>
     	  <t>Location: https://rdap.pubtest.nic.it/</t>
     	  <t>Description: This implementation includes support for RDAP queries using data from
           the public test environment of .it ccTLD.</t>
-    	  <t>Level of Maturity: This is a &quot;proof of concept&quot; research implementation.</t>
+    	  <t>Level of Maturity: This is an &quot;alpha&quot; test implementation.</t>
     	  <t>Coverage: This implementation includes all of the features described in this
           specification.</t>
     	  <t>Contact Information: Mario Loffredo, mario.loffredo@iit.cnr.it</t>
     	</list></t>
       </section>
 
+      <section anchor="registro-it-rdap-client" title="IIT-CNR/Registro.it RDAP Client">
+        <t><list style="none">
+          <t>Responsible Organization: Institute of Informatics and Telematics of National
+            Research Council (IIT-CNR)/Registro.it</t>
+          <t>Location: https://web-rdap.pubtest.nic.it/</t>
+          <t>Description: This is a Javascript web-based RDAP client. RDAP responses are
+            retrieved from RDAP servers by the browser, parsed into an HTML representation, and displayed in a format improving the user experience.
+            RDAP responses containing JSCard objects are handled identically to those containing
+            jCard objects.  Raw versions of RDAP responses including either jCard or JSCard objects are provided.</t>
+          <t>Level of Maturity: This is an &quot;alpha&quot; test implementation.</t>
+          <t>Coverage: This implementation includes all of the features described in this
+            specification.</t>
+          <t>Contact Information: Francesco Donini, francesco.donini@iit.cnr.it</t>
+        </list></t>
+      </section>
+
       <section anchor="client-rdap-org" title="client.rdap.org">
         <t><list style="none">
     	  <t>Location: https://client.rdap.org/</t>
     	  <t>Description: This is a web-based "single page" RDAP client. RDAP responses are
-          retrieved from RDAP servers by the browser, and parsed into an HTML represenation.
+          retrieved from RDAP servers by the browser, and parsed into an HTML representation.
           RDAP responses containing JSCard objects are handled identically to those containing
           jCard objects.</t>
-    	  <t>Level of Maturity: This is a &quot;proof of concept&quot; research implementation.</t>
+    	  <t>Level of Maturity: This is an &quot;alpha&quot; test implementation.</t>
     	  <t>Coverage: This implementation implements client support for parsing JSCard objects
           in RDAP responses.</t>
     	  <t>Contact Information: Gavin Brown, feedback@rdap.org</t>
@@ -648,7 +662,7 @@
      <t>IANA is requested to register the following values in the RDAP Extensions Registry:</t>
 
      <t><list style="none">
-       <t>Extension identifier: jscard</t>
+       <t>Extension identifier: jscard_0</t>
        <t>Registry operator: Any</t>
        <t>Published specification: This document.</t>
        <t>Contact: IETF &lt;iesg@ietf.org&gt;</t>
@@ -661,7 +675,7 @@
    <section anchor="security-considerations" title="Security Considerations">
   	<t>Unlike jCard, the formatted name as well as any other personally identifiable information
       is not required in JSCard.  The only mandatory property, namely &quot;uid&quot;, is not a sensitive information as it happens, instead, for the &quot;fn&quot; property in jCard.  Therefore, redacted properties can be merely excluded without using
-      placeholder values. This means that, with reference to what is described in <xref target="draft-ietf-regext-rdap-redacted"/>, only the &quot;Removal&quot; method can be used for redacting JSContact values where the &quot;Empty Value&quot; is also used for redacting jCard values.</t>
+      placeholder values. This means that, with reference to what is described in <xref target="draft-ietf-regext-rdap-redacted"/>, only the &quot;Removal&quot; method can be used for redacting JSContact values whereas the &quot;Empty Value&quot; is also used for redacting jCard values.</t>
    </section>
 
   </middle>
@@ -705,7 +719,7 @@
           <date/>
         </front>
       </reference>
-      <reference anchor="draft-ietf-rgext-rdap-redacted"
+      <reference anchor="draft-ietf-regext-rdap-redacted"
                  target="https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-redacted/">
         <front><title>Redacted Fields in the Registration Data Access Protocol (RDAP) Response</title>
           <author fullname="J.G. Gould" />
