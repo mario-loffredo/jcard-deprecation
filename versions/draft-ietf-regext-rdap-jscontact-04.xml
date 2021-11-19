@@ -11,8 +11,6 @@
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.6350.xml'>
   <!ENTITY RFC7095 PUBLIC ''
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7095.xml'>
-  <!ENTITY RFC7480 PUBLIC ''
-   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7480.xml'>
   <!ENTITY RFC9082 PUBLIC ''
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.9082.xml'>
   <!ENTITY RFC9083 PUBLIC ''
@@ -23,6 +21,14 @@
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml'>
   <!ENTITY RFC8288 PUBLIC ''
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8288.xml'>
+  <!ENTITY I-D.ietf-jmap-jscontact PUBLIC ''
+   'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-jmap-jscontact.xml'>
+  <!ENTITY I-D.ietf-jmap-jscontact-vcard PUBLIC ''
+   'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-jmap-jscontact-vcard.xml'>
+  <!ENTITY I-D.ietf-httpapi-deprecation-header PUBLIC ''
+   'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-httpapi-deprecation-header'>
+  <!ENTITY I-D.ietf-regext-rdap-redacted PUBLIC ''
+   'https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-regext-rdap-redacted'>
 ]>
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt"?>
 
@@ -86,7 +92,7 @@
   <middle>
     <section title="Introduction">
       <t>This document specifies an extension to the Registration Data Access Protocol (RDAP)
-      that allows RDAP servers to use JSContact (<xref target="draft-ietf-jmap-jscontact"/>)
+      that allows RDAP servers to use JSContact (<xref target="I-D.ietf-jmap-jscontact"/>)
       to represent the contact information associated with entities in RDAP responses, instead
       of jCard (<xref target="RFC7095"/>).  It also describes the process by which an RDAP server
       can transition from jCard to JSContact.  RDAP query and response extensions are defined to
@@ -101,7 +107,7 @@
         unintuitive, complicated to implement for both clients and servers, and incompatible
         with best practices for RESTful APIs.</t>
 
-        <t>JSContact (<xref target="draft-ietf-jmap-jscontact"/>) provides a simpler and more
+        <t>JSContact (<xref target="I-D.ietf-jmap-jscontact"/>) provides a simpler and more
         efficient representation for contact information with regard to time and effort saved in processing it.  In addition, similarly to jCard, it provides a means to
         represent internationalised and unstructured contact information.  Support for internationalised contact information has been
         recognised being necessary to facilitate the future internationalisation of registration
@@ -135,8 +141,7 @@
         <t>prefers maps rather than arrays to implement collections.</t>
       </list></t>
 
-      <t><xref target="draft-ietf-jmap-jscontact-vcard"/> provides informational guidance on
-      the conversion of jCard objects into JSCard objects, and vice versa.</t>
+      <t><xref target="I-D.ietf-jmap-jscontact-vcard"/> provides informational guidance on the conversion of jCard into JSCard, and vice versa.</t>
 
     </section>
 
@@ -153,11 +158,11 @@
           <t>&quot;fax&quot; in the &quot;phones&quot; map for the &lt;contact:fax&gt; element.</t>
         </list>
       </t>
-      <t>If present, the localized version of name, organization and postal address MUST be inserted into the &quot;localizations&quot; map (<xref target="localizations-example"/>).</t>
+      <t>If present, the localized version of name, organization and postal address MUST be inserted into the &quot;localizations&quot; map.  The following is an elided example of an RDAP entity including a JSCard object that presents the &quot;localizations&quot; map.</t>
 
-<figure anchor="localizations-example" title="JSCard instance including localizations"><artwork><![CDATA[
+<figure anchor="localizations-example"><artwork><![CDATA[
 ...
-{
+"jscard": {
   "@type" : "Card",
   "uid" : "7e0636f5-e48f-4a32-ab96-b57e9c07c7aa",
   "fullName" : "Vasya Pupkin",
@@ -185,7 +190,7 @@
   },
   "localizations" : {
     "uk" : {
-      "/addresses/addr" : {
+      "/jscard/addresses/addr" : {
         "@type" : "Address",
         "street" : [ {
           "@type" : "StreetComponent",
@@ -199,8 +204,8 @@
         "locality" : "Киев",
         "countryCode" : "UA"
       },
-      "/fullName" : "Вася Пупкин",
-      "/organizations/org" : {
+      "/jscard/fullName" : "Вася Пупкин",
+      "jscard/organizations/org" : {
         "@type" : "Organization",
         "name" : "Моя Компания"
       }
@@ -212,11 +217,9 @@
 
 
       <t>Implementers MAY use different mapping schemes to define keys for additional entries of the aforementioned maps or others.  For example, a mapping scheme may consist in using a trivial sequential number (e.g. &quot;url-1&quot;, &quot;url-2&quot;, etc.)</t>
-      <t>An example of an RDAP response containing a "jscard" property is shown in <xref target="jscard-example"/>.
-      The "jscard" object in this example has been converted from the example included in section
-      5.1 of <xref target="RFC9083"/>.</t>
+      <t>The following is an example of an RDAP entity including a JSCard object that has been converted from the example in section 5.1 of <xref target="RFC9083"/>.</t>
 
-<figure anchor="jscard-example" title="Example of RDAP response including the JSCard object"><artwork><![CDATA[
+<figure anchor="jscard-example"><artwork><![CDATA[
    {
       "rdapConformance": [
          "rdap_level_0",
@@ -383,7 +386,7 @@
           process outlined in this document uses two types of link relation:</t>
 
           <t><list style="symbols">
-            <t>&quot;deprecation&quot;, as described in <xref target="draft-ietf-httpapi-deprecation-header" />;</t>
+            <t>&quot;deprecation&quot;, as described in <xref target="I-D.ietf-httpapi-deprecation-header" />;</t>
             <t>&quot;alternate&quot;, as described in <xref target="RFC8288" />.</t>
           </list></t>
         </section>
@@ -667,7 +670,7 @@
        <t>Published specification: This document.</t>
        <t>Contact: IETF &lt;iesg@ietf.org&gt;</t>
        <t>Intended usage: This extension represents a contact card provided in an RDAP response
-         according to the JSContact specification (<xref target="draft-ietf-jmap-jscontact"/>).</t>
+         according to the JSContact specification (<xref target="I-D.ietf-jmap-jscontact"/>).</t>
      </list></t>
 
    </section>
@@ -675,7 +678,7 @@
    <section anchor="security-considerations" title="Security Considerations">
   	<t>Unlike jCard, the formatted name as well as any other personally identifiable information
       is not required in JSCard.  The only mandatory property, namely &quot;uid&quot;, is not a sensitive information as it happens, instead, for the &quot;fn&quot; property in jCard.  Therefore, redacted properties can be merely excluded without using
-      placeholder values. This means that, with reference to what is described in <xref target="draft-ietf-regext-rdap-redacted"/>, only the &quot;Removal&quot; method can be used for redacting JSContact values whereas the &quot;Empty Value&quot; is also used for redacting jCard values.</t>
+      placeholder values. This means that, with reference to what is described in <xref target="I-D.ietf-regext-rdap-redacted"/>, only the &quot;Removal&quot; method can be used for redacting JSContact values whereas the &quot;Empty Value&quot; is also used for redacting jCard values.</t>
    </section>
 
   </middle>
@@ -695,40 +698,10 @@
     </references>
 
     <references title="Informative References">
-      <reference anchor="draft-ietf-jmap-jscontact"
-        target="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact/">
-        <front><title>JSContact: A JSON representation of contact data</title>
-          <author initials="R." surname="Stepanek" fullname="Robert Stepanek" />
-          <author initials="M." surname="Loffredo" fullname="Mario Loffredo" />
-          <date/>
-        </front>
-      </reference>
-      <reference anchor="draft-ietf-jmap-jscontact-vcard"
-        target="https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact-vcard/">
-        <front><title>JSContact: Converting from and to vCard</title>
-          <author initials="M." surname="Loffredo" fullname="Mario Loffredo" />
-          <author initials="R." surname="Stepanek" fullname="Robert Stepanek" />
-          <date/>
-        </front>
-      </reference>
-      <reference anchor="draft-ietf-httpapi-deprecation-header"
-        target="https://datatracker.ietf.org/doc/draft-ietf-httpapi-deprecation-header/">
-        <front><title>The Deprecation HTTP Header Field</title>
-          <author initials="S." surname="Dalal" fullname="Sanjay Dalal" />
-          <author initials="E." surname="Wilde" fullname="Erik Wilde" />
-          <date/>
-        </front>
-      </reference>
-      <reference anchor="draft-ietf-regext-rdap-redacted"
-                 target="https://datatracker.ietf.org/doc/draft-ietf-regext-rdap-redacted/">
-        <front><title>Redacted Fields in the Registration Data Access Protocol (RDAP) Response</title>
-          <author fullname="J.G. Gould" />
-          <author fullname="D.S. Smith" />
-          <author fullname="J.K. Kolker" />
-          <author fullname="R.C. Carney" />
-          <date/>
-        </front>
-      </reference>
+      &I-D.ietf-jmap-jscontact;
+      &I-D.ietf-jmap-jscontact-vcard;
+      &I-D.ietf-httpapi-deprecation-header;
+      &I-D.ietf-regext-rdap-redacted;
       <reference anchor='RDAP-PILOT-WG'
         target='https://www.icann.org/en/system/files/files/rdap-pilot-report-25apr19-en.pdf'>
         <front>
@@ -736,7 +709,7 @@
           <author>
             <organization>ICANN RDAP Pilot WG</organization>
           </author>
-          <date year='2019' month='April' />		
+          <date year='2019' month='April' />
         </front>
       </reference>
       <reference anchor='API-DEPRECATION'
