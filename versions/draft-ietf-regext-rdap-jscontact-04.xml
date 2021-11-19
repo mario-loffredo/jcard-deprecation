@@ -127,7 +127,7 @@
         not a direct mapping from the vCard data model and expands semantics where appropriate.</t>
 
       <t>The JSContact specification declares two main object types: &quot;Card&quot;, which
-        represents a single contact "card", and &quot;CardGroup&quot; which represents a
+        represents a single contact &quot;card&quot;, and &quot;CardGroup&quot; which represents a
         collection of Card objects.  For the purpose of this document, only Card objects are
         considered.  To avoid confusion, in the following of this document, the term &quot;JSCard&quot; is used to refer to &quot;JSContact Card&quot;.</t>
 
@@ -137,7 +137,7 @@
         <t>follows an object-oriented rather than array-oriented approach;</t>
         <t>is simple to process;</t>
         <t>requires no extra work in serialization/deserialization from/to a data model;</t>
-        <t>includes no "jagged" arrays;</t>
+        <t>includes no &quot;jagged&quot; arrays;</t>
         <t>prefers maps rather than arrays to implement collections.</t>
       </list></t>
 
@@ -146,8 +146,8 @@
     </section>
 
     <section anchor="using-jscontact" title="Using JSCard objects in RDAP Responses">
-      <t>Entity objects in RDAP responses MAY include a "jscard" property whose value is a JSCard object instead of the "vCardArray" property defined in <xref target="RFC9083"/>.</t>
-      <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard&quot; in the "rdapConformance" array.</t>
+      <t>Entity objects in RDAP responses MAY include a &quot;jscard&quot; property whose value is a JSCard object instead of the &quot;vCardArray&quot; property defined in <xref target="RFC9083"/>.</t>
+      <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard_0&quot; in the &quot;rdapConformance&quot; array.</t>
       <t>The JSCard &quot;uid&quot; property SHOULD contain the same value as the RDAP &quot;handle&quot; property.</t>
       <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  To aid interoperability, RDAP providers are RECOMMENDED to use as map keys the following string values and labels defined in <xref target="RFC5733"/>:
         <list style="symbols">
@@ -223,7 +223,7 @@
    {
       "rdapConformance": [
          "rdap_level_0",
-         "jscard"
+         "jscard_0"
       ],
       "objectClassName" : "entity",
       "handle":"XXXX",
@@ -408,7 +408,7 @@
                 target="API-DEPRECATION"/>.</t>
 
         <t>The procedure consists of four contiguous stages.
-          During the procedure, the presence of "jscard" tag in the rdapConformance array
+          During the procedure, the presence of &quot;jscard_0&quot; tag in the rdapConformance array
           indicates that JSCard is returned instead of jCard.  The date and time format used to notify
           clients about the stages of this procedure is defined in <xref target="RFC3339" />.</t>
 
@@ -635,7 +635,7 @@
       <section anchor="client-rdap-org" title="client.rdap.org">
         <t><list style="none">
     	  <t>Location: https://client.rdap.org/</t>
-    	  <t>Description: This is a web-based "single page" RDAP client. RDAP responses are
+    	  <t>Description: This is a web-based &quot;single page&quot; RDAP client. RDAP responses are
           retrieved from RDAP servers by the browser, and parsed into an HTML representation.
           RDAP responses containing JSCard objects are handled identically to those containing
           jCard objects.</t>
@@ -750,8 +750,8 @@
       </section>
       <section title="Change from 02 to 03">
         <t><list style="numbers">
-          <t>Updated section "Conventions Used in This Document".</t>
-          <t>Updated the contact in "IANA Considerations" section.</t>
+          <t>Updated section &quot;Conventions Used in This Document&quot;.</t>
+          <t>Updated the contact in &quot;IANA Considerations&quot; section.</t>
           <t>Changed the reference draft-loffredo-jmap-jscontact-vcard to draft-ietf-jmap-jscontact-vcard.</t>
           <t>Added reference to RFC8174.</t>
           <t>Other minor edits.</t>
