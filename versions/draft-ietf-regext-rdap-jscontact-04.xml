@@ -127,7 +127,7 @@
         not a direct mapping from the vCard data model and expands semantics where appropriate.</t>
 
       <t>The JSContact specification declares two main object types: &quot;Card&quot;, which
-        represents a single contact &quot;card&quot;, and &quot;CardGroup&quot; which represents a
+        represents a single contact card, and &quot;CardGroup&quot; which represents a
         collection of Card objects.  For the purpose of this document, only Card objects are
         considered.  To avoid confusion, in the following of this document, the term &quot;JSCard&quot; is used to refer to &quot;JSContact Card&quot;.</t>
 
@@ -160,7 +160,7 @@
       </t>
       <t>If present, the localized version of name, organization and postal address MUST be inserted into the &quot;localizations&quot; map.  The following is an elided example of an RDAP entity including a JSCard object that presents the &quot;localizations&quot; map.</t>
 
-<figure anchor="localizations-example"><artwork><![CDATA[
+<figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork><![CDATA[
 ...
 "jscard": {
   "@type" : "Card",
@@ -190,7 +190,7 @@
   },
   "localizations" : {
     "uk" : {
-      "/jscard/addresses/addr" : {
+      "addresses/addr" : {
         "@type" : "Address",
         "street" : [ {
           "@type" : "StreetComponent",
@@ -204,8 +204,8 @@
         "locality" : "Киев",
         "countryCode" : "UA"
       },
-      "/jscard/fullName" : "Вася Пупкин",
-      "jscard/organizations/org" : {
+      "fullName" : "Вася Пупкин",
+      "organizations/org" : {
         "@type" : "Organization",
         "name" : "Моя Компания"
       }
@@ -219,7 +219,7 @@
       <t>Implementers MAY use different mapping schemes to define keys for additional entries of the aforementioned maps or others.  For example, a mapping scheme may consist in using a trivial sequential number (e.g. &quot;url-1&quot;, &quot;url-2&quot;, etc.)</t>
       <t>The following is an example of an RDAP entity including a JSCard object that has been converted from the example in section 5.1 of <xref target="RFC9083"/>.</t>
 
-<figure anchor="jscard-example"><artwork><![CDATA[
+<figure anchor="jscard-example" title="Example of using JSContact in RDAP response"><artwork><![CDATA[
    {
       "rdapConformance": [
          "rdap_level_0",
@@ -678,8 +678,13 @@
    <section anchor="security-considerations" title="Security Considerations">
   	<t>Unlike jCard, the formatted name as well as any other personally identifiable information
       is not required in JSCard.  The only mandatory property, namely &quot;uid&quot;, is not a sensitive information as it happens, instead, for the &quot;fn&quot; property in jCard.  Therefore, redacted properties can be merely excluded without using
-      placeholder values. This means that, with reference to what is described in <xref target="I-D.ietf-regext-rdap-redacted"/>, only the &quot;Removal&quot; method can be used for redacting JSContact values whereas the &quot;Empty Value&quot; is also used for redacting jCard values.</t>
+      placeholder values. This means that, with reference to what is described in <xref target="I-D.ietf-regext-rdap-redacted"/>, only the &quot;Removal&quot; method can be used for redacting JSContact properties whereas the &quot;Empty Value&quot; is also used for redacting jCard.</t>
    </section>
+
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>The authors would like to acknowledge the following individuals for their contributions to this document: Jasdip Singh and Francesco Donini.</t>
+    </section>
+
 
   </middle>
 
@@ -781,6 +786,18 @@
         <t><list style="numbers">
           <t>Replaced references to obsolete RFC7482 and RFC7483 with RFC9082 and RFC9083.</t>
           <t>Updated <xref target="using-jscontact"/> and <xref target="jscard-example"/>.</t>
+        </list></t>
+      </section>
+      <section title="Change from 03 to 04">
+        <t><list style="numbers">
+          <t>Changed the references to Internet Drafts.</t>
+          <t>Added an example showing how localizations are treated in JSContact.</t>
+          <t>Changed the position of section &quot;Goals&quot; in <xref target="jcard-transition-procedure"/>.</t>
+          <t>Added three more implementations to <xref target="impl-status"/>.</t>
+          <t>Changed the rdapConformance tag &quot;jscard&quot; to &quot;jscard_0&quot;</t>
+          <t>Added clarifications addressing the feedback provided by Jasdip Singh about version -03.</t>
+          <t>Added <xref target="Acknowledgements"/>.</t>
+          <t>Other minor edits.</t>
         </list></t>
       </section>
     </section>
