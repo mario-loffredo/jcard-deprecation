@@ -607,7 +607,7 @@
 </ul>
 
 <p> </p>
-<p id="rfc.section.3.p.5">If present, the localized version of name, organization and postal address MUST be inserted into the "localizations" map.  The following is an elided example of an RDAP entity including a JSCard object that presents the "localizations" map.</p>
+<p id="rfc.section.3.p.5">If present, the localized version of name, organization and postal address MUST be inserted into the "localizations" map.  The following is an elided example of an RDAP entity including a JSCard object that presents the "localizations" map (See PDF for non-ASCII character string).</p>
 <div id="rfc.figure.1"></div>
 <div id="localizations-example"></div>
 <pre>
@@ -682,15 +682,37 @@
         "uid": "XXXX",
         "fullName": "Joe User" ,
         "name": [
-          {"@type": "NameComponent", "type": "surname", "value": "User"},
-          {"@type": "NameComponent", "type": "personal", "value": "Joe"},
-          {"@type": "NameComponent", "type": "suffix", "value": "ing. jr"},
-          {"@type": "NameComponent", "type": "suffix", "value": "M.Sc."}
+          {
+            "@type": "NameComponent",
+            "type": "surname",
+            "value": "User"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "personal",
+            "value": "Joe"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "suffix",
+            "value": "ing. jr"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "suffix",
+            "value": "M.Sc."
+          }
         ],
         "kind": "individual",
         "preferredContactLanguages": {
-          "fr": { "@type": "ContactLanguage", "pref": 1 },
-          "en": { "@type": "ContactLanguage", "pref": 2 }
+          "fr": {
+            "@type": "ContactLanguage",
+            "pref": 1
+          },
+          "en": {
+            "@type": "ContactLanguage",
+            "pref": 2
+          }
         },
         "organizations": {
           "org": {
@@ -711,10 +733,20 @@
         "addresses": {
           "addr": {
             "@type": "Address",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "street": [
-                       {"@type": "StreetComponent", "type": "name", "value": "4321 Rue Somewhere"},
-                       {"@type": "StreetComponent", "type": "extension", "value": "Suite 1234"}
+                       {
+                         "@type": "StreetComponent",
+                         "type": "name",
+                         "value": "4321 Rue Somewhere"
+                       },
+                       {
+                         "@type": "StreetComponent",
+                         "type": "extension",
+                         "value": "Suite 1234"
+                       }
                       ],
             "locality": "Quebec",
             "region": "QC",
@@ -725,14 +757,18 @@
           },
           "home": {
             "@type": "Address",
-            "contexts": { "private": true },
+            "contexts": {
+              "private": true
+            },
             "fullAddress": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
           }
         },
         "phones": {
           "voice" : {
             "@type": "Phone",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "features": {
                "voice": true,
                "cell": true,
@@ -746,21 +782,27 @@
         "emails": {
           "email": {
             "@type": "EmailAddress",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "email": "joe.user@example.com"
           }
         },
         "online": {
           "key": {
             "@type" : "Resource",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "type": "uri",
             "label": "key",
             "resource": "http://www.example.com/joe.user/joe.asc"
           },
           "url": {
             "@type" : "Resource",
-            "contexts": { "private": true },
+            "contexts": {
+              "private": true
+            },
             "type": "uri",
             "label": "url",
             "resource": "http://example.org"

@@ -158,9 +158,9 @@
           <t>&quot;fax&quot; in the &quot;phones&quot; map for the &lt;contact:fax&gt; element.</t>
         </list>
       </t>
-      <t>If present, the localized version of name, organization and postal address MUST be inserted into the &quot;localizations&quot; map.  The following is an elided example of an RDAP entity including a JSCard object that presents the &quot;localizations&quot; map.</t>
+      <t>If present, the localized version of name, organization and postal address MUST be inserted into the &quot;localizations&quot; map.  The following is an elided example of an RDAP entity including a JSCard object that presents the &quot;localizations&quot; map (See PDF for non-ASCII character string).</t>
 
-<figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork><![CDATA[
+<figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork xml:space="preserve">
 ...
 "jscard": {
   "@type" : "Card",
@@ -213,13 +213,13 @@
   }
 }
 ...
-]]></artwork></figure>
+</artwork></figure>
 
 
       <t>Implementers MAY use different mapping schemes to define keys for additional entries of the aforementioned maps or others.  For example, a mapping scheme may consist in using a trivial sequential number (e.g. &quot;url-1&quot;, &quot;url-2&quot;, etc.)</t>
       <t>The following is an example of an RDAP entity including a JSCard object that has been converted from the example in section 5.1 of <xref target="RFC9083"/>.</t>
 
-<figure anchor="jscard-example" title="Example of using JSContact in RDAP response"><artwork><![CDATA[
+<figure anchor="jscard-example" title="Example of using JSContact in RDAP response"><artwork xml:space="preserve">
    {
       "rdapConformance": [
          "rdap_level_0",
@@ -232,15 +232,37 @@
         "uid": "XXXX",
         "fullName": "Joe User" ,
         "name": [
-          {"@type": "NameComponent", "type": "surname", "value": "User"},
-          {"@type": "NameComponent", "type": "personal", "value": "Joe"},
-          {"@type": "NameComponent", "type": "suffix", "value": "ing. jr"},
-          {"@type": "NameComponent", "type": "suffix", "value": "M.Sc."}
+          {
+            "@type": "NameComponent",
+            "type": "surname",
+            "value": "User"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "personal",
+            "value": "Joe"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "suffix",
+            "value": "ing. jr"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "suffix",
+            "value": "M.Sc."
+          }
         ],
         "kind": "individual",
         "preferredContactLanguages": {
-          "fr": { "@type": "ContactLanguage", "pref": 1 },
-          "en": { "@type": "ContactLanguage", "pref": 2 }
+          "fr": {
+            "@type": "ContactLanguage",
+            "pref": 1
+          },
+          "en": {
+            "@type": "ContactLanguage",
+            "pref": 2
+          }
         },
         "organizations": {
           "org": {
@@ -261,10 +283,20 @@
         "addresses": {
           "addr": {
             "@type": "Address",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "street": [
-                       {"@type": "StreetComponent", "type": "name", "value": "4321 Rue Somewhere"},
-                       {"@type": "StreetComponent", "type": "extension", "value": "Suite 1234"}
+                       {
+                         "@type": "StreetComponent",
+                         "type": "name",
+                         "value": "4321 Rue Somewhere"
+                       },
+                       {
+                         "@type": "StreetComponent",
+                         "type": "extension",
+                         "value": "Suite 1234"
+                       }
                       ],
             "locality": "Quebec",
             "region": "QC",
@@ -275,14 +307,18 @@
           },
           "home": {
             "@type": "Address",
-            "contexts": { "private": true },
+            "contexts": {
+              "private": true
+            },
             "fullAddress": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
           }
         },
         "phones": {
           "voice" : {
             "@type": "Phone",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "features": {
                "voice": true,
                "cell": true,
@@ -296,21 +332,27 @@
         "emails": {
           "email": {
             "@type": "EmailAddress",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "email": "joe.user@example.com"
           }
         },
         "online": {
           "key": {
             "@type" : "Resource",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "type": "uri",
             "label": "key",
             "resource": "http://www.example.com/joe.user/joe.asc"
           },
           "url": {
             "@type" : "Resource",
-            "contexts": { "private": true },
+            "contexts": {
+              "private": true
+            },
             "type": "uri",
             "label": "url",
             "resource": "http://example.org"
@@ -353,7 +395,7 @@
         }
       ]
    }
-]]></artwork></figure>
+</artwork></figure>
 
     <section anchor="rdap-query-parameters-specification" title="RDAP Query Parameters">
 
@@ -456,7 +498,7 @@
               </list></t>
 
              <figure anchor="stage2-example1" title="jCard sunset - JSCard not requested"><artwork xml:space="preserve">
-<![CDATA["notices": [
+"notices": [
   {
     "title": "jCard sunset end",
     "description": ["2022-07-01T00:00:00Z"],
@@ -475,9 +517,9 @@
     ]
   }
 ]
-]]></artwork></figure>
+</artwork></figure>
              <figure anchor="stage2-example2" title="jCard sunset - JSCard requested"><artwork xml:space="preserve">
-<![CDATA["notices": [
+"notices": [
   {
     "title": "jCard sunset end",
     "description": ["2022-07-01T00:00:00Z"],
@@ -491,7 +533,7 @@
     ]
   }
 ]
-]]></artwork></figure>
+</artwork></figure>
           </section>
 
           <section title="Stage 3: jCard deprecation">
@@ -514,7 +556,7 @@
             </list></t>
 
             <figure anchor="stage3-example1" title="jCard deprecation - jCard not requested"><artwork xml:space="preserve">
-<![CDATA["notices": [
+"notices": [
   {
     "title": "jCard deprecation end",
     "description": ["2022-12-31T23:59:59Z"],
@@ -534,9 +576,9 @@
     ]
   }
 ]
-]]></artwork></figure>
+</artwork></figure>
           <figure anchor="stage3-example2" title="jCard deprecation - jCard requested"><artwork xml:space="preserve">
-<![CDATA["notices": [
+"notices": [
   {
     "title": "jCard deprecation end",
     "description": ["2022-12-31T23:59:59Z"],
@@ -556,7 +598,7 @@
     ]
   }
 ]
-]]></artwork></figure>
+</artwork></figure>
         </section>
 
         <section title="Stage 4: jCard deprecated">

@@ -65,42 +65,42 @@ Table of Contents
      1.2.  Conventions Used in This Document . . . . . . . . . . . .   3
    2.  JSContact . . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Using JSCard objects in RDAP Responses  . . . . . . . . . . .   4
-     3.1.  RDAP Query Parameters . . . . . . . . . . . . . . . . . .   9
-   4.  Transition Considerations . . . . . . . . . . . . . . . . . .   9
-     4.1.  RDAP Features Supporting a Transition Process . . . . . .   9
-       4.1.1.  Notices and Link Relationships  . . . . . . . . . . .   9
-       4.1.2.  rdapConformance Property  . . . . . . . . . . . . . .  10
-       4.1.3.  Query Parameters  . . . . . . . . . . . . . . . . . .  10
-     4.2.  Transition Procedure  . . . . . . . . . . . . . . . . . .  10
-       4.2.1.  Goals . . . . . . . . . . . . . . . . . . . . . . . .  10
-       4.2.2.  Transition Stages . . . . . . . . . . . . . . . . . .  11
-         4.2.2.1.  Stage 1: only jCard provided  . . . . . . . . . .  11
-         4.2.2.2.  Stage 2: jCard sunset . . . . . . . . . . . . . .  11
-         4.2.2.3.  Stage 3: jCard deprecation  . . . . . . . . . . .  12
-         4.2.2.4.  Stage 4: jCard deprecated . . . . . . . . . . . .  14
-         4.2.2.5.  Length  . . . . . . . . . . . . . . . . . . . . .  14
-   5.  Implementation Status . . . . . . . . . . . . . . . . . . . .  14
-     5.1.  IIT-CNR/Registro.it RDAP Server . . . . . . . . . . . . .  15
-     5.2.  IIT-CNR/Registro.it RDAP Client . . . . . . . . . . . . .  15
-     5.3.  client.rdap.org . . . . . . . . . . . . . . . . . . . . .  16
-     5.4.  CentralNic Registry . . . . . . . . . . . . . . . . . . .  16
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
-   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  17
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  18
-   Appendix A.  Change Log . . . . . . . . . . . . . . . . . . . . .  19
-     A.1.  Change from 00 to 01  . . . . . . . . . . . . . . . . . .  19
-     A.2.  Change from 01 to 02  . . . . . . . . . . . . . . . . . .  20
-     A.3.  Change from 02 to 03  . . . . . . . . . . . . . . . . . .  20
-     A.4.  Change from 03 to 04  . . . . . . . . . . . . . . . . . .  20
-     A.5.  Initial WG version  . . . . . . . . . . . . . . . . . . .  20
-     A.6.  Change from 00 to 01  . . . . . . . . . . . . . . . . . .  20
-     A.7.  Change from 01 to 02  . . . . . . . . . . . . . . . . . .  20
-     A.8.  Change from 02 to 03  . . . . . . . . . . . . . . . . . .  20
-     A.9.  Change from 03 to 04  . . . . . . . . . . . . . . . . . .  20
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
+     3.1.  RDAP Query Parameters . . . . . . . . . . . . . . . . . .  10
+   4.  Transition Considerations . . . . . . . . . . . . . . . . . .  10
+     4.1.  RDAP Features Supporting a Transition Process . . . . . .  10
+       4.1.1.  Notices and Link Relationships  . . . . . . . . . . .  10
+       4.1.2.  rdapConformance Property  . . . . . . . . . . . . . .  11
+       4.1.3.  Query Parameters  . . . . . . . . . . . . . . . . . .  11
+     4.2.  Transition Procedure  . . . . . . . . . . . . . . . . . .  11
+       4.2.1.  Goals . . . . . . . . . . . . . . . . . . . . . . . .  11
+       4.2.2.  Transition Stages . . . . . . . . . . . . . . . . . .  12
+         4.2.2.1.  Stage 1: only jCard provided  . . . . . . . . . .  12
+         4.2.2.2.  Stage 2: jCard sunset . . . . . . . . . . . . . .  12
+         4.2.2.3.  Stage 3: jCard deprecation  . . . . . . . . . . .  13
+         4.2.2.4.  Stage 4: jCard deprecated . . . . . . . . . . . .  15
+         4.2.2.5.  Length  . . . . . . . . . . . . . . . . . . . . .  15
+   5.  Implementation Status . . . . . . . . . . . . . . . . . . . .  15
+     5.1.  IIT-CNR/Registro.it RDAP Server . . . . . . . . . . . . .  16
+     5.2.  IIT-CNR/Registro.it RDAP Client . . . . . . . . . . . . .  16
+     5.3.  client.rdap.org . . . . . . . . . . . . . . . . . . . . .  17
+     5.4.  CentralNic Registry . . . . . . . . . . . . . . . . . . .  17
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  18
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  18
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  19
+   Appendix A.  Change Log . . . . . . . . . . . . . . . . . . . . .  20
+     A.1.  Change from 00 to 01  . . . . . . . . . . . . . . . . . .  20
+     A.2.  Change from 01 to 02  . . . . . . . . . . . . . . . . . .  21
+     A.3.  Change from 02 to 03  . . . . . . . . . . . . . . . . . .  21
+     A.4.  Change from 03 to 04  . . . . . . . . . . . . . . . . . .  21
+     A.5.  Initial WG version  . . . . . . . . . . . . . . . . . . .  21
+     A.6.  Change from 00 to 01  . . . . . . . . . . . . . . . . . .  21
+     A.7.  Change from 01 to 02  . . . . . . . . . . . . . . . . . .  21
+     A.8.  Change from 02 to 03  . . . . . . . . . . . . . . . . . .  21
+     A.9.  Change from 03 to 04  . . . . . . . . . . . . . . . . . .  21
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
 
 
 
@@ -235,7 +235,8 @@ Internet-Draft           Using JSContact in RDAP           November 2021
    If present, the localized version of name, organization and postal
    address MUST be inserted into the "localizations" map.  The following
    is an elided example of an RDAP entity including a JSCard object that
-   presents the "localizations" map.
+   presents the "localizations" map (See PDF for non-ASCII character
+   string).
 
 ...
 "jscard": {
@@ -273,7 +274,6 @@ Internet-Draft           Using JSContact in RDAP           November 2021
           "type" : "name",
           "value" : "1, &#1059;&#1083;&#1080;&#1094;&#1072;"
         }, {
-          "@type" : "StreetComponent",
 
 
 
@@ -282,6 +282,7 @@ Loffredo & Brown          Expires May 30, 2022                  [Page 5]
 Internet-Draft           Using JSContact in RDAP           November 2021
 
 
+          "@type" : "StreetComponent",
           "type" : "postOfficeBox",
           "value" : "01001"
         } ],
@@ -321,15 +322,14 @@ Internet-Draft           Using JSContact in RDAP           November 2021
         "uid": "XXXX",
         "fullName": "Joe User" ,
         "name": [
-          {"@type": "NameComponent", "type": "surname", "value": "User"},
-          {"@type": "NameComponent", "type": "personal", "value": "Joe"},
-          {"@type": "NameComponent", "type": "suffix", "value": "ing. jr"},
-          {"@type": "NameComponent", "type": "suffix", "value": "M.Sc."}
-        ],
-        "kind": "individual",
-        "preferredContactLanguages": {
-          "fr": { "@type": "ContactLanguage", "pref": 1 },
-          "en": { "@type": "ContactLanguage", "pref": 2 }
+          {
+            "@type": "NameComponent",
+            "type": "surname",
+            "value": "User"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "personal",
 
 
 
@@ -338,6 +338,29 @@ Loffredo & Brown          Expires May 30, 2022                  [Page 6]
 Internet-Draft           Using JSContact in RDAP           November 2021
 
 
+            "value": "Joe"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "suffix",
+            "value": "ing. jr"
+          },
+          {
+            "@type": "NameComponent",
+            "type": "suffix",
+            "value": "M.Sc."
+          }
+        ],
+        "kind": "individual",
+        "preferredContactLanguages": {
+          "fr": {
+            "@type": "ContactLanguage",
+            "pref": 1
+          },
+          "en": {
+            "@type": "ContactLanguage",
+            "pref": 2
+          }
         },
         "organizations": {
           "org": {
@@ -358,10 +381,28 @@ Internet-Draft           Using JSContact in RDAP           November 2021
         "addresses": {
           "addr": {
             "@type": "Address",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "street": [
-                       {"@type": "StreetComponent", "type": "name", "value": "4321 Rue Somewhere"},
-                       {"@type": "StreetComponent", "type": "extension", "value": "Suite 1234"}
+                       {
+
+
+
+Loffredo & Brown          Expires May 30, 2022                  [Page 7]
+
+Internet-Draft           Using JSContact in RDAP           November 2021
+
+
+                         "@type": "StreetComponent",
+                         "type": "name",
+                         "value": "4321 Rue Somewhere"
+                       },
+                       {
+                         "@type": "StreetComponent",
+                         "type": "extension",
+                         "value": "Suite 1234"
+                       }
                       ],
             "locality": "Quebec",
             "region": "QC",
@@ -372,28 +413,24 @@ Internet-Draft           Using JSContact in RDAP           November 2021
           },
           "home": {
             "@type": "Address",
-            "contexts": { "private": true },
+            "contexts": {
+              "private": true
+            },
             "fullAddress": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
           }
         },
         "phones": {
           "voice" : {
             "@type": "Phone",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "features": {
                "voice": true,
                "cell": true,
                "video": true,
                "text": true
             },
-
-
-
-Loffredo & Brown          Expires May 30, 2022                  [Page 7]
-
-Internet-Draft           Using JSContact in RDAP           November 2021
-
-
             "pref": 1,
             "phone": "tel:+1-555-555-1234;ext=102"
           }
@@ -401,21 +438,35 @@ Internet-Draft           Using JSContact in RDAP           November 2021
         "emails": {
           "email": {
             "@type": "EmailAddress",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "email": "joe.user@example.com"
+
+
+
+Loffredo & Brown          Expires May 30, 2022                  [Page 8]
+
+Internet-Draft           Using JSContact in RDAP           November 2021
+
+
           }
         },
         "online": {
           "key": {
             "@type" : "Resource",
-            "contexts": { "work": true },
+            "contexts": {
+              "work": true
+            },
             "type": "uri",
             "label": "key",
             "resource": "http://www.example.com/joe.user/joe.asc"
           },
           "url": {
             "@type" : "Resource",
-            "contexts": { "private": true },
+            "contexts": {
+              "private": true
+            },
             "type": "uri",
             "label": "url",
             "resource": "http://example.org"
@@ -442,19 +493,19 @@ Internet-Draft           Using JSContact in RDAP           November 2021
           "value":"http://example.com/entity/XXXX",
           "rel":"self",
           "href":"http://example.com/entity/XXXX",
-
-
-
-Loffredo & Brown          Expires May 30, 2022                  [Page 8]
-
-Internet-Draft           Using JSContact in RDAP           November 2021
-
-
           "type" : "application/rdap+json"
         }
       ],
       "events":[
         {
+
+
+
+Loffredo & Brown          Expires May 30, 2022                  [Page 9]
+
+Internet-Draft           Using JSContact in RDAP           November 2021
+
+
           "eventAction":"registration",
           "eventDate":"1990-12-31T23:59:59Z"
         }
@@ -497,20 +548,19 @@ Internet-Draft           Using JSContact in RDAP           November 2021
    link objects, which can be used to provide clients with references
    and documentation.  These link objects may have a "rel" property
    which defines the relationship type, as described in [RFC8288],
-
-
-
-
-Loffredo & Brown          Expires May 30, 2022                  [Page 9]
-
-Internet-Draft           Using JSContact in RDAP           November 2021
-
-
    Section 4.  The transition process outlined in this document uses two
    types of link relation:
 
    o  "deprecation", as described in
       [I-D.ietf-httpapi-deprecation-header];
+
+
+
+
+Loffredo & Brown          Expires May 30, 2022                 [Page 10]
+
+Internet-Draft           Using JSContact in RDAP           November 2021
+
 
    o  "alternate", as described in [RFC8288].
 
@@ -553,19 +603,20 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
    o  clients would be informed about the transition timeline;
 
-
-
-
-
-Loffredo & Brown          Expires May 30, 2022                 [Page 10]
-
-Internet-Draft           Using JSContact in RDAP           November 2021
-
-
    o  the backward compatibility would be guaranteed throughout the
       transition;
 
    o  servers and clients could execute their transitions independently.
+
+
+
+
+
+
+Loffredo & Brown          Expires May 30, 2022                 [Page 11]
+
+Internet-Draft           Using JSContact in RDAP           November 2021
+
 
 4.2.2.  Transition Stages
 
@@ -613,7 +664,12 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 11]
+
+
+
+
+
+Loffredo & Brown          Expires May 30, 2022                 [Page 12]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -669,7 +725,7 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 12]
+Loffredo & Brown          Expires May 30, 2022                 [Page 13]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -725,7 +781,7 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 13]
+Loffredo & Brown          Expires May 30, 2022                 [Page 14]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -781,7 +837,7 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 14]
+Loffredo & Brown          Expires May 30, 2022                 [Page 15]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -837,7 +893,7 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 15]
+Loffredo & Brown          Expires May 30, 2022                 [Page 16]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -893,7 +949,7 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 16]
+Loffredo & Brown          Expires May 30, 2022                 [Page 17]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -949,7 +1005,7 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 17]
+Loffredo & Brown          Expires May 30, 2022                 [Page 18]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -1005,7 +1061,7 @@ Internet-Draft           Using JSContact in RDAP           November 2021
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 18]
+Loffredo & Brown          Expires May 30, 2022                 [Page 19]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -1061,7 +1117,7 @@ A.1.  Change from 00 to 01
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 19]
+Loffredo & Brown          Expires May 30, 2022                 [Page 20]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -1117,7 +1173,7 @@ A.9.  Change from 03 to 04
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 20]
+Loffredo & Brown          Expires May 30, 2022                 [Page 21]
 
 Internet-Draft           Using JSContact in RDAP           November 2021
 
@@ -1173,4 +1229,4 @@ Authors' Addresses
 
 
 
-Loffredo & Brown          Expires May 30, 2022                 [Page 21]
+Loffredo & Brown          Expires May 30, 2022                 [Page 22]
