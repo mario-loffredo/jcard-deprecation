@@ -493,10 +493,10 @@
               <t><list style="symbols">
                 <t>&quot;deprecation&quot;: a link to a URI-identified resource documenting the jCard
                   deprecation;</t>
-                <t>&quot;alternate&quot;: if JSCard is not requested, a link to an alternate results view identified by the
+                <t>&quot;alternate&quot;: if JSCard is not requested, a link to an alternate result view identified by the
                    by the current query string plus the parameter &quot;jscard&quot;
                   set to 1/true/yes (<xref target="stage2-example1" />); otherwise, only the
-                  &quot;deprecation&quot; link is provided (<xref target="stage2-example2" />).</t>
+                  &quot;deprecation&quot; link can be provided (<xref target="stage2-example2" />).</t>
               </list></t>
 
              <figure anchor="stage2-example1" title="jCard sunset - JSCard not requested"><artwork xml:space="preserve">
@@ -550,9 +550,9 @@
             <t><list style="symbols">
               <t>&quot;deprecation&quot;: a link to a URI-identified resource documenting the jCard
                 deprecation;</t>
-              <t>&quot;alternate&quot;: if jCard is not requested, a link to an alternate results view identified by the current query string plus the parameter &quot;jcard&quot;
+              <t>&quot;alternate&quot;: if jCard is not requested, a link to an alternate result view identified by the current query string plus the parameter &quot;jcard&quot;
                 set to 1/true/yes (<xref target="stage3-example1" />); otherwise, a link to the
-                JSCard version of the same resource as identified by the current query string
+                the result view identified by the current query string
                 without the parameter &quot;jcard&quot; (<xref target="stage3-example2" />).</t>
             </list></t>
 
@@ -618,7 +618,6 @@
             server log to figure out whether declared times need to be changed to meet client
             requirements.</t>
         </section>
-
 
       </section>
     </section>
