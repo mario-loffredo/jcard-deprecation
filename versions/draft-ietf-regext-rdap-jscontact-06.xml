@@ -92,22 +92,22 @@
   <middle>
     <section title="Introduction">
       <t>This document specifies an extension to the Registration Data Access Protocol (RDAP)
-      that allows RDAP servers to use JSContact (<xref target="I-D.ietf-jmap-jscontact"/>)
+      that allows RDAP servers to use JSContact <xref target="I-D.ietf-jmap-jscontact"/>
       to represent the contact information associated with entities in RDAP responses, instead
-      of jCard (<xref target="RFC7095"/>).  It also describes the process by which an RDAP server
+      of jCard <xref target="RFC7095"/>.  It also describes the process by which an RDAP server
       can transition from jCard to JSContact.  RDAP query and response extensions are defined to
       facilitate the transition process.</t>
 
       <section anchor="Rationale" title="Rationale">
-        <t>According to the feedback from RDAP Pilot Working Group (<xref target="RDAP-PILOT-WG"/>,
+        <t>According to the feedback from RDAP Pilot Working Group <xref target="RDAP-PILOT-WG"/>,
         a group of RDAP server implementers representing registries and registrars of generic
-        TLDs), the most commonly raised implementation concern, for both servers and client
-        implementers, related to the use of jCard (<xref target="RFC7095"/>) to represent the
+        TLDs, the most commonly raised implementation concern, for both servers and client
+        implementers, related to the use of jCard <xref target="RFC7095"/> to represent the
         contact information associated with entities.  Working Group members reported jCard to be
         unintuitive, complicated to implement for both clients and servers, and incompatible
         with best practices for RESTful APIs.</t>
 
-        <t>JSContact (<xref target="I-D.ietf-jmap-jscontact"/>) provides a simpler and more
+        <t>JSContact <xref target="I-D.ietf-jmap-jscontact"/> provides a simpler and more
         efficient representation for contact information with regard to time and effort saved in processing it.  In addition, similarly to jCard, it provides a means to
         represent internationalised and unstructured contact information.  Support for internationalised contact information has been
         recognised being necessary to facilitate the future internationalisation of registration
@@ -122,7 +122,7 @@
     <section anchor="JSContact" title="JSContact">
       <t>The JSContact specification defines a data model and JSON representation of contact
         information that can be used for data storage and exchange in address book or directory
-        applications.  It aims to be an alternative to the vCard data format (<xref target="RFC6350"/>)
+        applications.  It aims to be an alternative to the vCard data format <xref target="RFC6350"/>
         and to be unambiguous, extendable and simple to process.  In contrast with jCard, it is
         not a direct mapping from the vCard data model and expands semantics where appropriate.</t>
 
@@ -423,8 +423,7 @@
       <section anchor="rdap-features-supporting-transition" title="RDAP Features Supporting a Transition Process">
         <section title="Notices and Link Relationships">
           <t>RDAP allows servers to communicate service information to clients through notices.
-          An RDAP response may contain one or more notice objects (<xref target="RFC9083"/>, Section
-          4.3), each of which may include a set of link objects, which can be used to provide clients
+          According to Section 4.3 of <xref target="RFC9083"/>, an RDAP response may contain one or more notice objects. Each notice may include a set of link objects, which can be used to provide clients
           with references and documentation.  These link objects may have a "rel" property which defines
           the relationship type, as described in <xref target="RFC8288"/>, Section 4.  The transition
           process outlined in this document uses two types of link relation:</t>
@@ -474,17 +473,19 @@
 
         <section anchor="jcard-deprecation-procedure-stages" title="Transition Stages">
 
-            <section title="Stage 1: only jCard provided">
-              <t>This stage corresponds to providing jCard as default contact card (<xref
-                target="RFC9083" />).  The RDAP server is not able to provide an alternate contact
+            <section anchor="stage1" title="Stage 1: only jCard provided">
+              <t>This stage corresponds to providing jCard as default contact card <xref
+                target="RFC9083" />.  The RDAP server is not able to provide an alternate contact
                 card.  The rdapConformance array MUST NOT contain the &quot;jscard_0&quot; tag.</t>
             </section>
 
-            <section title="Stage 2: jCard sunset">
+            <section anchor="stage2" title="Stage 2: jCard sunset">
               <t>During this stage, the server uses jCard by default, but the RDAP server will
                 return JSCard if the client sets the query parameter &quot;jscard&quot; to 1/true/yes.
                 The rdapConformance array MUST contain the &quot;jscard_0&quot; tag if JSCard is
-                requested.</t>
+                returned.</t>
+
+              <t>From this stage on, the RDAP server MUST include the &quot;jscard_0&quot; tag in the rdapConformance array of the help response to signal clients that JSCard can be returned instead of jCard.</t>
 
               <t>The RDAP server SHOULD include a notice titled &quot;jCard sunset end&quot;.  Such
                 a notice includes a description reporting the jCard sunset end date and time and two
@@ -538,10 +539,10 @@
 </artwork></figure>
           </section>
 
-          <section title="Stage 3: jCard deprecation">
+          <section anchor="stage3" title="Stage 3: jCard deprecation">
             <t>This stage corresponds to the provisioning of JSCard by default, but
               the RDAP will return jCard if the client sets the query parameter &quot;jcard&quot; to 1/true/yes.  The rdapConformance array contains the &quot;jscard_0&quot; tag unless
-              jCard is requested.  The &quot;jscard&quot; query parameter is ignored.</t>
+              jCard is returned.  The &quot;jscard&quot; query parameter MUST be ignored.</t>
 
             <t>The RDAP server SHOULD return a notice titled &quot;jCard deprecation end&quot;.
               Such a notice includes a description reporting the jCard deprecation end
@@ -602,12 +603,12 @@
 </artwork></figure>
         </section>
 
-        <section title="Stage 4: jCard deprecated">
+        <section anchor="stage4" title="Stage 4: jCard deprecated">
           <t>This stage corresponds to providing JSCard as default contact card.  The RDAP
             server is not able to provide an alternate contact card.  The rdapConformance
             array always contains &quot;jscard_0&quot; tag.  The RDAP server doesn't include any
             notice about the jCard deprecation process.  Both &quot;jscard&quot; and &quot;jcard&quot; query
-            parameters are ignored.</t>
+            parameters MUST be ignored.</t>
         </section>
 
         <section anchor="jcard-deprecation-procedure-length" title="Length">
@@ -712,7 +713,7 @@
        <t>Published specification: This document.</t>
        <t>Contact: IETF &lt;iesg@ietf.org&gt;</t>
        <t>Intended usage: This extension represents a contact card provided in an RDAP response
-         according to the JSContact specification (<xref target="I-D.ietf-jmap-jscontact"/>).</t>
+         according to the JSContact specification <xref target="I-D.ietf-jmap-jscontact"/>.</t>
      </list></t>
 
    </section>
@@ -845,6 +846,11 @@
       <section title="Change from 04 to 05">
         <t><list style="numbers">
           <t>Updated <xref target="jscard-example"/> to make it compliant with draft-ietf-jmap-jscontact-09.</t>
+        </list></t>
+      </section>
+      <section title="Change from 05 to 06">
+        <t><list style="numbers">
+          <t>Reviewed the notices presented in <xref target="stage2"/> and <xref target="stage3"/>.</t>
         </list></t>
       </section>
     </section>
