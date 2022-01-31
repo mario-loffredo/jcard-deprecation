@@ -552,7 +552,7 @@
               <t>&quot;deprecation&quot;: a link to a URI-identified resource documenting the jCard
                 deprecation;</t>
               <t>&quot;alternate&quot;: if jCard is not requested, a link to an alternate result view identified by the current query string plus the parameter &quot;jcard&quot;
-                set to 1/true/yes (<xref target="stage3-example1" />); otherwise, a link to the
+                set to 1/true/yes (<xref target="stage3-example1" />); otherwise, a link to
                 the result view identified by the current query string
                 without the parameter &quot;jcard&quot; (<xref target="stage3-example2" />).</t>
             </list></t>
