@@ -24,292 +24,243 @@ Such a feeling is not limited to RDAP implementers but is also shared by most of
 <a name="converting-jcard-into-jscard"></a>
 ## 2. Converting jCard into JSCard
 
-While the jCard element in the RDAP response is named "vcardArray", its JSCard counterpart could be called "jscard". Here in the following three examples of mapping between &quot;vcardArray&quot; and &quot;jscard&quot; according to the policy defined in [JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/draft-loffredo-jmap-jscontact-vcard/) are shown.
+While the jCard element in the RDAP response is named "vcardArray", its JSCard counterpart could be called "jscard". Here in the following examples of mapping between &quot;vcardArray&quot; and &quot;jscard&quot; according to the policy defined in [JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/draft-loffredo-jmap-jscontact-vcard/) are shown.
 
-### Use case taken from RFC7483
-
-```
- ...      
- "vcardArray":[
-   "vcard",
-   [
-     ["version", {}, "text", "4.0"],
-     ["fn", {}, "text", "Joe User"],
-     ["n", {}, "text",
-       ["User", "Joe", "", "", ["ing. jr", "M.Sc."]]
-     ],
-     ["kind", {}, "text", "individual"],
-     ["lang", {
-       "pref":"1"
-     }, "language-tag", "fr"],
-     ["lang", {
-       "pref":"2"
-     }, "language-tag", "en"],
-     ["org", {
-       "type":"work"
-     }, "text", "Example"],
-     ["title", {}, "text", "Research Scientist"],
-     ["role", {}, "text", "Project Lead"],
-     ["adr",
-       { "type":"work" },
-       "text",
-       [
-         "",
-         "Suite 1234",
-         "4321 Rue Somewhere",
-         "Quebec",
-         "QC",
-         "G1V 2M2",
-         "Canada"
-       ]
-     ],
-     ["adr",
-       {
-         "type":"home",
-         "label":"123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
-       },
-       "text",
-       [
-         "", "", "", "", "", "", ""
-       ]
-     ],
-     ["tel",
-       {
-         "type":["work", "voice"],
-         "pref":"1"
-       },
-       "uri",
-       "tel:+1-555-555-1234;ext=102"
-     ],
-     ["tel",
-       { "type":["work", "cell", "voice", "video", "text"] },
-       "uri",
-       "tel:+1-555-555-4321"
-     ],
-     ["email",
-       { "type":"work" },
-       "text",
-       "joe.user@example.com"
-     ],
-     ["geo", {
-       "type":"work"}, 
-       "uri", 
-       "geo:46.772673,-71.282945"
-     ],
-     ["key",
-       { "type":"work" },
-       "uri",
-       "http://www.example.com/joe.user/joe.asc"
-     ],
-     ["tz", 
-       {},
-       "utc-offset", 
-       "-05:00"
-     ],
-     ["url", 
-       { "type":"home" },
-       "uri", 
-       "http://example.org"
-     ]
-   ]
- ],
- ...      
+### Example of an entity lookup response
 
 ```
-
-```
-      ...      
-      "jscard":{
-        "uid": "XXXX",
-        "fullName": { "value": "Joe User" },
-        "name": [
-          { "value":"Joe", "type": "personal" },
-          { "value":"User", "type": "surname" },
-          { "value":"ing. jr", "type": "suffix" },
-          { "value":"M.Sc.", "type": "suffix" }
+{
+  "rdapConformance": [
+     "rdap_level_0",
+     "jscard_0"
+  ],
+  "objectClassName" : "entity",
+  "handle":"XXXX",
+  "jscard":{
+    "@type": "Card",
+    "uid": "XXXX",
+    "fullName": "Joe User" ,
+    "name": {
+      "components": [
+        {
+          "@type": "NameComponent",
+          "type": "surname",
+          "value": "User"
+        },
+        {
+          "@type": "NameComponent",
+          "type": "personal",
+          "value": "Joe"
+        },
+        {
+          "@type": "NameComponent",
+          "type": "suffix",
+          "value": "ing. jr"
+        },
+        {
+          "@type": "NameComponent",
+          "type": "suffix",
+          "value": "M.Sc."
+        }
+      ]
+    },
+    "kind": "individual",
+    "preferredContactLanguages": {
+      "fr": {
+        "@type": "ContactLanguage",
+        "pref": 1
+      },
+      "en": {
+        "@type": "ContactLanguage",
+        "pref": 2
+      }
+    },
+    "organizations": {
+      "org": {
+        "@type": "Organization",
+        "name": "Example"
+      }
+    },
+    "titles": {
+      "title": {
+        "@type": "Title",
+        "title": "Research Scientist"
+      },
+      "role": {
+        "@type": "Title",
+        "title": "Project Lead"
+      }
+    },
+    "addresses": {
+      "addr": {
+        "@type": "Address",
+        "contexts": {
+          "work": true
+        },
+        "street": [
+          {
+            "@type": "StreetComponent",
+            "type": "name",
+            "value": "4321 Rue Somewhere"
+          },
+          {
+            "@type": "StreetComponent",
+            "type": "extension",
+            "value": "Suite 1234"
+          }
         ],
-        "kind": "individual",
-        "preferredContactLanguages": {
-          "fr": { "pref": 1 },
-          "en": { "pref": 2 }
+        "locality": "Quebec",
+        "region": "QC",
+        "postcode": "G1V 2M2",
+        "country": "Canada",
+        "coordinates": "geo:46.772673,-71.282945",
+        "timeZone": "Etc/GMT+5"
+      },
+      "home": {
+        "@type": "Address",
+        "contexts": {
+          "private": true
         },
-        "organizations": {
-          "org": {
-            "name": { "value": "Example" }
-          }
+        "fullAddress": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
+      }
+    },
+    "phones": {
+      "voice" : {
+        "@type": "Phone",
+        "contexts": {
+          "work": true
         },
-        "titles": {
-          "title-1": {
-            "title": { "value": "Research Scientist" }
-          },
-          "title-2": {
-            "title": { "value": "Project Lead" }
-          }
+        "features": {
+           "voice": true,
+           "cell": true,
+           "video": true,
+           "text": true
         },
-        "addresses": {
-          "int": {
-            "contexts": { "work": true },
-            "extension": "Suite 1234",
-            "street": "4321 Rue Somewhere",
-            "locality": "Quebec",
-            "region": "QC",
-            "postcode": "G1V 2M2",
-            "country": "Canada",
-            "coordinates": "geo:46.772673,-71.282945",
-            "timeZone": "Canada/Eastern"
-          },
-          "home": {
-            "contexts": { "private": true },
-            "fullAddress": {
-              "value": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
-            }
-          }
+        "pref": 1,
+        "phone": "tel:+1-555-555-1234;ext=102"
+      }
+    },
+    "emails": {
+      "email": {
+        "@type": "EmailAddress",
+        "contexts": {
+          "work": true
         },
-        "phones": {
-          "voice" : {
-            "contexts": { "work": true },
-            "features": { "voice": true },
-            "label": "cell,video,text",
-            "pref": 1,
-            "phone": "tel:+1-555-555-1234;ext=102"
-          }
+        "email": "joe.user@example.com"
+      }
+    },
+    "online": {
+      "key": {
+        "@type" : "Resource",
+        "contexts": {
+          "work": true
         },
-        "emails": {
-          "email": {
-            "contexts": { "work": true },
-            "email": "joe.user@example.com"
-          }
+        "type": "uri",
+        "label": "key",
+        "resource": "http://www.example.com/joe.user/joe.asc"
+      },
+      "url": {
+        "@type" : "Resource",
+        "contexts": {
+          "private": true
         },
-        "online": {
-          "key": {
-            "contexts": { "work": true },
-            "type": "uri",
-            "label": "key",
-            "resource": "http://www.example.com/joe.user/joe.asc"
-          },
-          "url": {
-            "contexts": { "private": true },
-            "type": "uri",
-            "label": "url",
-            "resource": "http://example.org"
-          }
+        "type": "uri",
+        "label": "url",
+        "resource": "http://example.org"
+      }
+    }
+  },
+  "roles":[ "registrar" ],
+  "publicIds":[
+    {
+      "type":"IANA Registrar ID",
+      "identifier":"1"
+    }
+  ],
+  "remarks":[
+    {
+      "description":[
+        "She sells sea shells down by the sea shore.",
+        "Originally written by Terry Sullivan."
+      ]
+    }
+  ],
+  "links":[
+    {
+      "value":"http://example.com/entity/XXXX",
+      "rel":"self",
+      "href":"http://example.com/entity/XXXX",
+      "type" : "application/rdap+json"
+    }
+  ],
+  "events":[
+    {
+      "eventAction":"registration",
+      "eventDate":"1990-12-31T23:59:59Z"
+    }
+  ],
+  "asEventActor":[
+    {
+      "eventAction":"last changed",
+      "eventDate":"1991-12-31T23:59:59Z"
+    }
+  ]
+}
+```
+
+### Elided example of an entity lookup response including multilingual information
+
+```
+...
+    "jscard": {
+      "@type" : "Card",
+      "uid" : "7e0636f5-e48f-4a32-ab96-b57e9c07c7aa",
+      "fullName" : "Vasya Pupkin",
+      "organizations" : {
+        "org" : {
+          "@type" : "Organization",
+          "name" : "My Company"
         }
       },
-      ...      
-```
-
-### Multilingual Information
-
-```
-...
-"vcardArray": [
-  "vcard",
-  [
-    [ "version", {}, "text", "4.0" ],
-    [ "fn",
-      { "language": "ja", "altid": "1" },
-      "text",
-      "大久保 正仁"
-    ],
-    [ "fn",
-      { "language": "en", "altid": "1" },
-      "text",
-      "Okubo Masahito"
-    ],
-    [ "title",
-      { "language": "ja", "altid": "1" },
-      "text",
-      "事務局長"
-    ],
-    [ "title",
-      { "language": "en", "altid": "1" },
-      "text",
-      "Secretary General"
-    ],
-    [ "kind", {}, "text", "individual" ],
-    [ "lang", { "pref": "1" }, "language-tag", "ja" ],
-    [ "lang", { "pref": "2" }, "language-tag", "en" ]
-  ]
-],
-...
-```
-
-```
-...
-"jscard":{
-  "uid": "XXXX",
-  "fullName": {
-    "value": "大久保 正仁",
-    "language": "ja",
-    "localizations": {
-      "en": "Okubo Masahito"
-    }
-  },
-  "titles": {
-    "a-title": {
-      "value": "事務局長",
-      "language": "ja",
-      "localizations": {
-        "en": "Secretary General"
+      "addresses" : {
+        "addr" : {
+          "@type" : "Address",
+          "street" : [ {
+            "@type" : "StreetComponent",
+            "type" : "name",
+            "value" : "1 Street"
+          }, {
+            "@type" : "StreetComponent",
+            "type" : "postOfficeBox",
+            "value" : "01001"
+          } ],
+          "locality" : "Kyiv",
+          "countryCode" : "UA"
+        }
+      },
+      "localizations" : {
+        "uk" : {
+          "/jscard/addresses/addr" : {
+            "@type" : "Address",
+            "street" : [ {
+              "@type" : "StreetComponent",
+              "type" : "name",
+              "value" : "1, Улица"
+            }, {
+              "@type" : "StreetComponent",
+              "type" : "postOfficeBox",
+              "value" : "01001"
+            } ],
+            "locality" : "Киев",
+            "countryCode" : "UA"
+          },
+          "/jscard/fullName" : "Вася Пупкин",
+          "/jscard/organizations/org" : {
+            "@type" : "Organization",
+            "name" : "Моя Компания"
+          }
+        }
       }
     }
-  },
-  "kind": "individual",
-  "preferredContactLanguages": {
-    "ja": [{ "pref": 1 }],
-    "en": [{ "pref": 2 }]
-  }
-},
-...
-```
-
-### Unstructured Data
-
-```
-...
-"vcardArray": [
-  "vcard",
-  [
-    [ "version", {}, "text", "4.0" ],
-    [ "fn",
-       { "altid": "1", "language": "zh-Hant-TW" },
-       "text",
-       "台灣固網股份有限公司"
-    ],
-    [ "fn",
-       { "altid": "1", "language": "en" },
-       "text",
-       "Taiwan Fixed Network CO.,LTD."
-    ],
-    [ "kind", {}, "text", "org" ],
-    [ "adr",
-       { "label": "8F., No.172-1, Sec.2, Ji-Lung Rd," },
-       "text",
-       [ "", "", "", "", "", "", "" ]
-    ]
-],
-...
-```
-
-```
-...
-"jscard":{
-  "uid": "XXXX",
-  "fullName": {
-    "value": "Taiwan Fixed Network CO.,LTD.",
-    "language": "en",
-    "localizations": {
-      "zh-Hant-TW": "台灣固網股份有限公司"
-    }
-  },
-  "kind": "org",
-  "addresses": {
-    "my-address": {
-      "fullAddress": {
-        "value": "8F., No.172-1, Sec.2, Ji-Lung Rd,"
-      }
-    }
-  }
-},
 ...
 ```
