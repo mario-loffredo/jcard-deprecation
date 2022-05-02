@@ -18,13 +18,13 @@ According to the feedback from [RDAP Pilot WG](https://www.icann.org/en/system/f
 *	affecting performance.
 
 Such a feeling is not limited to RDAP implementers but is also shared by most of APIs producers and consumers dealing with jCard.
-[JSContact](https://datatracker.ietf.org/doc/draft-ietf-jmap-jscontact) includes a contact representation that is able to represent the same information as jCard more efficiently. In particular, it meets the requirements from RDAP implementers about representing multilingual information and unstructured data. Therefore, jCard might be deprecated and replaced by the contact card defined by JSContact in the RDAP responses.
+[JSContact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/) includes a contact representation that is able to represent the same information as jCard more efficiently. In particular, it meets the requirements from RDAP implementers about representing multilingual information and unstructured data. Therefore, jCard might be deprecated and replaced by the contact card defined by JSContact in the RDAP responses.
 
 
 <a name="converting-jcard-into-jscard"></a>
 ## 2. Converting jCard into JSCard
 
-While the jCard element in the RDAP response is named "vcardArray", its JSCard counterpart could be called "jscard". Here in the following examples of mapping between &quot;vcardArray&quot; and &quot;jscard&quot; according to the policy defined in [JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/draft-loffredo-jmap-jscontact-vcard/) are shown.
+While the jCard element in the RDAP response is named "vcardArray", its JSCard counterpart is called "jscard_0" to be compliant with the extension identifier defined in the rdapConformance array. Here in the following examples of mapping between &quot;vcardArray&quot; and &quot;jscard_0&quot; according to the policy defined in [JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/) are shown.
 
 ### Example of an entity lookup response
 
@@ -36,7 +36,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
   ],
   "objectClassName" : "entity",
   "handle":"XXXX",
-  "jscard":{
+  "jscard_0":{
     "@type": "Card",
     "uid": "XXXX",
     "fullName": "Joe User" ,
@@ -212,7 +212,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
 
 ```
 ...
-    "jscard": {
+    "jscard_0": {
       "@type" : "Card",
       "uid" : "7e0636f5-e48f-4a32-ab96-b57e9c07c7aa",
       "fullName" : "Vasya Pupkin",
@@ -240,7 +240,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
       },
       "localizations" : {
         "uk" : {
-          "/jscard/addresses/addr" : {
+          "/jscard_0/addresses/addr" : {
             "@type" : "Address",
             "street" : [ {
               "@type" : "StreetComponent",
@@ -254,8 +254,8 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
             "locality" : "Киев",
             "countryCode" : "UA"
           },
-          "/jscard/fullName" : "Вася Пупкин",
-          "/jscard/organizations/org" : {
+          "/jscard_0/fullName" : "Вася Пупкин",
+          "/jscard_0/organizations/org" : {
             "@type" : "Organization",
             "name" : "Моя Компания"
           }
