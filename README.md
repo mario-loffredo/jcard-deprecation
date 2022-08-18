@@ -24,7 +24,7 @@ Such a feeling is not limited to RDAP implementers but is also shared by most of
 <a name="converting-jcard-into-jscard"></a>
 ## 2. Converting jCard into JSCard
 
-While the jCard element in the RDAP response is named "vcardArray", its JSCard counterpart is called "jscard_0" to be compliant with the extension identifier defined in the rdapConformance array. Here in the following examples of mapping between &quot;vcardArray&quot; and &quot;jscard_0&quot; according to the policy defined in [JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/) are shown.
+While the jCard element in the RDAP response is named "vcardArray", its JSCard counterpart is called "jscard" to be compliant with the extension identifier defined in the rdapConformance array. Here in the following examples of mapping between &quot;vcardArray&quot; and &quot;jscard&quot; according to the policy defined in [JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/) are shown.
 
 ### Example of an entity lookup response
 
@@ -32,11 +32,11 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
 {
   "rdapConformance": [
      "rdap_level_0",
-     "jscard_0"
+     "jscard"
   ],
   "objectClassName" : "entity",
   "handle":"XXXX",
-  "jscard_0":{
+  "jscard":{
     "@type": "Card",
     "uid": "XXXX",
     "fullName": "Joe User" ,
@@ -212,7 +212,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
 
 ```
 ...
-    "jscard_0": {
+    "jscard": {
       "@type" : "Card",
       "uid" : "7e0636f5-e48f-4a32-ab96-b57e9c07c7aa",
       "fullName" : "Vasya Pupkin",
@@ -239,8 +239,8 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
         }
       },
       "localizations" : {
-        "uk" : {
-          "/jscard_0/addresses/addr" : {
+        "ua" : {
+          "jscard/addresses/addr" : {
             "@type" : "Address",
             "street" : [ {
               "@type" : "StreetComponent",
@@ -254,8 +254,8 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
             "locality" : "Киев",
             "countryCode" : "UA"
           },
-          "/jscard_0/fullName" : "Вася Пупкин",
-          "/jscard_0/organizations/org" : {
+          "jscard/fullName" : "Вася Пупкин",
+          "jscard/organizations/org" : {
             "@type" : "Organization",
             "name" : "Моя Компания"
           }
