@@ -343,7 +343,7 @@
             "contexts": {
               "work": true
             },
-            "email": "joe.user@example.com"
+            "address": "joe.user@example.com"
           }
         },
         "cryptoKeys": {
