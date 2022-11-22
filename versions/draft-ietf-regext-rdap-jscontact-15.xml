@@ -279,12 +279,12 @@
           "title": {
             "@type": "Title",
             "type": "title",
-            "title": "Research Scientist"
+            "name": "Research Scientist"
           },
           "role": {
             "@type": "Title",
             "type": "role",
-            "title": "Project Lead"
+            "name": "Project Lead"
           }
         },
         "addresses": {
@@ -334,7 +334,7 @@
                "text": true
             },
             "pref": 1,
-            "phone": "tel:+1-555-555-1234;ext=102"
+            "number": "tel:+1-555-555-1234;ext=102"
           }
         },
         "emails": {
@@ -792,9 +792,9 @@
         <t hangText="jCard property:">tel with type=&quot;voice&quot;</t>
         <t hangText="Reference:">Section 6.4.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[1].type=='voice')][3]</t>
-        <t hangText="JSContact property:">Phone.phone</t>
+        <t hangText="JSContact property:">Phone.number</t>
         <t hangText="Reference:">Section 2.3.2 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.phones.voice.phone</t>
+        <t hangText="Path:">$..jscard.phones.voice.number</t>
       </list>
       </t>
       <t>
@@ -802,9 +802,9 @@
         <t hangText="jCard property:">tel with type=&quot;fax&quot;</t>
         <t hangText="Reference:">Section 6.4.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[1].type=='fax')][3]</t>
-        <t hangText="JSContact property:">Phone.phone</t>
+        <t hangText="JSContact property:">Phone.number</t>
         <t hangText="Reference:">Section 2.3.2 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.phones.fax.phone</t>
+        <t hangText="Path:">$..jscard.phones.fax.number</t>
       </list>
       </t>
       <t>
