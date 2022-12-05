@@ -166,6 +166,7 @@
 ...
 "jscard": {
   "@type" : "Card",
+  "@version" : "rfc0000",
   "uid" : "7e0636f5-e48f-4a32-ab96-b57e9c07c7aa",
   "fullName" : "Vasya Pupkin",
   "organizations" : {
@@ -774,7 +775,7 @@
         <t hangText="Reference:">Section 6.2.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='fn')][3]</t>
         <t hangText="JSContact property:">fullName</t>
-        <t hangText="Reference:">Section 2.2.2 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.2.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.fullName</t>
       </list>
       </t>
@@ -794,7 +795,7 @@
         <t hangText="Reference:">Section 6.4.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[1].type=='voice')][3]</t>
         <t hangText="JSContact property:">Phone.number</t>
-        <t hangText="Reference:">Section 2.3.2 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.3.3 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.phones.voice.number</t>
       </list>
       </t>
@@ -804,7 +805,7 @@
         <t hangText="Reference:">Section 6.4.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[1].type=='fax')][3]</t>
         <t hangText="JSContact property:">Phone.number</t>
-        <t hangText="Reference:">Section 2.3.2 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.3.3 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.phones.fax.number</t>
       </list>
       </t>
@@ -813,9 +814,9 @@
         <t hangText="jCard property:">email</t>
         <t hangText="Reference:">Section 6.4.2 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='email')][3]</t>
-        <t hangText="JSContact property:">Email.email</t>
+        <t hangText="JSContact property:">Email.address</t>
         <t hangText="Reference:">Section 2.3.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.emails.email.email</t>
+        <t hangText="Path:">$..jscard.emails.email.address</t>
       </list>
       </t>
       <t>
@@ -824,7 +825,7 @@
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][1]</t>
         <t hangText="JSContact property:">&quot;postOfficeBox&quot; StreetComponent of Address.street</t>
-        <t hangText="Reference:">Section 2.4.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.addresses.addr.street[?(@.type=='postOfficeBox')].value</t>
       </list>
       </t>
@@ -834,7 +835,7 @@
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][2]</t>
         <t hangText="JSContact property:">&quot;name&quot; StreetComponent of Address.street</t>
-        <t hangText="Reference:">Section 2.4.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.addresses.addr.street[?(@.type=='name')].value</t>
       </list>
       </t>
@@ -844,7 +845,7 @@
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][3]</t>
         <t hangText="JSContact property:">Address.locality</t>
-        <t hangText="Reference:">Section 2.4.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.addresses.addr.locality</t>
       </list>
       </t>
@@ -854,7 +855,7 @@
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][4]</t>
         <t hangText="JSContact property:">Address.region</t>
-        <t hangText="Reference:">Section 2.4.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.addresses.addr.region</t>
       </list>
       </t>
@@ -864,7 +865,7 @@
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][5]</t>
         <t hangText="JSContact property:">Address.postcode</t>
-        <t hangText="Reference:">Section 2.4.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.addresses.addr.postcode</t>
       </list>
       </t>
@@ -874,7 +875,7 @@
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][6]</t>
         <t hangText="JSContact property:">Address.country</t>
-        <t hangText="Reference:">Section 2.4.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.addresses.addr.country</t>
       </list>
       </t>
@@ -884,7 +885,7 @@
         <t hangText="Reference:">Section 3.1 of <xref target="RFC8605"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][1].cc</t>
         <t hangText="JSContact property:">Address.countryCode</t>
-        <t hangText="Reference:">Section 2.4.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.addresses.addr.countryCode</t>
       </list>
       </t>
@@ -1020,7 +1021,7 @@
       </section>
       <section title="Change from 14 to 15">
         <t><list style="numbers">
-          <t>Corrected <xref target="jscard-example"/> by renaming &quot;preferredContactLanguages&quot; to &quot;preferredLanguages&quot;, &quot;ContactLanguage&quot; to &quot;LanguagePreference&quot; and "personal" to "given".</t>
+          <t>Corrected both <xref target="jscard-example"/> and <xref target="jcard-jscontact-mapping"/> by renaming &quot;preferredContactLanguages&quot; to &quot;preferredLanguages&quot;, &quot;ContactLanguage&quot; to &quot;LanguagePreference&quot;, &quot;personal&quot; to &quot;given&quot;, &quot;Phone.phone&quot; to &quot;Phone.number&quot; and &quot;Email.email&quot; to &quot;Email.address&quot;.  Added &quot;@version&quot; to both <xref target="jscard-example"/> and <xref target="localizations-example"/>.</t>
         </list></t>
       </section>
     </section>
