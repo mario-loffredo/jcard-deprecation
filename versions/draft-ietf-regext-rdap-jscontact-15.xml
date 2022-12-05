@@ -231,6 +231,7 @@
       "handle":"XXXX",
       "jscard":{
         "@type": "Card",
+        "@version": "rfc0000",
         "uid": "XXXX",
         "fullName": "Joe User" ,
         "name": {
