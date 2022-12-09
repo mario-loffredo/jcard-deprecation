@@ -116,8 +116,11 @@
         data directory services.</t>
       </section>
 
-      <section title="Conventions Used in This Document">
+      <section anchor="Conventions" title="Conventions Used in This Document">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
+
+        <t>The JSContact specification declares the object type &quot;Card&quot; which
+          represents a single contact card.  To avoid confusion, in the following of this document, the term &quot;JSCard&quot; is used to refer to &quot;JSContact Card&quot;.</t>
       </section>
     </section>
       
@@ -127,12 +130,6 @@
         applications.  It aims to be an alternative to the vCard data format <xref target="RFC6350"/>
         and to be unambiguous, extendable and simple to process.  In contrast with jCard, it is
         not a direct mapping from the vCard data model and expands semantics where appropriate.</t>
-
-      <t>The JSContact specification declares two main object types: &quot;Card&quot;, which
-        represents a single contact card, and &quot;CardGroup&quot; which represents a
-        collection of Card objects.  For the purpose of this document, only Card objects are
-        considered.  To avoid confusion, in the following of this document, the term &quot;JSCard&quot; is used to refer to &quot;JSContact Card&quot;.</t>
-
       <t>JSCard differs from jCard in that it:</t>
 
       <t><list style="symbols">
@@ -147,11 +144,11 @@
 
     </section>
 
-    <section anchor="using-jscontact" title="Using JSCard objects in RDAP Responses">
+    <section anchor="using-jscontact" title="Using JSContact objects in RDAP Responses">
       <t>Entity objects in RDAP responses MAY include a &quot;jscard&quot; property whose value is a JSCard object instead of the &quot;vCardArray&quot; property defined in <xref target="RFC9083"/>.</t>
       <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard&quot; in the &quot;rdapConformance&quot; array.</t>
       <t>The JSCard &quot;uid&quot; property SHOULD contain the same value as the RDAP &quot;handle&quot; property.</t>
-      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  To aid interoperability, RDAP providers are RECOMMENDED to use as map keys the following string values and labels defined in <xref target="RFC5733"/>:
+      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  A JSContact map key MUST comply with the definition of the Id type.  To aid interoperability, RDAP providers MUST use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
         <list style="symbols">
           <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element. If both internationalised and localized forms exist, the key MUST be used for the internationalised form;<vspace blankLines='1' /></t>
           <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element. If both internationalised and localized forms exist, the key MUST be used for the internationalised form;<vspace blankLines='1' /></t>
@@ -162,12 +159,15 @@
       </t>
       <t>If present, the localized versions of name, organization and postal address MUST be inserted into the &quot;localizations&quot; map.  The following is an elided example of an RDAP entity lookup response including a JSCard object that presents the &quot;localizations&quot; map (See PDF for non-ASCII character string).</t>
 
-<figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork xml:space="preserve">
+      <t>The information needed to register the JSContact Id values in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
+
+      <figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork xml:space="preserve">
 ...
 "jscard": {
   "@type" : "Card",
-  "@version" : "rfc0000",
-  "uid" : "7e0636f5-e48f-4a32-ab96-b57e9c07c7aa",
+  "@version" : "1.0",
+  "uid" : "YYYY",
+  "locale" : "en",
   "fullName" : "Vasya Pupkin",
   "organizations" : {
     "org" : {
@@ -232,8 +232,9 @@
       "handle":"XXXX",
       "jscard":{
         "@type": "Card",
-        "@version": "rfc0000",
+        "@version": "1.0",
         "uid": "XXXX",
+        "locale" : "en",
         "fullName": "Joe User" ,
         "name": {
           "@type": "Name",
@@ -700,6 +701,10 @@
     </section>
 
    <section anchor="IANA-considerations" title="IANA Considerations">
+
+
+    <section anchor="rdap-extensions-registry" title="RDAP Extensions Registry">
+
      <t>IANA is requested to register the following values in the RDAP Extensions Registry:</t>
 
      <t><list style="none">
@@ -709,6 +714,59 @@
        <t>Contact: IETF &lt;iesg@ietf.org&gt;<vspace blankLines='1' /></t>
        <t>Intended usage: This extension prefix identifier is used for the &quot;jscard&quot; member returned in the JSON response <xref target="I-D.ietf-calext-jscontact"/>.</t>
      </list></t>
+
+    </section>
+
+
+    <section anchor="rdap-json-values-registry" title="RDAP JSON Values Registry">
+
+      <t>With regard to the fields of the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/>, the &quot;JSContact Id Value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="using-jscontact"/>.</t>
+      <t>IANA is requested to register the following values in the &quot;RDAP JSON Values&quot; registry:</t>
+
+      <t>
+        <list style="hanging">
+          <t hangText="Value:">org</t>
+          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Description:">The key in the JSContact &quot;organizations&quot; map identifiying the contact organization.</t>
+          <t hangText="Registrant Name:">IESG</t>
+          <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
+          <t hangText="Reference:">This document</t>
+        </list>
+        <list style="hanging">
+          <t hangText="Value:">addr</t>
+          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Description:">The key in the JSContact &quot;addresses&quot; map identifiying the unique or preferred contact address.</t>
+          <t hangText="Registrant Name:">IESG</t>
+          <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
+          <t hangText="Reference:">This document</t>
+        </list>
+        <list style="hanging">
+          <t hangText="Value:">email</t>
+          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Description:">The key in the JSContact &quot;emails&quot; map identifiying the unique or preferred contact email address.</t>
+          <t hangText="Registrant Name:">IESG</t>
+          <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
+          <t hangText="Reference:">This document</t>
+        </list>
+        <list style="hanging">
+          <t hangText="Value:">voice</t>
+          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Description:">The key in the JSContact &quot;emails&quot; map identifiying the unique or preferred contact voice number.</t>
+          <t hangText="Registrant Name:">IESG</t>
+          <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
+          <t hangText="Reference:">This document</t>
+        </list>
+        <list style="hanging">
+          <t hangText="Value:">fax</t>
+          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Description:">The key in the JSContact &quot;emails&quot; map identifiying the unique or preferred contact fax number.</t>
+          <t hangText="Registrant Name:">IESG</t>
+          <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
+          <t hangText="Reference:">This document</t>
+        </list>
+      </t>
+    </section>
+
 
    </section>
 
@@ -1021,7 +1079,7 @@
       </section>
       <section title="Change from 14 to 15">
         <t><list style="numbers">
-          <t>Corrected both <xref target="jscard-example"/> and <xref target="jcard-jscontact-mapping"/> by renaming &quot;preferredContactLanguages&quot; to &quot;preferredLanguages&quot;, &quot;ContactLanguage&quot; to &quot;LanguagePreference&quot;, &quot;personal&quot; to &quot;given&quot;, &quot;Phone.phone&quot; to &quot;Phone.number&quot; and &quot;Email.email&quot; to &quot;Email.address&quot;.  Added &quot;@version&quot; to both <xref target="jscard-example"/> and <xref target="localizations-example"/>.</t>
+          <t>Corrected both <xref target="jscard-example"/> and <xref target="jcard-jscontact-mapping"/> by renaming &quot;preferredContactLanguages&quot; to &quot;preferredLanguages&quot;, &quot;ContactLanguage&quot; to &quot;LanguagePreference&quot;, &quot;personal&quot; to &quot;given&quot;, &quot;Phone.phone&quot; to &quot;Phone.number&quot; and &quot;Email.email&quot; to &quot;Email.address&quot;.  Added &quot;@version&quot; to both <xref target="jscard-example"/> and <xref target="localizations-example"/>.  Removed mention of JSContact CardGroup type.  Renamed and changed <xref target="using-jscontact"/>.  Added <xref target="rdap-json-values-registry"/>.</t>
         </list></t>
       </section>
     </section>
