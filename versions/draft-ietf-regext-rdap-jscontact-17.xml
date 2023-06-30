@@ -230,10 +230,10 @@
         "name": {
           "full": "Joe User" ,
           "components": [
-            { "type": "surname", "value": "User" },
-            { "type": "given", "value": "Joe" },
-            { "type": "credential", "value": "ing. jr" },
-            { "type": "credential", "value": "M.Sc." }
+            { "kind": "surname", "value": "User" },
+            { "kind": "given", "value": "Joe" },
+            { "kind": "credential", "value": "ing. jr" },
+            { "kind": "credential", "value": "M.Sc." }
           ]
         },
         "kind": "individual",
@@ -623,7 +623,7 @@
           <t hangText="Searchable Resource Type:">domains, nameservers, entities</t>
           <t hangText="Related Resource Type:">entity</t>
           <t hangText="Property:">fn</t>
-          <t hangText="Property Path:">$.entities[*].jscard.[fullName,localizations.*.fullName]</t>
+          <t hangText="Property Path:">$.entities[*].jscard.[name.full,localizations.*.name.full]</t>
           <t hangText="Registrant Name:">IESG</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
           <t hangText="Reference:">This document</t>
@@ -706,7 +706,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='fn')][3]</t>
         <t hangText="JSContact property:">fullName</t>
         <t hangText="Reference:">Section 2.2.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.[fullName,localizations.*.fullName]</t>
+        <t hangText="Path:">$..jscard.[name.full,localizations.*.name.full]</t>
       </list>
       </t>
       <t>
@@ -754,9 +754,9 @@
         <t hangText="jCard property:">&quot;post office box&quot; component of adr</t>
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][1]</t>
-        <t hangText="JSContact property:">&quot;postOfficeBox&quot; StreetComponent of Address.street</t>
+        <t hangText="JSContact property:">&quot;postOfficeBox&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.[addresses.addr.street[?(@.type=='postOfficeBox')].value,localizations.*.addresses.addr.street[?(@.type=='postOfficeBox')].value]</t>
+        <t hangText="Path:">$..jscard.[addresses.addr.components[?(@.kind=='postOfficeBox')].value,localizations.*.addresses.addr.components[?(@.kind=='postOfficeBox')].value]</t>
       </list>
       </t>
       <t>
@@ -764,9 +764,9 @@
         <t hangText="jCard property:">&quot;street address&quot; component of adr</t>
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][2]</t>
-        <t hangText="JSContact property:">&quot;name&quot; StreetComponent of Address.street</t>
+        <t hangText="JSContact property:">&quot;name&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.[addresses.addr.street[?(@.type=='name')].value,localizations.*.addresses.addr.street[?(@.type=='name')].value]</t>
+        <t hangText="Path:">$..jscard.[addresses.addr.components[?(@.kind=='name')].value,localizations.*.addresses.addr.components[?(@.kind=='name')].value]</t>
       </list>
       </t>
       <t>
@@ -774,9 +774,9 @@
         <t hangText="jCard property:">&quot;locality&quot; component of adr</t>
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][3]</t>
-        <t hangText="JSContact property:">Address.locality</t>
+        <t hangText="JSContact property:">&quot;locality&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.[addresses.addr.locality,localizations.*.addresses.addr.locality]</t>
+        <t hangText="Path:">$..jscard.[addresses.addr.components[?(@.kind=='locality')].value,localizations.*.addresses.addr.components[?(@.kind=='locality')].value]</t>
       </list>
       </t>
       <t>
@@ -784,9 +784,9 @@
         <t hangText="jCard property:">&quot;region&quot; component of adr</t>
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][4]</t>
-        <t hangText="JSContact property:">Address.region</t>
+        <t hangText="JSContact property:">&quot;region&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.[addresses.addr.region,localizations.*.addresses.addr.region]</t>
+        <t hangText="Path:">$..jscard.[addresses.addr.components[?(@.kind=='region')].value,localizations.*.addresses.addr.components[?(@.kind=='region')].value]</t>
       </list>
       </t>
       <t>
@@ -794,9 +794,9 @@
         <t hangText="jCard property:">&quot;postal code&quot; component of adr</t>
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][5]</t>
-        <t hangText="JSContact property:">Address.postcode</t>
+        <t hangText="JSContact property:">&quot;postcode&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.[addresses.addr.postcode,localizations.*.addresses.addr.postcode]</t>
+        <t hangText="Path:">$..jscard.[addresses.addr.components[?(@.kind=='postcode')].value,localizations.*.addresses.addr.components[?(@.kind=='postcode')].value]</t>
       </list>
       </t>
       <t>
@@ -804,9 +804,9 @@
         <t hangText="jCard property:">&quot;country name&quot; component of adr</t>
         <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][6]</t>
-        <t hangText="JSContact property:">Address.country</t>
+        <t hangText="JSContact property:">&quot;country&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
-        <t hangText="Path:">$..jscard.[addresses.addr.country,localizations.*.addresses.addr.country]</t>
+        <t hangText="Path:">$..jscard.[addresses.addr.components[?(@.kind=='country')].value,localizations.*.addresses.addr.components[?(@.kind=='country')].value]</t>
       </list>
       </t>
       <t>
@@ -817,10 +817,17 @@
         <t hangText="JSContact property:">Address.countryCode</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.[addresses.addr.countryCode,localizations.*.addresses.addr.countryCode]</t>
-        <!--
-        <t hangText="Path:">$..jscard..addresses.addr.countryCode</t>
-        -->
       </list>
+      </t>
+      <t>
+        <list style="hanging">
+          <t hangText="jCard property:">adr</t>
+          <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
+          <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')]</t>
+          <t hangText="JSContact property:">Address</t>
+          <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+          <t hangText="Path:">$..jscard.[addresses.addr,localizations.*.addresses.addr]</t>
+        </list>
       </t>
     </section>
 
@@ -975,6 +982,11 @@
           <t>Rephrased <xref target="security-considerations"/>.</t>
           <t>Corrected JSContact examples based on draft-ietf-calext-jscontact-11.</t>
           <t>Fixed nits.</t>
+        </list></t>
+      </section>
+      <section title="Change from 16 to 17">
+        <t><list style="numbers">
+          <t>Corrected <xref target="localizations-example"/>, <xref target="jscard-example"/>, <xref target="rdap-reverse-search-mapping-registry"/> and <xref target="jcard-jscontact-mapping"/> to make them compliant with draft-ietf-calext-jscontact-12.</t>
         </list></t>
       </section>
     </section>
