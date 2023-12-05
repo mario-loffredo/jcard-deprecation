@@ -19,6 +19,8 @@
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.9083.xml'>
   <!ENTITY RFC7942 PUBLIC ''
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.7942.xml'>
+  <!ENTITY RFC8605 PUBLIC ''
+   'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8605.xml'>
   <!ENTITY RFC8174 PUBLIC ''
    'http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml'>
   <!ENTITY RFC8288 PUBLIC ''
@@ -146,9 +148,22 @@
 
     </section>
 
-    <section anchor="using-jscontact" title="Using JSContact objects in RDAP Responses">
+    <section anchor="using-jscontact" title="Using JSContact in RDAP Responses">
+
+    <section anchor="extension-identifier" title="Extension Identifier">
       <t>Entity objects in RDAP responses MAY include a &quot;jscard&quot; property whose value is a JSCard object instead of the &quot;vCardArray&quot; property defined in <xref target="RFC9083"/>.</t>
       <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard&quot; in the &quot;rdapConformance&quot; array.</t>
+    </section>
+    <section anchor="jscontact-version" title="Version">
+      <t>The JSContact version to be used in RDAP MUST be &quot;1.0&quot;.</t>
+    </section>
+      <section anchor="jscontact-kind" title="Kind">
+        <t>The JSContact &quot;kind&quot; property value MUST be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
+      </section>
+      <section anchor="jscontact-language" title="Language">
+        <t>The JSContact &quot;language&quot; property SHOULD be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
+      </section>
+    <section anchor="map-keys" title="Map Keys">
       <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  A JSContact map key MUST comply with the definition of the Id type.  To aid interoperability, RDAP providers MUST use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
         <list style="symbols">
           <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element.  If both internationalised and localized forms exist, the key MUST be used for the internationalised form;<vspace blankLines='1' /></t>
@@ -158,7 +173,16 @@
           <t>&quot;fax&quot; in the &quot;phones&quot; map for the &lt;contact:fax&gt; element.</t>
         </list>
       </t>
+      <t>Additional keys of the &quot;links&quot; map that MUST be used to represent contact links which result from converting jCard &quot;uri&quot; and &quot;contact-uri&quot; properties are:
+        <list style="symbols">
+          <t>&quot;url&quot; used for the unique or preferred contact url (e.g. a web site).  The &quot;kind&quot; property of the JSContact &quot;Link&quot; object MUST NOT be set;<vspace blankLines='1'/></t>
+          <t>&quot;contact-uri&quot; used for the contact uri as defined in <xref target="RFC8605"/>.  The &quot;kind&quot; property of the JSContact &quot;Link&quot; object MUST be set to &quot;contact&quot;.</t>
+        </list>
+      </t>
       <t>The information needed to register the JSContact Id values in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
+      <t>An unregistered Id value used for the aforementioned maps or others SHOULD comply with the following scheme: &quot;&lt;map name&gt;-&lt;sequential number&gt;&quot; (e.g. &quot;addresses-1&quot;, &quot;addresses-2&quot;).</t>
+    </section>
+      <section anchor="localizations" title="Localizations">
       <t>If present, the localized versions of name, organization and postal address MUST be added to the &quot;localizations&quot; map.  With reference to the defintion of localization in <xref target="I-D.ietf-calext-jscontact"/>, an RDAP response with JSContact content MUST expand all localizations (i.e. a patch key using the syntax &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a JSCard object that presents a localized postal address (See PDF for non-ASCII character string).</t>
       <figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork xml:space="preserve">
 ...
@@ -210,9 +234,10 @@
 }
 ...
 </artwork></figure>
+    </section>
 
-      <t>Implementers MAY use different mapping schemes to define keys for additional entries of the aforementioned maps or others.  For example, a mapping scheme may consist in using a trivial sequential number (e.g. &quot;url-1&quot;, &quot;url-2&quot;, etc.)</t>
-      <t>The following is an example of an RDAP entity including a JSCard object that has been converted from the example in section 5.1 of <xref target="RFC9083"/>.</t>
+    <section anchor="jscard-example-sec" title="Example of using JSContact in RDAP response">
+      <t>The following is an example of an RDAP entity including a JSCard object.</t>
 
 <figure anchor="jscard-example" title="Example of using JSContact in RDAP response"><artwork xml:space="preserve">
    {
@@ -228,74 +253,58 @@
         "uid": "74b64df3-2d60-56b4-9df3-8594886f4456",
         "language": "en",
         "name": {
-          "full": "Joe User" ,
+          "full": "Joe User",
           "components": [
             { "kind": "surname", "value": "User" },
-            { "kind": "given", "value": "Joe" },
-            { "kind": "credential", "value": "ing. jr" },
-            { "kind": "credential", "value": "M.Sc." }
+            { "kind": "given", "value": "Joe" }
           ]
-        },
-        "kind": "individual",
-        "preferredLanguages": {
-          "fr": { "pref": 1 },
-          "en": { "pref": 2 }
         },
         "organizations": {
           "org": {
             "name": "Example"
           }
         },
-        "titles": {
-          "title": { "kind": "title", "name": "Research Scientist" },
-          "role": { "kind": "role", "name": "Project Lead" }
-        },
-        "addresses": {
-          "addr": {
-            "contexts": { "work": true },
-            "components": [
-              { "kind": "name", "value": "4321 Rue Somewhere" },
-              { "kind": "extension", "value": "Suite 1234" },
-              { "kind": "locality", "value": "Quebec" },
-              { "kind": "region", "value": "QC" },
-              { "kind": "postcode", "value": "G1V 2M2" },
-              { "kind": "country", "value": "Canada" }
-            ],
-            "countryCode": "CA",
-            "coordinates": "geo:46.772673,-71.282945",
-            "timeZone": "Etc/GMT+5"
-          },
-          "home": {
-            "full": "123 Maple Ave\nVancouver\nBC\n1239\n"
-            "contexts": { "private": true }
-          }
-        },
+         "addresses": {
+           "addr": {
+             "components": [
+               { "kind": "name", "value": "4321 Rue Somewhere" },
+               { "kind": "extension", "value": "Suite 1234" },
+               { "kind": "locality", "value": "Quebec" },
+               { "kind": "region", "value": "QC" },
+               { "kind": "postcode", "value": "G1V 2M2" },
+               { "kind": "country", "value": "Canada" }
+             ],
+             "countryCode": "CA",
+             "coordinates": "geo:46.772673,-71.282945"
+           },
+           "addresses-1": {
+             "full": "123 Maple Ave Vancouver BC 1239"
+             "contexts": { "private": true }
+           }
+         },
         "phones": {
           "voice": {
-            "contexts": { "work": true },
-            "features": {
-               "voice": true,
-               "mobile": true,
-               "video": true,
-               "text": true
-            },
-            "pref": 1,
-            "number": "tel:+1-555-555-1234;ext=102"
+            "features": { "voice": true },
+            "number": "tel:+1-555-555-1234"
+          },
+          "fax": {
+            "features": { "fax": true },
+            "number": "tel:+1-555-555-4321"
           }
         },
         "emails": {
           "email": {
-            "contexts": { "work": true },
             "address": "joe.user@example.com"
           }
         },
-        "cryptoKeys": {
-          "contexts": { "work": true },
-          "uri": "https://www.example.com/joe.user/joe.asc"
-        },
         "links": {
-          "contexts": { "private": true },
-          "uri": "https://example.org"
+          "url": {
+            "uri": "https://www.example.com"
+          },
+          "contact-uri": {
+            "kind": "contact",
+            "uri": "mailto:contact@example.com"
+          }
         }
       },
       "roles":[ "registrar" ],
@@ -303,14 +312,6 @@
         {
           "type":"IANA Registrar ID",
           "identifier":"1"
-        }
-      ],
-      "remarks":[
-        {
-          "description":[
-            "She sells sea shells down by the sea shore.",
-            "Originally written by Terry Sullivan."
-          ]
         }
       ],
       "links":[
@@ -335,10 +336,9 @@
       ]
    }
 </artwork></figure>
+    </section>
 
-     <t>The use of JSContact updates the mappings of two reverse search properties, namely &quot;fn&quot; and &quot;email&quot;, defined in <xref target="I-D.ietf-regext-rdap-reverse-search"/>.  Such new mappings are registered in the Reverse Search Mapping registry as described in <xref target="rdap-reverse-search-mapping-registry"/>.</t>
-
-    <section anchor="rdap-query-parameters-specification" title="RDAP Query Parameters">
+    <section anchor="rdap-query-parameters-specification" title="Query Parameters">
 
       <t>One new query parameter is defined for the purpose of this document.</t>
 
@@ -348,6 +348,10 @@
 
       <t>This parameter is further explained in <xref target="stage2"/>.</t>
     </section>
+
+      <section anchor="reverse-search-properties" title="Reverse Search Properties">
+        <t>The use of JSContact updates the mappings of two reverse search properties, namely &quot;fn&quot; and &quot;email&quot;, defined in <xref target="I-D.ietf-regext-rdap-reverse-search"/>.  Such new mappings are registered in the Reverse Search Mapping registry as described in <xref target="rdap-reverse-search-mapping-registry"/>.</t>
+      </section>
 
     </section>
 
@@ -569,7 +573,7 @@
 
     <section anchor="rdap-json-values-registry" title="RDAP JSON Values Registry">
 
-      <t>With regard to the fields of the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/>, the &quot;JSContact Id Value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="using-jscontact"/>.</t>
+      <t>With regard to the fields of the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/>, the &quot;JSContact Id Value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="map-keys"/>.</t>
       <t>IANA is requested to register the following values in the &quot;RDAP JSON Values&quot; registry:</t>
 
       <t>
@@ -609,6 +613,22 @@
           <t hangText="Value:">fax</t>
           <t hangText="Type:">JSContact Id Value</t>
           <t hangText="Description:">The key in the JSContact &quot;phones&quot; map identifiying the unique or preferred contact fax number.</t>
+          <t hangText="Registrant Name:">IESG</t>
+          <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
+          <t hangText="Reference:">This document</t>
+        </list>
+        <list style="hanging">
+          <t hangText="Value:">url</t>
+          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Description:">The key in the JSContact &quot;links&quot; map identifiying the unique or preferred url.</t>
+          <t hangText="Registrant Name:">IESG</t>
+          <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
+          <t hangText="Reference:">This document</t>
+        </list>
+        <list style="hanging">
+          <t hangText="Value:">contact-uri</t>
+          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Description:">The key in the JSContact &quot;links&quot; map identifiying the contact uri as defined in <xref target="RFC8605"/>.</t>
           <t hangText="Registrant Name:">IESG</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
           <t hangText="Reference:">This document</t>
@@ -697,17 +717,47 @@
 
     <section anchor="jcard-jscontact-mapping" title="jCard-JSContact Mapping">
 
-      <t>Provided that the keys defined in <xref target="using-jscontact"/> are used for the JSContact maps, the mapping between the most commonly used jCard properties in an RDAP response and their JSContact counterparts is shown in the following.  The mapping is done through the use of JSONPath expressions <xref target="I-D.ietf-jsonpath-base"/>.</t>
+      <t>Provided that the keys defined in <xref target="map-keys"/> are used for the JSContact maps, the mapping between the most commonly used jCard properties in an RDAP response and their JSContact counterparts is shown in the following.  The mapping is done through the use of JSONPath expressions <xref target="I-D.ietf-jsonpath-base"/>.</t>
 
       <t>
       <list style="hanging" >
         <t hangText="jCard property:">fn</t>
         <t hangText="Reference:">Section 6.2.1 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='fn')][3]</t>
-        <t hangText="JSContact property:">fullName</t>
+        <t hangText="JSContact property:">Name.full</t>
         <t hangText="Reference:">Section 2.2.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.[name.full,localizations.*.name.full]</t>
       </list>
+      </t>
+      <t>
+        <list style="hanging">
+          <t hangText="jCard property:">&quot;family name&quot; component of n</t>
+          <t hangText="Reference:">Section 6.2.2 of <xref target="RFC6350"/></t>
+          <t hangText="Path:">$..vcardArray[1][?(@[0]=='n')][3][0]</t>
+          <t hangText="JSContact property:">&quot;postOfficeBox&quot; NameComponent of Name.components</t>
+          <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+          <t hangText="Path:">$..jscard.[name.components[?(@.kind=='surname')].value,localizations.*.name.components[?(@.kind=='surname')].value]</t>
+        </list>
+      </t>
+      <t>
+        <list style="hanging">
+          <t hangText="jCard property:">&quot;given name&quot; component of n</t>
+          <t hangText="Reference:">Section 6.2.2 of <xref target="RFC6350"/></t>
+          <t hangText="Path:">$..vcardArray[1][?(@[0]=='n')][3][1]</t>
+          <t hangText="JSContact property:">&quot;given&quot; NameComponent of Name.components</t>
+          <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+          <t hangText="Path:">$..jscard.[name.components[?(@.kind=='given')].value,localizations.*.name.components[?(@.kind=='given')].value]</t>
+        </list>
+      </t>
+      <t>
+        <list style="hanging">
+          <t hangText="jCard property:">n</t>
+          <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
+          <t hangText="Path:">$..vcardArray[1][?(@[0]=='n')]</t>
+          <t hangText="JSContact property:">Name</t>
+          <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+          <t hangText="Path:">$..jscard.[name,localizations.*.name]</t>
+        </list>
       </t>
       <t>
       <list style="hanging">
@@ -715,7 +765,7 @@
         <t hangText="Reference:">Section 6.6.4 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='org')][3]</t>
         <t hangText="JSContact property:">Organization.name</t>
-        <t hangText="Reference:">Section 2.2.4 of <xref target="I-D.ietf-calext-jscontact"/></t>
+        <t hangText="Reference:">Section 2.2.2 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.[organizations.org.name,localizations.*.organizations.org.name]</t>
       </list>
       </t>
@@ -748,6 +798,16 @@
         <t hangText="Reference:">Section 2.3.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
         <t hangText="Path:">$..jscard.[emails.email.address,localizations.*.emails.email.address]</t>
       </list>
+      </t>
+      <t>
+        <list style="hanging" >
+          <t hangText="jCard property:">&quot;label&quot; parameter of adr</t>
+          <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
+          <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][1].label</t>
+          <t hangText="JSContact property:">Address.full</t>
+          <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
+          <t hangText="Path:">$..jscard.[addresses.adr.full,localizations.*.addresses.adr.full]</t>
+        </list>
       </t>
       <t>
       <list style="hanging">
@@ -827,6 +887,26 @@
           <t hangText="JSContact property:">Address</t>
           <t hangText="Reference:">Section 2.5.1 of <xref target="I-D.ietf-calext-jscontact"/></t>
           <t hangText="Path:">$..jscard.[addresses.addr,localizations.*.addresses.addr]</t>
+        </list>
+      </t>
+      <t>
+        <list style="hanging">
+          <t hangText="jCard property:">contact-uri</t>
+          <t hangText="Reference:">Section 2.1 of <xref target="RFC8605"/></t>
+          <t hangText="Path:">$..vcardArray[1][?(@[0]=='contact-uri')]</t>
+          <t hangText="JSContact property:">Link.uri</t>
+          <t hangText="Reference:">Section 2.6.3 of <xref target="I-D.ietf-calext-jscontact"/></t>
+          <t hangText="Path:">$..jscard.links.contact-uri.uri</t>
+        </list>
+      </t>
+      <t>
+        <list style="hanging">
+          <t hangText="jCard property:">url</t>
+          <t hangText="Reference:">Section 6.7.8 of <xref target="RFC6350"/></t>
+          <t hangText="Path:">$..vcardArray[1][?(@[0]=='url')]</t>
+          <t hangText="JSContact property:">Link.uri</t>
+          <t hangText="Reference:">Section 2.6.3 of <xref target="I-D.ietf-calext-jscontact"/></t>
+          <t hangText="Path:">$..jscard.links.url.uri</t>
         </list>
       </t>
     </section>
@@ -986,7 +1066,9 @@
       </section>
       <section title="Change from 16 to 17">
         <t><list style="numbers">
-          <t>Corrected <xref target="localizations-example"/>, <xref target="jscard-example"/>, <xref target="rdap-reverse-search-mapping-registry"/> and <xref target="jcard-jscontact-mapping"/> to make them compliant with draft-ietf-calext-jscontact-12.</t>
+          <t>Fixed <xref target="localizations-example"/>, <xref target="jscard-example"/>, <xref target="rdap-reverse-search-mapping-registry"/> and <xref target="jcard-jscontact-mapping"/> to make them compliant with draft-ietf-calext-jscontact-16 and purge them of the JSContact properties which are hardly used in RDAP.</t>
+          <t>Rearranged <xref target="using-jscontact"/>.</t>
+          <t>Added other mapping correspondences to <xref target="jcard-jscontact-mapping"/>.</t>
         </list></t>
       </section>
     </section>
