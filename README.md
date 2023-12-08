@@ -29,238 +29,152 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
 ### Example of an entity lookup response
 
 ```
-{
-  "rdapConformance": [
-     "rdap_level_0",
-     "jscard"
-  ],
-  "objectClassName" : "entity",
-  "handle":"XXXX",
-  "jscard":{
-    "@type": "Card",
-    "uid": "XXXX",
-    "fullName": "Joe User" ,
-    "name": {
-      "components": [
-        {
-          "@type": "NameComponent",
-          "type": "surname",
-          "value": "User"
+   {
+      "rdapConformance": [
+         "rdap_level_0",
+         "jscard"
+      ],
+      "objectClassName": "entity",
+      "handle":"XXXX",
+      "jscard":{
+        "@type": "Card",
+        "@version": "1.0",
+        "uid": "74b64df3-2d60-56b4-9df3-8594886f4456",
+        "language": "en",
+        "name": {
+          "full": "Joe User",
+          "components": [
+            { "kind": "surname", "value": "User" },
+            { "kind": "given", "value": "Joe" }
+          ]
         },
-        {
-          "@type": "NameComponent",
-          "type": "personal",
-          "value": "Joe"
+        "organizations": {
+          "org": {
+            "name": "Example"
+          }
         },
-        {
-          "@type": "NameComponent",
-          "type": "suffix",
-          "value": "ing. jr"
+         "addresses": {
+           "addr": {
+             "components": [
+               { "kind": "name", "value": "4321 Rue Somewhere" },
+               { "kind": "extension", "value": "Suite 1234" },
+               { "kind": "locality", "value": "Quebec" },
+               { "kind": "region", "value": "QC" },
+               { "kind": "postcode", "value": "G1V 2M2" },
+               { "kind": "country", "value": "Canada" }
+             ],
+             "countryCode": "CA",
+             "coordinates": "geo:46.772673,-71.282945"
+           },
+           "addresses-1": {
+             "full": "123 Maple Ave Vancouver BC 1239"
+             "contexts": { "private": true }
+           }
+         },
+        "phones": {
+          "voice": {
+            "features": { "voice": true },
+            "number": "tel:+1-555-555-1234"
+          },
+          "fax": {
+            "features": { "fax": true },
+            "number": "tel:+1-555-555-4321"
+          }
         },
+        "emails": {
+          "email": {
+            "address": "joe.user@example.com"
+          }
+        },
+        "links": {
+          "url": {
+            "uri": "https://www.example.com"
+          },
+          "contact-uri": {
+            "kind": "contact",
+            "uri": "mailto:contact@example.com"
+          }
+        }
+      },
+      "roles":[ "registrar" ],
+      "publicIds":[
         {
-          "@type": "NameComponent",
-          "type": "suffix",
-          "value": "M.Sc."
+          "type":"IANA Registrar ID",
+          "identifier":"1"
+        }
+      ],
+      "links":[
+        {
+          "value":"https://example.com/entity/XXXX",
+          "rel":"self",
+          "href":"https://example.com/entity/XXXX",
+          "type" : "application/rdap+json"
+        }
+      ],
+      "events":[
+        {
+          "eventAction":"registration",
+          "eventDate":"1990-12-31T23:59:59Z"
+        }
+      ],
+      "asEventActor":[
+        {
+          "eventAction":"last changed",
+          "eventDate":"1991-12-31T23:59:59Z"
         }
       ]
-    },
-    "kind": "individual",
-    "preferredContactLanguages": {
-      "fr": {
-        "@type": "ContactLanguage",
-        "pref": 1
-      },
-      "en": {
-        "@type": "ContactLanguage",
-        "pref": 2
-      }
-    },
-    "organizations": {
-      "org": {
-        "@type": "Organization",
-        "name": "Example"
-      }
-    },
-    "titles": {
-      "title": {
-        "@type": "Title",
-        "title": "Research Scientist"
-      },
-      "role": {
-        "@type": "Title",
-        "title": "Project Lead"
-      }
-    },
-    "addresses": {
-      "addr": {
-        "@type": "Address",
-        "contexts": {
-          "work": true
-        },
-        "street": [
-          {
-            "@type": "StreetComponent",
-            "type": "name",
-            "value": "4321 Rue Somewhere"
-          },
-          {
-            "@type": "StreetComponent",
-            "type": "extension",
-            "value": "Suite 1234"
-          }
-        ],
-        "locality": "Quebec",
-        "region": "QC",
-        "postcode": "G1V 2M2",
-        "country": "Canada",
-        "coordinates": "geo:46.772673,-71.282945",
-        "timeZone": "Etc/GMT+5"
-      },
-      "home": {
-        "@type": "Address",
-        "contexts": {
-          "private": true
-        },
-        "fullAddress": "123 Maple Ave\nSuite 90001\nVancouver\nBC\n1239\n"
-      }
-    },
-    "phones": {
-      "voice" : {
-        "@type": "Phone",
-        "contexts": {
-          "work": true
-        },
-        "features": {
-           "voice": true,
-           "cell": true,
-           "video": true,
-           "text": true
-        },
-        "pref": 1,
-        "phone": "tel:+1-555-555-1234;ext=102"
-      }
-    },
-    "emails": {
-      "email": {
-        "@type": "EmailAddress",
-        "contexts": {
-          "work": true
-        },
-        "email": "joe.user@example.com"
-      }
-    },
-    "online": {
-      "key": {
-        "@type" : "Resource",
-        "contexts": {
-          "work": true
-        },
-        "type": "uri",
-        "label": "key",
-        "resource": "http://www.example.com/joe.user/joe.asc"
-      },
-      "url": {
-        "@type" : "Resource",
-        "contexts": {
-          "private": true
-        },
-        "type": "uri",
-        "label": "url",
-        "resource": "http://example.org"
-      }
-    }
-  },
-  "roles":[ "registrar" ],
-  "publicIds":[
-    {
-      "type":"IANA Registrar ID",
-      "identifier":"1"
-    }
-  ],
-  "remarks":[
-    {
-      "description":[
-        "She sells sea shells down by the sea shore.",
-        "Originally written by Terry Sullivan."
-      ]
-    }
-  ],
-  "links":[
-    {
-      "value":"http://example.com/entity/XXXX",
-      "rel":"self",
-      "href":"http://example.com/entity/XXXX",
-      "type" : "application/rdap+json"
-    }
-  ],
-  "events":[
-    {
-      "eventAction":"registration",
-      "eventDate":"1990-12-31T23:59:59Z"
-    }
-  ],
-  "asEventActor":[
-    {
-      "eventAction":"last changed",
-      "eventDate":"1991-12-31T23:59:59Z"
-    }
-  ]
-}
+   }
 ```
 
 ### Elided example of an entity lookup response including multilingual information
 
 ```
 ...
-    "jscard": {
-      "@type" : "Card",
-      "uid" : "7e0636f5-e48f-4a32-ab96-b57e9c07c7aa",
-      "fullName" : "Vasya Pupkin",
-      "organizations" : {
-        "org" : {
-          "@type" : "Organization",
-          "name" : "My Company"
+"jscard": {
+  "@type": "Card",
+  "@version": "1.0",
+  "uid": "7812cafe-336e-5969-988b-ad68f78ae90f",
+  "language": "en",
+  "name": {
+    "full": "Vasya Pupkin"
+  },
+  "organizations": {
+    "org": {
+      "name": "My Company"
+    }
+  },
+  "addresses": {
+    "addr": {
+      "components": [
+        { "kind": "name", "value": "1 Street" },
+        { "kind": "postOfficeBox", "value": "01001" },
+        { "kind": "locality", "value": "Kyiv" }
+      ],
+      "countryCode": "UA"
+    }
+  },
+  "localizations": {
+    "ua": {
+      "addresses": {
+        "addr": {
+          "components": [
+           { "kind": "name", "value": "1, Улица" },
+           { "kind": "postOfficeBox", "value": "01001" },
+           { "kind": "locality", "value": "Киев" }
+          ],
+          "countryCode": "UA"
         }
       },
-      "addresses" : {
-        "addr" : {
-          "@type" : "Address",
-          "street" : [ {
-            "@type" : "StreetComponent",
-            "type" : "name",
-            "value" : "1 Street"
-          }, {
-            "@type" : "StreetComponent",
-            "type" : "postOfficeBox",
-            "value" : "01001"
-          } ],
-          "locality" : "Kyiv",
-          "countryCode" : "UA"
-        }
+      "name": {
+        "full": "Вася Пупкин"
       },
-      "localizations" : {
-        "ua" : {
-          "jscard/addresses/addr" : {
-            "@type" : "Address",
-            "street" : [ {
-              "@type" : "StreetComponent",
-              "type" : "name",
-              "value" : "1, Улица"
-            }, {
-              "@type" : "StreetComponent",
-              "type" : "postOfficeBox",
-              "value" : "01001"
-            } ],
-            "locality" : "Киев",
-            "countryCode" : "UA"
-          },
-          "jscard/fullName" : "Вася Пупкин",
-          "jscard/organizations/org" : {
-            "@type" : "Organization",
-            "name" : "Моя Компания"
-          }
+      "organizations": {
+        "org": {
+          "name": "Моя Компания"
         }
       }
     }
+  }
+}
 ...
 ```
