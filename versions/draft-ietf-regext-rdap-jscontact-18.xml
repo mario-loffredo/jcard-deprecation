@@ -47,7 +47,7 @@
 <?rfc symrefs="yes"?>
 <?rfc iprnotified="no"?>
 
-<rfc category="std" docName="draft-ietf-regext-rdap-jscontact-17" ipr="trust200902" submissionType="IETF" consensus="true">
+<rfc category="std" docName="draft-ietf-regext-rdap-jscontact-18" ipr="trust200902" submissionType="IETF" consensus="true">
   <front>
     <title abbrev="Using JSContact in RDAP">Using JSContact in Registration Data Access Protocol
     (RDAP) JSON Responses</title>
