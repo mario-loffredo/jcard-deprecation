@@ -67,18 +67,17 @@
     </author>
 
     <author fullname="Gavin Brown" initials="G" surname="Brown">
-      <organization>CentralNic Group plc</organization>
+      <organization>ICANN</organization>
       <address>
         <postal>
-        <street>Saddlers House, 44 Gutter Lane</street>
-        <city>London</city>
-        <region>England</region>
-        <code>EC2V 6BR</code>
-        <country>GB</country>
+          <street>12025 Waterfront Drive, Suite 300</street>
+          <city>Los Angeles</city>
+          <region>CA</region>
+          <code>90292</code>
+          <country>US</country>
         </postal>
-        <phone>+44 20 33 88 0600</phone>
-        <email>gavin.brown@centralnic.com</email>
-        <uri>https://www.centralnic.com</uri>
+        <email>gavin.brown@icann.org</email>
+        <uri>https://www.icann.org/</uri>
       </address>
     </author>
 
