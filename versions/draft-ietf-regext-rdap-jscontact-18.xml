@@ -145,6 +145,7 @@
 
       <t><xref target="I-D.ietf-calext-jscontact-vcard"/> provides informational guidance on the conversion of jCard into JSCard, and vice versa.  <xref target="jcard-jscontact-mapping"/> shows JSContact counterparts for the most commonly used jCard properties in an RDAP response.</t>
 
+      <t>Since JSContact is a generalized representation of contact data, many of its capabilities are not optimised for use in RDAP responses. This document defines a usage profile for JSContact which simplifies the implementation, whether for clients or servers.</t>
     </section>
 
     <section anchor="using-jscontact" title="Using JSContact in RDAP Responses">
