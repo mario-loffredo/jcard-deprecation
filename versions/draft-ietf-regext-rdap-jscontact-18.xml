@@ -164,7 +164,7 @@
         <t>The JSContact &quot;language&quot; property <bcp14>SHOULD</bcp14> be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
       </section>
     <section anchor="map-keys" title="Map Keys">
-      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  A JSContact map key <bcp14>MUST</bcp14> comply with the definition of the Id type.  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
+      <t>Since most of the JSCard collections are represented as maps, map keys <bcp14>MUST</bcp14> be defined.  A JSContact map key <bcp14>MUST</bcp14> comply with the definition of the Id type (see Section 1.4.1 of <xref target="I-D.ietf-calext-jscontact-vcard" />).  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
         <list style="symbols">
           <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element.  If both internationalised and localized forms exist, the key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
           <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element.  If both internationalised and localized forms exist, the key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
