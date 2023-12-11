@@ -150,39 +150,39 @@
     <section anchor="using-jscontact" title="Using JSContact in RDAP Responses">
 
     <section anchor="extension-identifier" title="Extension Identifier">
-      <t>Entity objects in RDAP responses MAY include a &quot;jscard&quot; property whose value is a JSCard object instead of the &quot;vCardArray&quot; property defined in <xref target="RFC9083"/>.</t>
-      <t>Servers returning the &quot;jscard&quot; property in their response MUST include &quot;jscard&quot; in the &quot;rdapConformance&quot; array.</t>
+      <t>Entity objects in RDAP responses <bcp14>MAY</bcp14> include a &quot;jscard&quot; property whose value is a JSCard object instead of the &quot;vCardArray&quot; property defined in <xref target="RFC9083"/>.</t>
+      <t>Servers returning the &quot;jscard&quot; property in their response <bcp14>MUST</bcp14> include &quot;jscard&quot; in the &quot;rdapConformance&quot; array.</t>
     </section>
     <section anchor="jscontact-version" title="Version">
-      <t>The JSContact version to be used in RDAP MUST be &quot;1.0&quot;.</t>
+      <t>The JSContact version to be used in RDAP <bcp14>MUST</bcp14> be &quot;1.0&quot;.</t>
     </section>
       <section anchor="jscontact-kind" title="Kind">
-        <t>The JSContact &quot;kind&quot; property value MUST be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
+        <t>The JSContact &quot;kind&quot; property value <bcp14>MUST</bcp14> be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
       </section>
       <section anchor="jscontact-language" title="Language">
-        <t>The JSContact &quot;language&quot; property SHOULD be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
+        <t>The JSContact &quot;language&quot; property <bcp14>SHOULD</bcp14> be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
       </section>
     <section anchor="map-keys" title="Map Keys">
-      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  A JSContact map key MUST comply with the definition of the Id type.  To aid interoperability, RDAP providers MUST use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
+      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  A JSContact map key <bcp14>MUST</bcp14> comply with the definition of the Id type.  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
         <list style="symbols">
-          <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element.  If both internationalised and localized forms exist, the key MUST be used for the internationalised form;<vspace blankLines='1' /></t>
-          <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element.  If both internationalised and localized forms exist, the key MUST be used for the internationalised form;<vspace blankLines='1' /></t>
+          <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element.  If both internationalised and localized forms exist, the key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
+          <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element.  If both internationalised and localized forms exist, the key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
           <t>&quot;email&quot; in the &quot;emails&quot; map when there is a single &lt;contact:email&gt; element;<vspace blankLines='1' /></t>
           <t>&quot;voice&quot; in the &quot;phones&quot; map for the &lt;contact:voice&gt; element;<vspace blankLines='1' /></t>
           <t>&quot;fax&quot; in the &quot;phones&quot; map for the &lt;contact:fax&gt; element.</t>
         </list>
       </t>
-      <t>Additional keys of the &quot;links&quot; map that MUST be used to represent contact links which result from converting jCard &quot;uri&quot; and &quot;contact-uri&quot; properties are:
+      <t>Additional keys of the &quot;links&quot; map that <bcp14>MUST</bcp14> be used to represent contact links which result from converting jCard &quot;uri&quot; and &quot;contact-uri&quot; properties are:
         <list style="symbols">
-          <t>&quot;url&quot; used for the unique or preferred contact url (e.g. a web site).  The &quot;kind&quot; property of the JSContact &quot;Link&quot; object MUST NOT be set;<vspace blankLines='1'/></t>
-          <t>&quot;contact-uri&quot; used for the contact uri as defined in <xref target="RFC8605"/>.  The &quot;kind&quot; property of the JSContact &quot;Link&quot; object MUST be set to &quot;contact&quot;.</t>
+          <t>&quot;url&quot; used for the unique or preferred contact url (e.g. a web site).  The &quot;kind&quot; property of the JSContact &quot;Link&quot; object <bcp14>MUST NOT</bcp14> be set;<vspace blankLines='1'/></t>
+          <t>&quot;contact-uri&quot; used for the contact uri as defined in <xref target="RFC8605"/>.  The &quot;kind&quot; property of the JSContact &quot;Link&quot; object <bcp14>MUST</bcp14> be set to &quot;contact&quot;.</t>
         </list>
       </t>
       <t>The information needed to register the JSContact Id values in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
-      <t>An unregistered Id value used for the aforementioned maps or others SHOULD comply with the following scheme: &quot;&lt;map name&gt;-&lt;sequential number&gt;&quot; (e.g. &quot;addresses-1&quot;, &quot;addresses-2&quot;).</t>
+      <t>An unregistered Id value used for the aforementioned maps or others <bcp14>SHOULD</bcp14> comply with the following scheme: &quot;&lt;map name&gt;-&lt;sequential number&gt;&quot; (e.g. &quot;addresses-1&quot;, &quot;addresses-2&quot;).</t>
     </section>
       <section anchor="localizations" title="Localizations">
-      <t>If present, the localized versions of name, organization and postal address MUST be added to the &quot;localizations&quot; map.  With reference to the defintion of localization in <xref target="I-D.ietf-calext-jscontact"/>, an RDAP response with JSContact content MUST expand all localizations (i.e. a patch key using the syntax &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a JSCard object that presents a localized postal address (See PDF for non-ASCII character string).</t>
+      <t>If present, the localized versions of name, organization and postal address <bcp14>MUST</bcp14> be added to the &quot;localizations&quot; map.  With reference to the defintion of localization in <xref target="I-D.ietf-calext-jscontact"/>, an RDAP response with JSContact content <bcp14>MUST</bcp14> expand all localizations (i.e. a patch key using the syntax &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a JSCard object that presents a localized postal address (See PDF for non-ASCII character string).</t>
       <figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork xml:space="preserve">
 ...
 "jscard": {
@@ -341,7 +341,7 @@
 
       <t>One new query parameter is defined for the purpose of this document.</t>
 
-      <t>The parameter is an OPTIONAL extension of queries defined in <xref target="RFC9082"/> as well as any RDAP query described by a future document whose response includes contact information.  It is as follows:</t>
+      <t>The parameter is an <bcp14>OPTIONAL</bcp14> extension of queries defined in <xref target="RFC9082"/> as well as any RDAP query described by a future document whose response includes contact information.  It is as follows:</t>
 
         <t>&quot;jscard&quot;: a boolean value that allows a client to request the &quot;jscard&quot; property in the RDAP response;</t>
 
@@ -404,20 +404,20 @@
             <section anchor="stage1" title="Stage 1: only jCard provided">
               <t>This stage corresponds to providing jCard as the default contact card <xref
                 target="RFC9083" />.  The RDAP server is not able to provide an alternate format for the contact
-                card.  The rdapConformance array MUST NOT contain the &quot;jscard&quot; tag.</t>
+                card.  The rdapConformance array <bcp14>MUST NOT</bcp14> contain the &quot;jscard&quot; tag.</t>
             </section>
 
             <section anchor="stage2" title="Stage 2: jCard sunset">
               <t>During this stage, the server uses jCard by default, but the RDAP server will
                 return JSCard if the client sets the query parameter &quot;jscard&quot; to 1/true/yes.
-                The rdapConformance array MUST contain the &quot;jscard&quot; tag if JSCard is
+                The rdapConformance array <bcp14>MUST</bcp14> contain the &quot;jscard&quot; tag if JSCard is
                 returned.</t>
 
-              <t>From this stage on, the RDAP server MUST include the &quot;jscard&quot; tag in the rdapConformance array of the help response to signal clients that JSCard can be returned instead of jCard.</t>
+              <t>From this stage on, the RDAP server <bcp14>MUST</bcp14> include the &quot;jscard&quot; tag in the rdapConformance array of the help response to signal clients that JSCard can be returned instead of jCard.</t>
 
-              <t>If JSCard is not requested, the RDAP server SHOULD include a notice titled &quot;jCard sunset end&quot;.  Such
+              <t>If JSCard is not requested, the RDAP server <bcp14>SHOULD</bcp14> include a notice titled &quot;jCard sunset end&quot;.  Such
                 a notice includes a description reporting the jCard sunset end date and time and two
-                OPTIONAL links:</t>
+                <bcp14>OPTIONAL</bcp14> links:</t>
 
               <t><list style="symbols">
                 <t>&quot;related&quot;: a link to a URI-identified resource documenting the transition procedure;<vspace blankLines='1' /></t>
@@ -454,7 +454,7 @@
           <t>This stage corresponds to providing JSCard as default contact card.  The rdapConformance
             array always contains &quot;jscard&quot; tag.  The RDAP server doesn't include any
             notice about the jCard deprecation process.  The &quot;jscard&quot; query
-            parameter MUST be ignored.</t>
+            parameter <bcp14>MUST</bcp14> be ignored.</t>
 
           <t>FOR DISCUSSION: should server signal the end of the transition by including the "jcard_deprecated" value in the rdapConformance array ? Would its usage be compliant with the rdapConformance definition in RFC 9083 ?</t>
         </section>
@@ -463,7 +463,7 @@
           <t>The length of the jCard sunset period is not fixed by this
             specification.  Best practices in REST API deprecation suggest that, depending on the
             deprecated API's reach, user base and service offering, a convenient time could be
-            anywhere between 3 - 8 months.  Anyway, RDAP providers are RECOMMENDED to monitor the
+            anywhere between 3 - 8 months.  Anyway, RDAP providers are <bcp14>RECOMMENDED</bcp14> to monitor the
             server log to figure out whether the declared time need to be changed to meet client
             requirements.</t>
         </section>
