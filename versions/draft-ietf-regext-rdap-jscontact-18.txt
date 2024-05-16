@@ -1,0 +1,1456 @@
+
+
+
+
+Registration Protocols Extensions                            M. Loffredo
+Internet-Draft                                       IIT-CNR/Registro.it
+Intended status: Standards Track                                G. Brown
+Expires: 17 November 2024                                          ICANN
+                                                             16 May 2024
+
+
+    Using JSContact in Registration Data Access Protocol (RDAP) JSON
+                               Responses
+                  draft-ietf-regext-rdap-jscontact-18
+
+Abstract
+
+   This document describes an RDAP extension which represents entity
+   contact information in JSON responses using JSContact.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 17 November 2024.
+
+Copyright Notice
+
+   Copyright (c) 2024 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 1]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Rationale . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.2.  Conventions Used in This Document . . . . . . . . . . . .   4
+   2.  JSContact . . . . . . . . . . . . . . . . . . . . . . . . . .   4
+   3.  Using JSContact in RDAP Responses . . . . . . . . . . . . . .   5
+     3.1.  Extension Identifier  . . . . . . . . . . . . . . . . . .   5
+     3.2.  Version . . . . . . . . . . . . . . . . . . . . . . . . .   5
+     3.3.  Kind  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
+     3.4.  Language  . . . . . . . . . . . . . . . . . . . . . . . .   5
+     3.5.  Name  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
+   4.  Map Keys  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
+   5.  Localizations . . . . . . . . . . . . . . . . . . . . . . . .   6
+   6.  Example of using JSContact in RDAP response . . . . . . . . .   7
+   7.  Query Parameters  . . . . . . . . . . . . . . . . . . . . . .   9
+   8.  Reverse Search Properties . . . . . . . . . . . . . . . . . .  10
+   9.  Transition Considerations . . . . . . . . . . . . . . . . . .  10
+     9.1.  RDAP Features Supporting the Transition Process . . . . .  10
+       9.1.1.  Notices and Link Relationships  . . . . . . . . . . .  10
+       9.1.2.  rdapConformance Property  . . . . . . . . . . . . . .  10
+     9.2.  Transition Procedure  . . . . . . . . . . . . . . . . . .  10
+       9.2.1.  Goals . . . . . . . . . . . . . . . . . . . . . . . .  11
+       9.2.2.  Transition Stages . . . . . . . . . . . . . . . . . .  11
+         9.2.2.1.  Stage 1: only jCard provided  . . . . . . . . . .  11
+         9.2.2.2.  Stage 2: jCard sunset . . . . . . . . . . . . . .  11
+         9.2.2.3.  Stage 3: jCard deprecation  . . . . . . . . . . .  12
+         9.2.2.4.  Length  . . . . . . . . . . . . . . . . . . . . .  12
+   10. Implementation Status . . . . . . . . . . . . . . . . . . . .  12
+     10.1.  IIT-CNR/Registro.it RDAP Server  . . . . . . . . . . . .  13
+     10.2.  IIT-CNR/Registro.it RDAP Client  . . . . . . . . . . . .  13
+     10.3.  client.rdap.org  . . . . . . . . . . . . . . . . . . . .  13
+     10.4.  CentralNic Registry  . . . . . . . . . . . . . . . . . .  14
+   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
+     11.1.  RDAP Extensions Registry . . . . . . . . . . . . . . . .  14
+     11.2.  RDAP JSON Values Registry  . . . . . . . . . . . . . . .  14
+     11.3.  RDAP Reverse Search Mapping Registry . . . . . . . . . .  16
+   12. Security Considerations . . . . . . . . . . . . . . . . . . .  16
+   13. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
+   14. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     14.1.  Normative References . . . . . . . . . . . . . . . . . .  17
+     14.2.  Informative References . . . . . . . . . . . . . . . . .  18
+   Appendix A.  jCard-JSContact Mapping  . . . . . . . . . . . . . .  19
+   Appendix B.  Change Log . . . . . . . . . . . . . . . . . . . . .  22
+     B.1.  Change from 00 to 01  . . . . . . . . . . . . . . . . . .  22
+     B.2.  Change from 01 to 02  . . . . . . . . . . . . . . . . . .  23
+     B.3.  Change from 02 to 03  . . . . . . . . . . . . . . . . . .  23
+     B.4.  Change from 03 to 04  . . . . . . . . . . . . . . . . . .  23
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 2]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+     B.5.  Initial WG version  . . . . . . . . . . . . . . . . . . .  23
+     B.6.  Change from 00 to 01  . . . . . . . . . . . . . . . . . .  23
+     B.7.  Change from 01 to 02  . . . . . . . . . . . . . . . . . .  23
+     B.8.  Change from 02 to 03  . . . . . . . . . . . . . . . . . .  23
+     B.9.  Change from 03 to 04  . . . . . . . . . . . . . . . . . .  23
+     B.10. Change from 04 to 05  . . . . . . . . . . . . . . . . . .  24
+     B.11. Change from 05 to 06  . . . . . . . . . . . . . . . . . .  24
+     B.12. Change from 06 to 07  . . . . . . . . . . . . . . . . . .  24
+     B.13. Change from 07 to 08  . . . . . . . . . . . . . . . . . .  24
+     B.14. Change from 08 to 09  . . . . . . . . . . . . . . . . . .  24
+     B.15. Change from 09 to 10  . . . . . . . . . . . . . . . . . .  24
+     B.16. Change from 10 to 11  . . . . . . . . . . . . . . . . . .  24
+     B.17. Change from 11 to 12  . . . . . . . . . . . . . . . . . .  24
+     B.18. Change from 12 to 13  . . . . . . . . . . . . . . . . . .  24
+     B.19. Change from 13 to 14  . . . . . . . . . . . . . . . . . .  25
+     B.20. Change from 14 to 15  . . . . . . . . . . . . . . . . . .  25
+     B.21. Change from 14 to 15  . . . . . . . . . . . . . . . . . .  25
+     B.22. Change from 15 to 16  . . . . . . . . . . . . . . . . . .  25
+     B.23. Change from 16 to 17  . . . . . . . . . . . . . . . . . .  25
+     B.24. Change from 17 to 18  . . . . . . . . . . . . . . . . . .  25
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  26
+
+1.  Introduction
+
+   This document specifies an extension to the Registration Data Access
+   Protocol (RDAP) that allows RDAP servers to use JSContact [RFC9553]
+   to represent the contact information associated with entities in RDAP
+   responses, instead of jCard [RFC7095].  It also describes the process
+   by which an RDAP server can transition from jCard to JSContact.  RDAP
+   query and response extensions are defined to facilitate the
+   transition process.
+
+1.1.  Rationale
+
+   According to the feedback from RDAP Pilot Working Group
+   [RDAP-PILOT-WG], a group of RDAP server implementers representing
+   registries and registrars of generic TLDs, the most commonly raised
+   implementation concern, for both servers and client implementers,
+   related to the use of jCard [RFC7095] to represent the contact
+   information associated with entities.  Working Group members reported
+   jCard to be unintuitive, complicated to implement for both clients
+   and servers, and incompatible with best practices for RESTful APIs.
+
+
+
+
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 3]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   JSContact [RFC9553] provides a simpler and more efficient
+   representation for contact information with regard to time and effort
+   saved in processing it.  In addition, similarly to jCard, it provides
+   a means to represent internationalised and unstructured contact
+   information.  Support for internationalised contact information has
+   been recognised being necessary to facilitate the future
+   internationalisation of registration data directory services.
+
+1.2.  Conventions Used in This Document
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+   The JSContact specification declares the object type "Card" which
+   represents a single contact card.  To avoid confusion, in the
+   following of this document, the term "JSCard" is used to refer to
+   "JSContact Card".
+
+2.  JSContact
+
+   The JSContact specification defines a data model and JSON
+   representation of contact information that can be used for data
+   storage and exchange in address book or directory applications.  It
+   aims to be an alternative to the vCard data format [RFC6350] and to
+   be unambiguous, extendable and simple to process.  In contrast with
+   jCard, it is not a direct mapping from the vCard data model and
+   expands semantics where appropriate.
+
+   JSCard differs from jCard in that it:
+
+   *  follows an object-oriented rather than array-oriented approach;
+   *  is simple to process;
+   *  requires no extra work in serialization/deserialization from/to a
+      data model;
+   *  includes no "jagged" arrays;
+   *  prefers maps rather than arrays to implement collections.
+
+   [RFC9555] provides guidance on the conversion of jCard into JSCard,
+   and vice versa.  Appendix A shows JSContact counterparts for the most
+   commonly used jCard properties in an RDAP response.
+
+   Since JSContact is a generalized representation of contact data, many
+   of its capabilities are not optimised for use in RDAP responses.
+   This document defines a usage profile for JSContact which simplifies
+   the implementation, whether for clients or servers.
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 4]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+3.  Using JSContact in RDAP Responses
+
+3.1.  Extension Identifier
+
+   Entity objects in RDAP responses MAY include a "jscard" property
+   whose value is a JSCard object instead of the "vCardArray" property
+   defined in [RFC9083].
+
+   Servers returning the "jscard" property in their response MUST
+   include "jscard" in the "rdapConformance" array.
+
+3.2.  Version
+
+   The JSCard "version" property value MUST be "1.0".
+
+3.3.  Kind
+
+   The JSCard "kind" property value MUST be "individual" (default) or
+   "org" to represent an individual or an organization, respectively.
+
+3.4.  Language
+
+   The JSCard "language" property SHOULD be set when localizations are
+   specified (i.e. the "localizations" property is not null).
+
+3.5.  Name
+
+   The JSCard "name" property MUST include the "full" member and MAY
+   include the "components" array to specify the name components of an
+   individual.
+
+4.  Map Keys
+
+   Since most of the JSCard collections are represented as maps, map
+   keys must be defined.  A JSCard map key MUST comply with the
+   definition of the Id type (see Section 1.4.1 of [RFC9553]).  To aid
+   interoperability, RDAP providers MUST use the following Id values
+   related to string values and labels defined in [RFC5733]:
+
+   *  "org" in the "organizations" map when there is a single
+      <contact:org> element.  If both internationalised and localized
+      forms exist, the key MUST be used for the internationalised form;
+   *  "addr" in the "addresses" map when there is a single
+      <contact:addr> element.  If both internationalised and localized
+      forms exist, the key MUST be used for the internationalised form;
+   *  "email" in the "emails" map when there is a single <contact:email>
+      element.  If both ASCII and SMTPUTF8 forms exist, the key MUST be
+      used for the ASCII form;
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 5]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   *  "voice" in the "phones" map for the <contact:voice> element;
+   *  "fax" in the "phones" map for the <contact:fax> element.
+
+   Additional keys of the "links" map that MUST be used to represent
+   contact links which result from converting jCard "uri" and "contact-
+   uri" properties are:
+
+   *  "url" used for the unique or preferred contact url (e.g. a web
+      site).  The "kind" property of the JSContact "Link" object MUST
+      NOT be set;
+   *  "contact-uri" used for the contact uri as defined in [RFC8605].
+      The "kind" property of the JSContact "Link" object MUST be set to
+      "contact".
+
+   The information needed to register the JSContact Id values in the
+   "RDAP JSON Values" registry [RFC9083] is described in Section 11.2.
+
+   An unregistered Id value used for the aforementioned maps or others
+   SHOULD comply with the following scheme: "<map name>-<sequential
+   number>" (e.g. "addresses-1", "addresses-2").
+
+5.  Localizations
+
+   If present, the localized versions of name, organization, postal
+   address and email MUST be added to the "localizations" map.  With
+   reference to the defintion of localization in [RFC9553], an RDAP
+   response with JSContact content MUST expand all localizations (i.e. a
+   patch key using the syntax "{key1}/{key2}/.../{keyN}" is not
+   allowed).  The following is an elided example of an RDAP entity
+   lookup response including a JSCard object that presents a localized
+   postal address (See PDF for non-ASCII character string).
+
+   ...
+   "jscard": {
+     "@type": "Card",
+     "@version": "1.0",
+     "uid": "7812cafe-336e-5969-988b-ad68f78ae90f",
+     "language": "en",
+     "name": {
+       "full": "Vasya Pupkin"
+     },
+     "organizations": {
+       "org": {
+         "name": "My Company"
+       }
+     },
+     "addresses": {
+       "addr": {
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 6]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+         "components": [
+           { "kind": "name", "value": "1 Street" },
+           { "kind": "postOfficeBox", "value": "01001" },
+           { "kind": "locality", "value": "Kyiv" }
+         ],
+         "countryCode": "UA"
+       }
+     },
+     "localizations": {
+       "ua": {
+         "addresses": {
+           "addr": {
+             "components": [
+              { "kind": "name", "value": "1, Улица" },
+              { "kind": "postOfficeBox", "value": "01001" },
+              { "kind": "locality", "value": "Киев" }
+             ],
+             "countryCode": "UA"
+           }
+         },
+         "name": {
+           "full": "Вася Пупкин"
+         },
+         "organizations": {
+           "org": {
+             "name": "Моя Компания"
+           }
+         }
+       }
+     }
+   }
+   ...
+
+          Figure 1: Example of handling localizations in JSContact
+
+6.  Example of using JSContact in RDAP response
+
+   The following is an example of an RDAP entity including a JSCard
+   object.
+
+   {
+      "rdapConformance": [
+         "rdap_level_0",
+         "jscard"
+      ],
+      "objectClassName": "entity",
+      "handle":"XXXX",
+      "jscard":{
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 7]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+        "@type": "Card",
+        "@version": "1.0",
+        "uid": "74b64df3-2d60-56b4-9df3-8594886f4456",
+        "name": {
+          "full": "Joe User",
+          "components": [
+            { "kind": "surname", "value": "User" },
+            { "kind": "given", "value": "Joe" }
+          ]
+        },
+        "organizations": {
+          "org": {
+            "name": "Org Example"
+          }
+        },
+         "addresses": {
+           "addr": {
+             "components": [
+               { "kind": "name", "value": "Main Street 1" },
+               { "kind": "locality", "value": "Ludwigshafen am Rhein" },
+               { "kind": "region", "value": "Rhineland-Palatinate" },
+               { "kind": "postcode", "value": "67067" },
+               { "kind": "country", "value": "Germany" }
+             ],
+             "countryCode": "DE",
+             "coordinates": "geo:49.477409, 8.445180"
+           },
+           "addresses-1": {
+             "full": "Somewhere Street 1 Mutterstadt 67112 Germany"
+             "contexts": { "private": true }
+           }
+         },
+        "phones": {
+          "voice": {
+            "features": { "voice": true },
+            "number": "tel:+49-1522-3433333"
+          },
+          "fax": {
+            "features": { "fax": true },
+            "number": "tel:+49-30-901820"
+          }
+        },
+        "emails": {
+          "email": {
+            "address": "joe.user@example.com"
+          }
+        },
+        "links": {
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 8]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+          "url": {
+            "uri": "https://www.example.com"
+          },
+          "contact-uri": {
+            "kind": "contact",
+            "uri": "mailto:contact@example.com"
+          }
+        }
+      },
+      "roles":[ "registrar" ],
+      "publicIds":[
+        {
+          "type":"IANA Registrar ID",
+          "identifier":"1"
+        }
+      ],
+      "links":[
+        {
+          "value":"https://example.com/entity/XXXX",
+          "rel":"self",
+          "href":"https://example.com/entity/XXXX",
+          "type" : "application/rdap+json"
+        }
+      ],
+      "events":[
+        {
+          "eventAction":"registration",
+          "eventDate":"1990-12-31T23:59:59Z"
+        }
+      ],
+      "asEventActor":[
+        {
+          "eventAction":"last changed",
+          "eventDate":"1991-12-31T23:59:59Z"
+        }
+      ]
+   }
+
+        Figure 2: Example of using JSContact in RDAP response
+
+7.  Query Parameters
+
+   One new query parameter is defined for the purpose of this document.
+
+   The parameter is an OPTIONAL extension of queries defined in
+   [RFC9082] as well as any RDAP query described by a future document
+   whose response includes contact information.  It is as follows:
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024                [Page 9]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   "jscard": a boolean value that allows a client to request the
+   "jscard" property in the RDAP response;
+
+   This parameter is further explained in Section 9.2.2.2.
+
+8.  Reverse Search Properties
+
+   The use of JSContact updates the mappings of two reverse search
+   properties, namely "fn" and "email", defined in [RFC9536].  Such new
+   mappings are registered in the Reverse Search Mapping registry as
+   described in Section 11.3.
+
+9.  Transition Considerations
+
+9.1.  RDAP Features Supporting the Transition Process
+
+9.1.1.  Notices and Link Relationships
+
+   RDAP allows servers to communicate service information to clients
+   through notices.  According to Section 4.3 of [RFC9083], an RDAP
+   response may contain one or more notice objects.  Each notice may
+   include a set of link objects, which can be used to provide clients
+   with references and documentation.  These link objects may have a
+   "rel" property which defines the relationship type, as described in
+   [RFC8288], Section 4.  The transition process outlined in this
+   document uses a link relation type, namely "alternate", described in
+   [RFC8288].
+
+9.1.2.  rdapConformance Property
+
+   The information about the specifications used in the construction of
+   the response is also described by the strings which appear in the
+   "rdapConformance" property of the RDAP response.
+
+9.2.  Transition Procedure
+
+   The principles of the procedure for jCard to JSCard transition are
+   based on the best practices in [API-DEPRECATION].
+
+   The procedure consists of three contiguous stages.  During the
+   procedure, the presence of "jscard" tag in the rdapConformance array
+   indicates that JSCard is returned instead of jCard.  The date and
+   time format used to notify clients about the stages of this procedure
+   is defined in [RFC3339].
+
+
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 10]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+9.2.1.  Goals
+
+   The procedure described in this document aims to achieve the
+   following goals:
+
+   *  only one contact representation would be included in the response;
+   *  the response would always be compliant to [RFC9083] because:
+      -  being the "jscard" property a response extension, its presence
+         would be signaled by the "jscard" conformance tag;
+      -  being "vcardArray" property optional in a response, its absence
+         would be allowed;
+   *  clients would be informed about the transition timeline;
+   *  the backward compatibility would be guaranteed throughout the
+      transition;
+   *  servers and clients could execute their transitions independently.
+
+9.2.2.  Transition Stages
+
+9.2.2.1.  Stage 1: only jCard provided
+
+   This stage corresponds to providing jCard as the default contact card
+   [RFC9083].  The RDAP server is not able to provide an alternate
+   format for the contact card.  The rdapConformance array MUST NOT
+   contain the "jscard" tag.
+
+9.2.2.2.  Stage 2: jCard sunset
+
+   During this stage, the server uses jCard by default, but the RDAP
+   server will return JSCard if the client sets the query parameter
+   "jscard" to 1/true/yes.  The rdapConformance array MUST contain the
+   "jscard" tag if JSCard is returned.
+
+   From this stage on, the RDAP server MUST include the "jscard" tag in
+   the rdapConformance array of the help response to signal clients that
+   JSCard can be returned instead of jCard.
+
+   If JSCard is not requested, the RDAP server SHOULD include a notice
+   titled "jCard sunset end".  Such a notice includes a description
+   reporting the jCard sunset end date and time and an OPTIONAL link:
+
+   *  "alternate": a link to an alternate result view identified by the
+      current query string plus the parameter "jscard" set to 1/true/yes
+      (Figure 3).
+
+
+
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 11]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   "notices": [
+     {
+       "title": "jCard sunset end",
+       "description": ["2022-12-31T23:59:59Z"],
+       "links": [
+         {
+           "value": "https://example.net/entity/XXXX",
+           "rel": "alternate",
+           "type": "application/rdap+json",
+           "href": " https://example.net/entity/XXXX?jscard=1"
+         }
+       ]
+     }
+   ]
+
+               Figure 3: jCard sunset - JSCard not requested
+
+9.2.2.3.  Stage 3: jCard deprecation
+
+   This stage corresponds to providing JSCard as default contact card.
+   The rdapConformance array always contains "jscard" tag.  The RDAP
+   server doesn't include any notice about the jCard deprecation
+   process.  The "jscard" query parameter MUST be ignored.
+
+   FOR DISCUSSION: should server signal the end of the transition by
+   including the "jcard_deprecated" value in the rdapConformance array ?
+   Would its usage be compliant with the rdapConformance definition in
+   RFC 9083 ?
+
+9.2.2.4.  Length
+
+   The length of the jCard sunset period is not fixed by this
+   specification.  Anyway, RDAP providers are RECOMMENDED to monitor the
+   server log to figure out whether the declared time need to be changed
+   to meet client requirements.
+
+10.  Implementation Status
+
+   NOTE: Please remove this section and the reference to RFC 7942 prior
+   to publication as an RFC.
+
+   This section records the status of known implementations of the
+   protocol defined by this specification at the time of posting of this
+   Internet-Draft, and is based on a proposal described in RFC 7942
+   [RFC7942].  The description of implementations in this section is
+   intended to assist the IETF in its decision processes in progressing
+   drafts to RFCs.  Please note that the listing of any individual
+   implementation here does not imply endorsement by the IETF.
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 12]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   Furthermore, no effort has been spent to verify the information
+   presented here that was supplied by IETF contributors.  This is not
+   intended as, and must not be construed to be, a catalog of available
+   implementations or their features.  Readers are advised to note that
+   other implementations may exist.
+
+   According to RFC 7942, "this will allow reviewers and working groups
+   to assign due consideration to documents that have the benefit of
+   running code, which may serve as evidence of valuable experimentation
+   and feedback that have made the implemented protocols more mature.
+   It is up to the individual working groups to use this information as
+   they see fit".
+
+10.1.  IIT-CNR/Registro.it RDAP Server
+
+   *  Responsible Organization: Institute of Informatics and Telematics
+      of National Research Council (IIT-CNR)/Registro.it
+   *  Location: https://rdap.pubtest.nic.it/
+      (https://rdap.pubtest.nic.it/domain/nic.it?jscard=1)
+   *  Description: This implementation includes support for RDAP queries
+      using data from the public test environment of .it ccTLD.
+   *  Level of Maturity: This is an "alpha" test implementation.
+   *  Coverage: This implementation includes all of the features
+      described in this specification.
+   *  Contact Information: Mario Loffredo, mario.loffredo@iit.cnr.it
+
+10.2.  IIT-CNR/Registro.it RDAP Client
+
+   *  Responsible Organization: Institute of Informatics and Telematics
+      of National Research Council (IIT-CNR)/Registro.it
+   *  Location: https://web-rdap.pubtest.nic.it/
+   *  Description: This is a Javascript web-based RDAP client.  RDAP
+      responses are retrieved from RDAP servers by the browser, parsed
+      into an HTML representation, and displayed in a format improving
+      the user experience.  RDAP responses containing JSCard objects are
+      handled identically to those containing jCard objects.  Raw
+      versions of RDAP responses including either jCard or JSCard
+      objects are provided.
+   *  Level of Maturity: This is an "alpha" test implementation.
+   *  Coverage: This implementation includes all of the features
+      described in this specification.
+   *  Contact Information: Francesco Donini, francesco.donini@iit.cnr.it
+
+10.3.  client.rdap.org
+
+   *  Location: https://client.rdap.org/
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 13]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   *  Description: This is a web-based "single page" RDAP client.  RDAP
+      responses are retrieved from RDAP servers by the browser, and
+      parsed into an HTML representation.  RDAP responses containing
+      JSCard objects are handled identically to those containing jCard
+      objects.
+   *  Level of Maturity: This is an "alpha" test implementation.
+   *  Coverage: This implementation implements client support for
+      parsing JSCard objects in RDAP responses.
+   *  Contact Information: Gavin Brown, feedback@rdap.org
+
+10.4.  CentralNic Registry
+
+   *  Responsible Organization: CentralNic Group PLC
+   *  Location: https://rdap.centralnic.com/{tld}
+   *  Description: This server is the product RDAP service for all top-
+      level domains on the CentralNic registry platform.
+   *  Level of Maturity: Production quality.
+   *  Coverage: This implementation includes all of the features
+      described in this specification.
+   *  Contact Information: support@centralnic.com
+
+11.  IANA Considerations
+
+11.1.  RDAP Extensions Registry
+
+   IANA is requested to register the following values in the RDAP
+   Extensions Registry:
+
+   *  Extension identifier: jscard
+   *  Registry operator: Any
+   *  Published specification: This document.
+   *  Contact: IETF <iesg@ietf.org>
+   *  Intended usage: This extension prefix identifier is used for the
+      "jscard" member returned in the JSON response [RFC9553].
+
+11.2.  RDAP JSON Values Registry
+
+   With regard to the fields of the "RDAP JSON Values" registry
+   [RFC9083], the "JSContact Id Value" type SHALL be used to register
+   the RDAP values for the JSContact Id type as defined in Section 4.
+
+   IANA is requested to register the following values in the "RDAP JSON
+   Values" registry:
+
+   Value:  org
+   Type:  JSContact Id Value
+   Description:  The key in the JSContact "organizations" map
+      identifiying the contact organization.
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 14]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+   Value:  addr
+   Type:  JSContact Id Value
+   Description:  The key in the JSContact "addresses" map identifiying
+      the unique or preferred contact postal address.
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+   Value:  email
+   Type:  JSContact Id Value
+   Description:  The key in the JSContact "emails" map identifiying the
+      unique or preferred contact email address.
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+   Value:  voice
+   Type:  JSContact Id Value
+   Description:  The key in the JSContact "phones" map identifiying the
+      unique or preferred contact voice number.
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+   Value:  fax
+   Type:  JSContact Id Value
+   Description:  The key in the JSContact "phones" map identifiying the
+      unique or preferred contact fax number.
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+   Value:  url
+   Type:  JSContact Id Value
+   Description:  The key in the JSContact "links" map identifiying the
+      unique or preferred url.
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+   Value:  contact-uri
+   Type:  JSContact Id Value
+   Description:  The key in the JSContact "links" map identifiying the
+      contact uri as defined in [RFC8605].
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 15]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+11.3.  RDAP Reverse Search Mapping Registry
+
+   IANA is requested to register the following entries in the the "RDAP
+   Reverse Search Mapping" registry [RFC9536]:
+
+   Searchable Resource Type:  domains, nameservers, entities
+   Related Resource Type:  entity
+   Property:  fn
+   Property Path:
+      $.entities[*].jscard.[name.full,localizations.*.name.full]
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+   Searchable Resource Type:  domains, nameservers, entities
+   Related Resource Type:  entity
+   Property:  email
+   Property Path:  $.entities[*].jscard.[emails.email.address,
+      localizations.*.emails.email.address]
+   Registrant Name:  IESG
+   Registrant Contact Information:  iesg@ietf.org
+   Reference:  This document
+
+12.  Security Considerations
+
+   Unlike what happens for the "fn" property in jCard, the only
+   mandatory property in JSContact, namely "uid", is not a sensitive
+   information.  Nevertheless, RDAP operators can redact it to prevent
+   results from being correlated.  Hence, with reference to what is
+   described in [RFC9537], a redaction method must be selected based on
+   the "uid" format.
+
+   If "uid" is represented as a URN in the uuid namespace, the most
+   appropriate choice is using the "Replacement Value" method along with
+   the nil UUID as replacing value.  If it is provided in the free-text
+   format, the "Empty Value" method should be preferred.  Otherwise, an
+   URI value can be redacted by using any of the two methods above.  For
+   example, the URL of the RDAP entity corresponding to the contact
+   (e.g. "https://example.com/rdap/entity/XYZ12345") can be redacted by
+   replacing the entity handle with a fixed literal (e.g
+   "https://example.com/rdap/entity/XXXXX").
+
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 16]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+13.  Acknowledgements
+
+   The authors would like to acknowledge the following individuals for
+   their contributions to this document: Jasdip Singh, Andrew Newton,
+   Marc Blanchet, Rick Wilhelm and Francesco Donini.
+
+14.  References
+
+14.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC3339]  Klyne, G. and C. Newman, "Date and Time on the Internet:
+              Timestamps", RFC 3339, DOI 10.17487/RFC3339, July 2002,
+              <https://www.rfc-editor.org/info/rfc3339>.
+
+   [RFC5733]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)
+              Contact Mapping", STD 69, RFC 5733, DOI 10.17487/RFC5733,
+              August 2009, <https://www.rfc-editor.org/info/rfc5733>.
+
+   [RFC6350]  Perreault, S., "vCard Format Specification", RFC 6350,
+              DOI 10.17487/RFC6350, August 2011,
+              <https://www.rfc-editor.org/info/rfc6350>.
+
+   [RFC7095]  Kewisch, P., "jCard: The JSON Format for vCard", RFC 7095,
+              DOI 10.17487/RFC7095, January 2014,
+              <https://www.rfc-editor.org/info/rfc7095>.
+
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/info/rfc7942>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+   [RFC8288]  Nottingham, M., "Web Linking", RFC 8288,
+              DOI 10.17487/RFC8288, October 2017,
+              <https://www.rfc-editor.org/info/rfc8288>.
+
+   [RFC9082]  Hollenbeck, S. and A. Newton, "Registration Data Access
+              Protocol (RDAP) Query Format", STD 95, RFC 9082,
+              DOI 10.17487/RFC9082, June 2021,
+              <https://www.rfc-editor.org/info/rfc9082>.
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 17]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   [RFC9083]  Hollenbeck, S. and A. Newton, "JSON Responses for the
+              Registration Data Access Protocol (RDAP)", STD 95,
+              RFC 9083, DOI 10.17487/RFC9083, June 2021,
+              <https://www.rfc-editor.org/info/rfc9083>.
+
+   [RFC9536]  Loffredo, M. and M. Martinelli, "Registration Data Access
+              Protocol (RDAP) Reverse Search", RFC 9536,
+              DOI 10.17487/RFC9536, April 2024,
+              <https://www.rfc-editor.org/info/rfc9536>.
+
+   [RFC9553]  Stepanek, R. and M. Loffredo, "JSContact: A JSON
+              Representation of Contact Data", RFC 9553,
+              DOI 10.17487/RFC9553, May 2024,
+              <https://www.rfc-editor.org/info/rfc9553>.
+
+   [RFC9555]  Loffredo, M. and R. Stepanek, "JSContact: Converting from
+              and to vCard", RFC 9555, DOI 10.17487/RFC9555, May 2024,
+              <https://www.rfc-editor.org/info/rfc9555>.
+
+14.2.  Informative References
+
+   [API-DEPRECATION]
+              Sandoval, K., "How to Smartly Sunset and Deprecate APIs",
+              August 2019, <https://web.archive.org/web/20200417084255/
+              https://nordicapis.com/how-to-smartly-sunset-and-
+              deprecate-apis/>.
+
+   [RDAP-PILOT-WG]
+              ICANN RDAP Pilot WG, "RDAP Pilot Report", April 2019,
+              <https://www.icann.org/en/system/files/files/rdap-pilot-
+              report-25apr19-en.pdf>.
+
+   [RFC8605]  Hollenbeck, S. and R. Carney, "vCard Format Extensions:
+              ICANN Extensions for the Registration Data Access Protocol
+              (RDAP)", RFC 8605, DOI 10.17487/RFC8605, May 2019,
+              <https://www.rfc-editor.org/info/rfc8605>.
+
+   [RFC9535]  Gössner, S., Ed., Normington, G., Ed., and C. Bormann,
+              Ed., "JSONPath: Query Expressions for JSON", RFC 9535,
+              DOI 10.17487/RFC9535, February 2024,
+              <https://www.rfc-editor.org/info/rfc9535>.
+
+   [RFC9537]  Gould, J., Smith, D., Kolker, J., and R. Carney, "Redacted
+              Fields in the Registration Data Access Protocol (RDAP)
+              Response", RFC 9537, DOI 10.17487/RFC9537, March 2024,
+              <https://www.rfc-editor.org/info/rfc9537>.
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 18]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+Appendix A.  jCard-JSContact Mapping
+
+   Provided that the keys defined in Section 4 are used for the
+   JSContact maps, the mapping between the most commonly used jCard
+   properties in an RDAP response and their JSContact counterparts is
+   shown in the following.  The mapping is done through the use of
+   JSONPath expressions [RFC9535].
+
+   jCard property:  fn
+   Reference:  Section 6.2.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='fn')][3]
+   JSContact property:  Name.full
+   Reference:  Section 2.2.1 of [RFC9553]
+   Path:  $..jscard.[name.full,localizations.*.name.full]
+
+   jCard property:  "family name" component of n
+   Reference:  Section 6.2.2 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='n')][3][0]
+   JSContact property:  "postOfficeBox" NameComponent of Name.components
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[name.components[?(@.kind=='surname')].value,localizatio
+      ns.*.name.components[?(@.kind=='surname')].value]
+
+   jCard property:  "given name" component of n
+   Reference:  Section 6.2.2 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='n')][3][1]
+   JSContact property:  "given" NameComponent of Name.components
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[name.components[?(@.kind=='given')].value,localizations
+      .*.name.components[?(@.kind=='given')].value]
+
+   jCard property:  n
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='n')]
+   JSContact property:  Name
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:  $..jscard.[name,localizations.*.name]
+
+   jCard property:  org
+   Reference:  Section 6.6.4 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='org')][3]
+   JSContact property:  Organization.name
+   Reference:  Section 2.2.3 of [RFC9553]
+   Path:
+      $..jscard.[organizations.org.name,localizations.*.organizations.or
+      g.name]
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 19]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   jCard property:  tel with type="voice"
+   Reference:  Section 6.4.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[1].type=='voice')][3]
+   JSContact property:  Phone.number
+   Reference:  Section 2.3.3 of [RFC9553]
+   Path:  $..jscard.phones.voice.number
+
+   jCard property:  tel with type="fax"
+   Reference:  Section 6.4.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[1].type=='fax')][3]
+   JSContact property:  Phone.number
+   Reference:  Section 2.3.3 of [RFC9553]
+   Path:  $..jscard.phones.fax.number
+
+   jCard property:  email
+   Reference:  Section 6.4.2 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='email')][3]
+   JSContact property:  Email.address
+   Reference:  Section 2.3.1 of [RFC9553]
+   Path:
+      $..jscard.[emails.email.address,localizations.*.emails.email.addre
+      ss]
+
+   jCard property:  "label" parameter of adr
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='adr')][1].label
+   JSContact property:  Address.full
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[addresses.adr.full,localizations.*.addresses.adr.full]
+
+   jCard property:  "post office box" component of adr
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='adr')][3][1]
+   JSContact property:  "postOfficeBox" AddressComponent of
+      Address.components
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[addresses.addr.components[?(@.kind=='postOfficeBox')].v
+      alue,localizations.*.addresses.addr.components[?(@.kind=='postOffi
+      ceBox')].value]
+
+   jCard property:  "street address" component of adr
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='adr')][3][2]
+   JSContact property:  "name" AddressComponent of Address.components
+   Reference:  Section 2.5.1 of [RFC9553]
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 20]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   Path:
+      $..jscard.[addresses.addr.components[?(@.kind=='name')].value,loca
+      lizations.*.addresses.addr.components[?(@.kind=='name')].value]
+
+   jCard property:  "locality" component of adr
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='adr')][3][3]
+   JSContact property:  "locality" AddressComponent of
+      Address.components
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[addresses.addr.components[?(@.kind=='locality')].value,
+      localizations.*.addresses.addr.components[?(@.kind=='locality')].v
+      alue]
+
+   jCard property:  "region" component of adr
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='adr')][3][4]
+   JSContact property:  "region" AddressComponent of Address.components
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[addresses.addr.components[?(@.kind=='region')].value,lo
+      calizations.*.addresses.addr.components[?(@.kind=='region')].value
+      ]
+
+   jCard property:  "postal code" component of adr
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='adr')][3][5]
+   JSContact property:  "postcode" AddressComponent of
+      Address.components
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[addresses.addr.components[?(@.kind=='postcode')].value,
+      localizations.*.addresses.addr.components[?(@.kind=='postcode')].v
+      alue]
+
+   jCard property:  "country name" component of adr
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='adr')][3][6]
+   JSContact property:  "country" AddressComponent of Address.components
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[addresses.addr.components[?(@.kind=='country')].value,l
+      ocalizations.*.addresses.addr.components[?(@.kind=='country')].val
+      ue]
+
+   jCard property:  "cc" parameter of adr
+   Reference:  Section 3.1 of [RFC8605]
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 21]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   Path:  $..vcardArray[1][?(@[0]=='adr')][1].cc
+   JSContact property:  Address.countryCode
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:
+      $..jscard.[addresses.addr.countryCode,localizations.*.addresses.ad
+      dr.countryCode]
+
+   jCard property:  adr
+   Reference:  Section 6.3.1 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='adr')]
+   JSContact property:  Address
+   Reference:  Section 2.5.1 of [RFC9553]
+   Path:  $..jscard.[addresses.addr,localizations.*.addresses.addr]
+
+   jCard property:  contact-uri
+   Reference:  Section 2.1 of [RFC8605]
+   Path:  $..vcardArray[1][?(@[0]=='contact-uri')]
+   JSContact property:  Link.uri
+   Reference:  Section 2.6.3 of [RFC9553]
+   Path:  $..jscard.links.contact-uri.uri
+
+   jCard property:  url
+   Reference:  Section 6.7.8 of [RFC6350]
+   Path:  $..vcardArray[1][?(@[0]=='url')]
+   JSContact property:  Link.uri
+   Reference:  Section 2.6.3 of [RFC9553]
+   Path:  $..jscard.links.url.uri
+
+Appendix B.  Change Log
+
+B.1.  Change from 00 to 01
+
+   1.   Changed category from "Best Current Practice" to "Standards
+        Track"
+   2.   Replaced the example of Figure 2
+   3.   Changed the title of the "Migration from JCard to JSCard"
+        section to "Transition Considerations"
+   4.   Added Section 7
+   5.   Updated Section 11
+   6.   Updated Section 12
+   7.   Rearranged the description of stage 1 in Section 9.2.2
+   8.   Changed the names of the transition stages 1 and 2
+   9.   Corrected examples
+   10.  Changed the rdapConformance tag "jscard_level_0" to "jscard"
+   11.  Removed the "Best Practices for deprecating a REST API features"
+        section,but added a useful reference.
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 22]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+B.2.  Change from 01 to 02
+
+   1.  Removed the sentence "which cannot be represented using jCard" in
+       Section 1.1.
+
+B.3.  Change from 02 to 03
+
+   1.  Updated section "Conventions Used in This Document".
+   2.  Updated the contact in "IANA Considerations" section.
+   3.  Changed the reference draft-loffredo-calext-jscontact-vcard to
+       draft-ietf-calext-jscontact-vcard.
+   4.  Added reference to RFC8174.
+   5.  Other minor edits.
+
+B.4.  Change from 03 to 04
+
+   1.  Updated the reference draft-dalal-deprecation-header to draft-
+       ietf-httpapi-deprecation-header.
+
+B.5.  Initial WG version
+
+   1.  Ported from draft-loffredo-regext-rdap-jcard-deprecation-04
+       renamed to draft-ietf-regext-rdap-jscontact-00.
+
+B.6.  Change from 00 to 01
+
+   1.  Updated Section 3 and Figure 2.
+
+B.7.  Change from 01 to 02
+
+   1.  Updated Section 2 and Figure 2.
+
+B.8.  Change from 02 to 03
+
+   1.  Replaced references to obsolete RFC7482 and RFC7483 with RFC9082
+       and RFC9083.
+   2.  Updated Section 3 and Figure 2.
+
+B.9.  Change from 03 to 04
+
+   1.  Changed the references to Internet Drafts.
+   2.  Added an example showing how localizations are treated in
+       JSContact.
+   3.  Changed the position of section "Goals" in Section 9.2.
+   4.  Added three more implementations to Section 10.
+   5.  Changed the rdapConformance tag "jscard" to "jscard_0"
+   6.  Added clarifications addressing the feedback provided by Jasdip
+       Singh about version -03.
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 23]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   7.  Added Section 13.
+   8.  Other minor edits.
+
+B.10.  Change from 04 to 05
+
+   1.  Updated Figure 2 to make it compliant with draft-ietf-jmap-
+       jscontact-09.
+
+B.11.  Change from 05 to 06
+
+   1.  Reviewed the notices presented in stages.
+
+B.12.  Change from 06 to 07
+
+   1.  Corrected the JSON Pointer expressions in Figure 1.
+   2.  Other minor edits.
+
+B.13.  Change from 07 to 08
+
+   1.  Corrected a nit in Figure 1.
+   2.  Removed the reference to draft-ietf-httpapi-deprecation-header.
+   3.  Replaced the "deprecation" link relation type with "related".
+   4.  Moved the references to JSContact drafts to the "Normative
+       References" section.
+
+B.14.  Change from 08 to 09
+
+   1.  Updated the references to JSContact drafts due to the transfer
+       from JMAP to CalExt.
+
+B.15.  Change from 09 to 10
+
+   1.  Updated Figure 2 to make it compliant with draft-ietf-calext-
+       jscontact-02.
+
+B.16.  Change from 10 to 11
+
+   1.  Added Appendix "jCard-JSContact Mapping".
+
+B.17.  Change from 11 to 12
+
+   1.  Renamed the "jscard" property to "jscard_0".
+   2.  Corrected JSONPath expressions in Appendix A.
+
+B.18.  Change from 12 to 13
+
+   1.  Reverted the names of response extension, the rdapConformance tag
+       and extension identifier from "jscard_0" to "jscard".
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 24]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   2.  Corrected Figure 1 by removing initial '/' character from
+       JSONPath notations related to localizations.
+
+B.19.  Change from 13 to 14
+
+   1.  Corrected Figure 2 by replacing "online" property with
+       "cryptoKeys" and "links" properties.
+
+B.20.  Change from 14 to 15
+
+   1.  Corrected Figure 1, Figure 2 and Appendix A to make them
+       compliant with draft-ietf-calext-jscontact-06.
+   2.  Removed mention of JSContact CardGroup object.
+   3.  Renamed and changed Section 3.
+   4.  Added Section 11.2.
+
+B.21.  Change from 14 to 15
+
+   1.  Corrected Figure 1, Figure 2 and Appendix A to make them
+       compliant with draft-ietf-calext-jscontact-06.
+   2.  Removed mention of JSContact CardGroup object.
+   3.  Renamed and changed Section 3.
+   4.  Added Section 11.2.
+
+B.22.  Change from 15 to 16
+
+   1.  Replaced JSContact "type" with "kind" in figures.
+   2.  Removed "jCard deprecation" stage and "jcard" query parameter.
+   3.  Renamed "jCard deprecated" stage into "jCard deprecation".
+   4.  Rephrased Section 12.
+   5.  Corrected JSContact examples based on draft-ietf-calext-
+       jscontact-11.
+   6.  Fixed nits.
+
+B.23.  Change from 16 to 17
+
+   1.  Fixed Figure 1, Figure 2, Section 11.3 and Appendix A to make
+       them compliant with draft-ietf-calext-jscontact-16 and purge them
+       of the JSContact properties which are hardly used in RDAP.
+   2.  Rearranged Section 3.
+   3.  Added other mapping correspondences to Appendix A.
+
+B.24.  Change from 17 to 18
+
+   1.  Updated references.
+   2.  Updated Gavin Brown's contact info.
+   3.  Removed from the notices field the optional link documenting the
+       transition procedure.
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 25]
+
+Internet-Draft           Using JSContact in RDAP                May 2024
+
+
+   4.  Added text to Section 2.
+   5.  Added a reference to RFC9553 section defining the Id type.
+   6.  Tagged all BCP14 keywords.
+   7.  Changed the example in Figure 2.
+   8.  Added Section 3.5.
+   9.  Changed Section 9.2.2.4 by removing the sentence about the
+       duration of the transition process.
+
+Authors' Addresses
+
+   Mario Loffredo
+   IIT-CNR/Registro.it
+   Via Moruzzi,1
+   56124 Pisa
+   Italy
+   Email: mario.loffredo@iit.cnr.it
+   URI:   http://www.iit.cnr.it
+
+
+   Gavin Brown
+   ICANN
+   12025 Waterfront Drive, Suite 300
+   Los Angeles, CA 90292
+   United States of America
+   Email: gavin.brown@icann.org
+   URI:   https://www.icann.org/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Loffredo & Brown        Expires 17 November 2024               [Page 26]

@@ -143,7 +143,7 @@
         <t>prefers maps rather than arrays to implement collections.</t>
       </list></t>
 
-      <t><xref target="RFC9555"/> provides informational guidance on the conversion of jCard into JSCard, and vice versa.  <xref target="jcard-jscontact-mapping"/> shows JSContact counterparts for the most commonly used jCard properties in an RDAP response.</t>
+      <t><xref target="RFC9555"/> provides guidance on the conversion of jCard into JSCard, and vice versa.  <xref target="jcard-jscontact-mapping"/> shows JSContact counterparts for the most commonly used jCard properties in an RDAP response.</t>
 
       <t>Since JSContact is a generalized representation of contact data, many of its capabilities are not optimised for use in RDAP responses. This document defines a usage profile for JSContact which simplifies the implementation, whether for clients or servers.</t>
     </section>
@@ -155,20 +155,24 @@
       <t>Servers returning the &quot;jscard&quot; property in their response <bcp14>MUST</bcp14> include &quot;jscard&quot; in the &quot;rdapConformance&quot; array.</t>
     </section>
     <section anchor="jscontact-version" title="Version">
-      <t>The JSContact version to be used in RDAP <bcp14>MUST</bcp14> be &quot;1.0&quot;.</t>
+      <t>The JSCard &quot;version&quot; property value <bcp14>MUST</bcp14> be &quot;1.0&quot;.</t>
     </section>
       <section anchor="jscontact-kind" title="Kind">
-        <t>The JSContact &quot;kind&quot; property value <bcp14>MUST</bcp14> be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
+        <t>The JSCard &quot;kind&quot; property value <bcp14>MUST</bcp14> be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
       </section>
       <section anchor="jscontact-language" title="Language">
-        <t>The JSContact &quot;language&quot; property <bcp14>SHOULD</bcp14> be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
+        <t>The JSCard &quot;language&quot; property <bcp14>SHOULD</bcp14> be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
       </section>
+      <section anchor="jscontact-name" title="Name">
+        <t>The JSCard &quot;name&quot; property <bcp14>MUST</bcp14> include the &quot;full&quot; member and <bcp14>MAY</bcp14> include the &quot;components&quot; array to specify the name components of an individual.</t>
+      </section>
+    </section>
     <section anchor="map-keys" title="Map Keys">
-      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  A JSContact map key <bcp14>MUST</bcp14> comply with the definition of the Id type (see Section 1.4.1 of <xref target="RFC9553"/>).  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
+      <t>Since most of the JSCard collections are represented as maps, map keys must be defined.  A JSCard map key <bcp14>MUST</bcp14> comply with the definition of the Id type (see Section 1.4.1 of <xref target="RFC9553"/>).  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
         <list style="symbols">
           <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element.  If both internationalised and localized forms exist, the key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
           <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element.  If both internationalised and localized forms exist, the key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
-          <t>&quot;email&quot; in the &quot;emails&quot; map when there is a single &lt;contact:email&gt; element;<vspace blankLines='1' /></t>
+          <t>&quot;email&quot; in the &quot;emails&quot; map when there is a single &lt;contact:email&gt; element.  If both ASCII and SMTPUTF8 forms exist, the key <bcp14>MUST</bcp14> be used for the ASCII form;<vspace blankLines='1' /></t>
           <t>&quot;voice&quot; in the &quot;phones&quot; map for the &lt;contact:voice&gt; element;<vspace blankLines='1' /></t>
           <t>&quot;fax&quot; in the &quot;phones&quot; map for the &lt;contact:fax&gt; element.</t>
         </list>
@@ -183,7 +187,7 @@
       <t>An unregistered Id value used for the aforementioned maps or others <bcp14>SHOULD</bcp14> comply with the following scheme: &quot;&lt;map name&gt;-&lt;sequential number&gt;&quot; (e.g. &quot;addresses-1&quot;, &quot;addresses-2&quot;).</t>
     </section>
       <section anchor="localizations" title="Localizations">
-      <t>If present, the localized versions of name, organization and postal address <bcp14>MUST</bcp14> be added to the &quot;localizations&quot; map.  With reference to the defintion of localization in <xref target="RFC9553"/>, an RDAP response with JSContact content <bcp14>MUST</bcp14> expand all localizations (i.e. a patch key using the syntax &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a JSCard object that presents a localized postal address (See PDF for non-ASCII character string).</t>
+      <t>If present, the localized versions of name, organization, postal address and email <bcp14>MUST</bcp14> be added to the &quot;localizations&quot; map.  With reference to the defintion of localization in <xref target="RFC9553"/>, an RDAP response with JSContact content <bcp14>MUST</bcp14> expand all localizations (i.e. a patch key using the syntax &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a JSCard object that presents a localized postal address (See PDF for non-ASCII character string).</t>
       <figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork xml:space="preserve">
 ...
 "jscard": {
@@ -251,7 +255,6 @@
         "@type": "Card",
         "@version": "1.0",
         "uid": "74b64df3-2d60-56b4-9df3-8594886f4456",
-        "language": "en",
         "name": {
           "full": "Joe User",
           "components": [
@@ -261,35 +264,34 @@
         },
         "organizations": {
           "org": {
-            "name": "Example"
+            "name": "Org Example"
           }
         },
          "addresses": {
            "addr": {
              "components": [
-               { "kind": "name", "value": "4321 Rue Somewhere" },
-               { "kind": "extension", "value": "Suite 1234" },
-               { "kind": "locality", "value": "Quebec" },
-               { "kind": "region", "value": "QC" },
-               { "kind": "postcode", "value": "G1V 2M2" },
-               { "kind": "country", "value": "Canada" }
+               { "kind": "name", "value": "Main Street 1" },
+               { "kind": "locality", "value": "Ludwigshafen am Rhein" },
+               { "kind": "region", "value": "Rhineland-Palatinate" },
+               { "kind": "postcode", "value": "67067" },
+               { "kind": "country", "value": "Germany" }
              ],
-             "countryCode": "CA",
-             "coordinates": "geo:46.772673,-71.282945"
+             "countryCode": "DE",
+             "coordinates": "geo:49.477409, 8.445180"
            },
            "addresses-1": {
-             "full": "123 Maple Ave Vancouver BC 1239"
+             "full": "Somewhere Street 1 Mutterstadt 67112 Germany"
              "contexts": { "private": true }
            }
          },
         "phones": {
           "voice": {
             "features": { "voice": true },
-            "number": "tel:+1-555-555-1234"
+            "number": "tel:+49-1522-3433333"
           },
           "fax": {
             "features": { "fax": true },
-            "number": "tel:+1-555-555-4321"
+            "number": "tel:+49-30-901820"
           }
         },
         "emails": {
@@ -353,11 +355,9 @@
         <t>The use of JSContact updates the mappings of two reverse search properties, namely &quot;fn&quot; and &quot;email&quot;, defined in <xref target="RFC9536"/>.  Such new mappings are registered in the Reverse Search Mapping registry as described in <xref target="rdap-reverse-search-mapping-registry"/>.</t>
       </section>
 
-    </section>
-
     <section anchor="transition" title="Transition Considerations">
 
-      <section anchor="rdap-features-supporting-transition" title="RDAP Features Supporting a Transition Process">
+      <section anchor="rdap-features-supporting-transition" title="RDAP Features Supporting the Transition Process">
         <section title="Notices and Link Relationships">
           <t>RDAP allows servers to communicate service information to clients through notices.
           According to Section 4.3 of <xref target="RFC9083"/>, an RDAP response may contain one or more notice objects. Each notice may include a set of link objects, which can be used to provide clients
@@ -456,9 +456,7 @@
 
         <section anchor="jcard-deprecation-procedure-length" title="Length">
           <t>The length of the jCard sunset period is not fixed by this
-            specification.  Best practices in REST API deprecation suggest that, depending on the
-            deprecated API's reach, user base and service offering, a convenient time could be
-            anywhere between 3 - 8 months.  Anyway, RDAP providers are <bcp14>RECOMMENDED</bcp14> to monitor the
+            specification.  Anyway, RDAP providers are <bcp14>RECOMMENDED</bcp14> to monitor the
             server log to figure out whether the declared time need to be changed to meet client
             requirements.</t>
         </section>
@@ -646,7 +644,7 @@
           <t hangText="Searchable Resource Type:">domains, nameservers, entities</t>
           <t hangText="Related Resource Type:">entity</t>
           <t hangText="Property:">email</t>
-          <t hangText="Property Path:">$.entities[*].jscard.emails.email.address</t>
+          <t hangText="Property Path:">$.entities[*].jscard.[emails.email.address, localizations.*.emails.email.address]</t>
           <t hangText="Registrant Name:">IESG</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
           <t hangText="Reference:">This document</t>
@@ -1070,9 +1068,12 @@
           <t>Updated references.</t>
           <t>Updated Gavin Brown's contact info.</t>
           <t>Removed from the notices field the optional link documenting the transition procedure.</t>
-          <t>Added text to the &quot;JSContact&quot; section.</t>
+          <t>Added text to <xref target="JSContact"/>.</t>
           <t>Added a reference to RFC9553 section defining the Id type.</t>
           <t>Tagged all BCP14 keywords.</t>
+          <t>Changed the example in Figure 2.</t>
+          <t>Added <xref target="jscontact-name"/>.</t>
+          <t>Changed <xref target="jcard-deprecation-procedure-length"/> by removing the sentence about the duration of the transition process.</t>
         </list></t>
       </section>
     </section>
