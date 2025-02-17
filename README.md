@@ -18,7 +18,7 @@ According to the feedback from [RDAP Pilot WG](https://www.icann.org/en/system/f
 *	affecting performance.
 
 Such a feeling is not limited to RDAP implementers but is also shared by most of APIs producers and consumers dealing with jCard.
-[JSContact](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact/) includes a contact representation that is able to represent the same information as jCard more efficiently. In particular, it meets the requirements from RDAP implementers about representing multilingual information and unstructured data. Therefore, jCard might be deprecated and replaced by the contact card defined by JSContact in the RDAP responses.
+The JSContact specification [RFC9553](https://www.rfc-editor.org/rfc/rfc9553.html) includes a contact representation that is able to represent the same information as jCard more efficiently. In particular, it meets the requirements from RDAP implementers about representing multilingual information and unstructured data. Therefore, jCard might be deprecated and replaced by the contact card defined by JSContact in the RDAP responses.
 
 
 <a name="converting-jcard-into-jscard"></a>
@@ -32,13 +32,13 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
    {
       "rdapConformance": [
          "rdap_level_0",
-         "jscard"
+         "jscontact"
       ],
       "objectClassName": "entity",
       "handle":"XXXX",
-      "jscard":{
+      "jscontact_card":{
         "@type": "Card",
-        "@version": "1.0",
+        "version": "1.0",
         "uid": "74b64df3-2d60-56b4-9df3-8594886f4456",
         "language": "en",
         "name": {
@@ -130,9 +130,9 @@ While the jCard element in the RDAP response is named "vcardArray", its JSCard c
 
 ```
 ...
-"jscard": {
+"jscontact_card": {
   "@type": "Card",
-  "@version": "1.0",
+  "version": "1.0",
   "uid": "7812cafe-336e-5969-988b-ad68f78ae90f",
   "language": "en",
   "name": {
