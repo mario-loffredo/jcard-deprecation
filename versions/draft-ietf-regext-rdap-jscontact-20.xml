@@ -157,19 +157,20 @@
           <t>Opaque Versioning: The Opaque Extension Versioning Identifier is &quot;jscontact&quot;.<vspace blankLines='1' /></t>
           <t>Semantic Versioning: The Semantic Extension Versioning Identifier is &quot;jscontact-0.1&quot;.</t>
         </list></t>
+        <t>Note that this extension identifier's version value may differ from the JSContact version value.  In fact, the former is related to changes in this RDAP extension, while the latter is related to changes in the JSContact specification.</t>
         <t>NOTE: Please change the Semantic Versioning value to &quot;jscontact-1.0&quot; prior to publication as an RFC.</t>
       </section>
     <section anchor="jscontact-version" title="Version">
-      <t>The JSContact &quot;Card.version&quot; property value <bcp14>MUST</bcp14> be &quot;1.0&quot;.</t>
+      <t>The information needed to register the JSContact &quot;version&quot; property value in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
     </section>
       <section anchor="jscontact-kind" title="Kind">
-        <t>The JSContact &quot;Card.kind&quot; property value <bcp14>MUST</bcp14> be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
+        <t>The JSContact &quot;kind&quot; property value <bcp14>MUST</bcp14> be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
       </section>
       <section anchor="jscontact-language" title="Language">
-        <t>The JSContact &quot;Card.language&quot; property <bcp14>SHOULD</bcp14> be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
+        <t>The JSContact &quot;language&quot; property <bcp14>SHOULD</bcp14> be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
       </section>
       <section anchor="jscontact-name" title="Name">
-        <t>The JSContact &quot;Card.name&quot; property <bcp14>MUST</bcp14> include the &quot;full&quot; member and <bcp14>MAY</bcp14> include the &quot;components&quot; array to specify the name components of an individual.</t>
+        <t>The JSContact &quot;name&quot; property <bcp14>MUST</bcp14> include the &quot;full&quot; member and <bcp14>MAY</bcp14> include the &quot;components&quot; array to specify the name components of an individual.</t>
       </section>
     <section anchor="map-keys" title="Map Keys">
       <t>Since most of the JSContact collections are represented as maps, map keys must be defined.  A JSContact map key <bcp14>MUST</bcp14> comply with the definition of the Id type (see Section 1.4.1 of <xref target="RFC9553"/>).  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
@@ -426,12 +427,12 @@
         "value": "https://example.net/entity/XXXX",
         "rel": "alternate",
         "type": "application/rdap+json",
-        "href": "https://example.net/entity/XXXX?versioning=versioning-0.2,jscontact-0.1"
+        "href": ".../entity/XXXX?versioning=versioning-0.2,jscontact-0.1"
       },
       {
         "value": "https://example.net/entity/XXXX",
         "rel": "alternate",
-        "type": "application/rdap-x+json;extensions=rdap_level_0 jscontact",
+        "type": "application/rdap-x+json;extensions=\"rdap_level_0 jscontact\"",
         "href": "https://example.net/entity/XXXX"
       }
     ]
@@ -568,10 +569,18 @@
 
     <section anchor="rdap-json-values-registry" title="RDAP JSON Values Registry">
 
-      <t>With regard to the fields of the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/>, the &quot;JSContact Id Value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="map-keys"/>.</t>
+      <t>With regard to the fields of the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/>, the &quot;JSContact Version Value&quot; type SHALL be used to register the RDAP values for the JSContact version property while the &quot;JSContact Id Value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="map-keys"/>.</t>
       <t>IANA is requested to register the following values in the &quot;RDAP JSON Values&quot; registry:</t>
 
       <t>
+        <list style="hanging">
+          <t hangText="Value:">1.0</t>
+          <t hangText="Type:">JSContact Version Value</t>
+          <t hangText="Description:">The JSContact version value to use in implementing this specification.</t>
+          <t hangText="Registrant Name:">IESG</t>
+          <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
+          <t hangText="Reference:">This document</t>
+        </list>
         <list style="hanging">
           <t hangText="Value:">org</t>
           <t hangText="Type:">JSContact Id Value</t>
@@ -1092,6 +1101,8 @@
           <t>Renamed the &quot;jscard&quot; extension identifier into &quot;jscontact&quot;.</t>
           <t>Renamed the &quot;jscard&quot; property into &quot;jscontact_card&quot;.</t>
           <t>Replaced any instance of the verbatim string &quot;JSCard&quot; with &quot;JSContact&quot;.</t>
+          <t>Rephrased <xref target="jscontact-version"/> by removing &quot;1.0&quot; as a mandatory value for the JSContact version property in RDAP and adding the value to the &quot;RDAP JSON Values&quot; registry.</t>
+          <t>Corrected link in <xref target="stage2-example1"/>.</t>
         </list></t>
       </section>
     </section>
