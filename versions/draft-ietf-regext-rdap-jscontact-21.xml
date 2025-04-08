@@ -390,7 +390,7 @@
       <section anchor="jcard-transition-procedure" title="Transition Procedure">
 
         <t>The transition procedure consists of three contiguous stages.
-          During the procedure, the presence of &quot;jscontact&quot; tag in the rdapConformance array
+          During the procedure, the presence of the &quot;jscontact&quot; tag in the rdapConformance array
           indicates that JSContact is returned instead of jCard.  The date and time format used to notify
           clients about the stages of this procedure is defined in <xref target="RFC3339" />.</t>
 
@@ -424,9 +424,10 @@
 
               <t>From this stage on, the RDAP server <bcp14>MUST</bcp14> include the &quot;jscontact&quot; tag in the rdapConformance array of the help response to signal clients that JSContact can be returned instead of jCard.</t>
 
-              <t>If JSContact is not requested, the RDAP server <bcp14>SHOULD</bcp14> include a notice titled &quot;jCard sunset end&quot; (<xref target="stage2-example1" />).  Such
-                a notice includes a description reporting the jCard sunset end date and time and two
-                <bcp14>OPTIONAL</bcp14> links providing the request for JSContact through both the methods described in <xref target="request-for-jscontact" />:</t>
+              <t>If JSContact is not requested, the RDAP server <bcp14>SHOULD</bcp14> include a notice titled &quot;jCard sunset end&quot;.  This
+                notice contains a description reporting the jCard sunset end date and time, and an
+                <bcp14>OPTIONAL</bcp14> link to the corresponding JSContact-based response requested via the
+                method the client used to negotiate the extensions (<xref target="request-for-jscontact" />).  If no method was used, the RDAP server includes the links related to both methods (<xref target="stage2-example1" />).</t>
 
              <figure anchor="stage2-example1" title="jCard sunset - JSContact not requested"><artwork xml:space="preserve">
 "notices": [
@@ -443,7 +444,7 @@
       {
         "value": "https://example.net/entity/XXXX",
         "rel": "alternate",
-        "type": "application/rdap+json,application/rdap-x+json;extensions=\"rdap_level_0 jscontact\"",
+        "type": "application/rdap-x+json;extensions=\"rdap_level_0 jscontact\"",
         "href": "https://example.net/entity/XXXX"
       }
     ]
@@ -456,7 +457,7 @@
           <t>This stage corresponds to providing JSContact as default format for contact data.  The rdapConformance
             array always contains &quot;jscontact&quot; tag.  The request for JSContact through any method described in <xref target="request-for-jscontact" />
             <bcp14>MUST</bcp14> be ignored.</t>
-          <t>The RDAP server <bcp14>SHOULD</bcp14> include a notice titled &quot;jCard deprecation&quot; and a description reporting the string &quot;jCard has been deprecated&quot; (<xref target="stage3-example1" />).</t>
+          <t>The RDAP server <bcp14>SHOULD</bcp14> include a notice titled &quot;jCard deprecation&quot; whose description reports the verbatim string &quot;jCard has been deprecated&quot; (<xref target="stage3-example1" />).</t>
           <figure anchor="stage3-example1" title="jCard deprecation - jCard has been deprecated"><artwork xml:space="preserve">
 "notices": [
   {
@@ -1124,9 +1125,9 @@
       </section>
       <section title="Change from 20 to 21">
         <t><list style="numbers">
-          <t>Changed the controller of IANA registies from IESG to IETF.</t>
-          <t>Corrected link type in <xref target="stage2-example1"/>.</t>
           <t>Added <xref target="Experiment"/>.</t>
+          <t>Changed the controller of IANA registies from IESG to IETF.</t>
+          <t>Minor editorial changes.</t>
         </list></t>
       </section>
     </section>
