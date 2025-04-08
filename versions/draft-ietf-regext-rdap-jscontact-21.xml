@@ -119,6 +119,17 @@
         data directory services.</t>
       </section>
 
+      <section anchor="Experiment" title="Experimental Status">
+        <t>This document has the Experimental status. This is because many of the issues it seeks to resolve are subjective in nature, and the effectiveness of the approach described in this document is difficult to measure.</t>
+
+        <t>A future update to this document may promote it to the Standards Track if either or both of the following conditions are met, within 3 years of the publication date of this document:</t>
+
+        <ol>
+          <li>More than 25% of those RDAP server operators who operate in a policy regime that permits deployment (such as country-code top-level domain registries, and regional internet registries), do so.</li>
+          <li>More than 25% of known open-source RDAP clients listed at <xref target="RDAP-BOOK"/> implement this extension.</li>
+        </ol>
+      </section>
+      
       <section anchor="Conventions" title="Conventions Used in This Document">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
       </section>
@@ -708,6 +719,13 @@
           <date year='2019' month='April' />
         </front>
       </reference>
+      <reference anchor='RDAP-BOOK'
+        target='https://rdap.rcode3.com/client_implementations/index.html'>
+        <front>
+          <title>A Guide to the Registration Data Access Protocol (RDAP), Section 4 (Client Implementations)</title>
+          <author fullname="Andrew Newton" initials="A" surname="Newton"/>
+        </front>
+      </reference>
     </references>
 
     <section anchor="jcard-jscontact-mapping" title="jCard-JSContact Mapping">
@@ -1108,6 +1126,7 @@
         <t><list style="numbers">
           <t>Changed the controller of IANA registies from IESG to IETF.</t>
           <t>Corrected link type in <xref target="stage2-example1"/>.</t>
+          <t>Added <xref target="Experiment"/>.</t>
         </list></t>
       </section>
     </section>
