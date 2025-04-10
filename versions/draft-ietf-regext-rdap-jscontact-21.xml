@@ -361,7 +361,7 @@
       <t>The client MAY request the server to include the &quot;jscontact_card&quot; property in the RDAP response by using only one of the following HTTP elements:</t>
       <t><list style="symbols">
         <t>the &quot;versioning&quot; query parameter as defined in <xref target="I-D.ietf-regext-rdap-versioning"/>;<vspace blankLines='1'/></t>
-        <t>the &quot;rdap-x&quot; media type as defined in <xref target="I-D.ietf-regext-rdap-x-media-type"/>.</t>
+        <t>the RDAP media type's &quot;extensions&quot; parameter as defined in <xref target="I-D.ietf-regext-rdap-x-media-type"/>.</t>
       </list></t>
 
       <t>Their usage in the transtion from jCard to JSContact is further explained in <xref target="stage2"/>.</t>
@@ -444,7 +444,7 @@
       {
         "value": "https://example.net/entity/XXXX",
         "rel": "alternate",
-        "type": "application/rdap-x+json;extensions=\"rdap_level_0 jscontact\"",
+        "type": "application/rdap+json;extensions=\"rdap_level_0 jscontact\"",
         "href": "https://example.net/entity/XXXX"
       }
     ]
@@ -1127,6 +1127,7 @@
         <t><list style="numbers">
           <t>Added <xref target="Experiment"/>.</t>
           <t>Changed the controller of IANA registies from IESG to IETF.</t>
+          <t>Replaced &quot;rdap-x&quot; with &quot;rdap&quot; in the rdap-x media type.</t>
           <t>Minor editorial changes.</t>
         </list></t>
       </section>
