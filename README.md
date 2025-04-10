@@ -4,7 +4,7 @@ This project aims at deprecating jCard in RDAP.
 
 # Table of contents
 1. [Motivations](#motivations)
-2. [Converting jCard into JSCard](#converting-jcard-into-jscard)
+2. [Converting jCard into JSCard](#converting-jcard-into-jscontact)
 
 
 <a name="motivations"></a>
@@ -21,10 +21,10 @@ Such a feeling is not limited to RDAP implementers but is also shared by most of
 The JSContact specification [RFC9553](https://www.rfc-editor.org/rfc/rfc9553.html) includes a contact representation that is able to represent the same information as jCard more efficiently. In particular, it meets the requirements from RDAP implementers about representing multilingual information and unstructured data. Therefore, jCard might be deprecated and replaced by the contact card defined by JSContact in the RDAP responses.
 
 
-<a name="converting-jcard-into-jscard"></a>
-## 2. Converting jCard into JSCard
+<a name="converting-jcard-into-jscontact"></a>
+## 2. Converting jCard into JSContact
 
-While the jCard element in the RDAP response is named "vcardArray", its JSCard counterpart is called "jscard" to be compliant with the extension identifier defined in the rdapConformance array. Here in the following examples of mapping between &quot;vcardArray&quot; and &quot;jscard&quot; according to the policy defined in [JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/) are shown.
+While the jCard element in the RDAP response is named "vcardArray", its JSContact counterpart is called "jscontact_card" to be compliant with the extension identifier defined in the rdapConformance array. Here in the following examples of mapping between &quot;vcardArray&quot; and &quot;jscontact_card&quot; according to the policy defined in [JSContact: Converting from and to vCard](https://datatracker.ietf.org/doc/draft-ietf-calext-jscontact-vcard/) are shown.
 
 ### Example of an entity lookup response
 
