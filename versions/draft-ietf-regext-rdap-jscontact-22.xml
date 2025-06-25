@@ -111,7 +111,7 @@
         <t>According to the feedback from RDAP Pilot Working Group <xref target="RDAP-PILOT-WG"/>,
         a group of RDAP server implementers representing registries and registrars of generic
         TLDs, the most commonly raised implementation concern, for both servers and client
-        implementers, related to the use of jCard <xref target="RFC7095"/> to represent the
+        implementers, was related to the use of jCard <xref target="RFC7095"/> to represent the
         contact information associated with entities.  Working Group members reported jCard to be
         unintuitive, complicated to implement for both clients and servers, and incompatible
         with best practices for RESTful APIs.</t>
@@ -227,7 +227,7 @@
         <t>An unregistered Id value used for the aforementioned maps or others <bcp14>SHOULD</bcp14> comply with the following scheme: &quot;&lt;map name&gt;-&lt;sequential number&gt;&quot; (e.g. &quot;addresses-1&quot;, &quot;addresses-2&quot;).</t>
       </section>
       <section anchor="localizations" title="Localizations">
-      <t>If present, the localized versions of name, organization, postal address and email <bcp14>MUST</bcp14> be added to the &quot;localizations&quot; map.  With reference to the defintion of localization in <xref target="RFC9553"/>, an RDAP response with JSContact content <bcp14>MUST</bcp14> expand all localizations (i.e. a nested PatchObject key like &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a JSContact card that includes localized version for name, organization and postal address (See PDF for non-ASCII character string).</t>
+      <t>If present, the localized versions of name, organization, postal address and email <bcp14>MUST</bcp14> be added to the &quot;localizations&quot; map.  With reference to the definition of localization in <xref target="RFC9553"/>, an RDAP response with JSContact content <bcp14>MUST</bcp14> expand all localizations (i.e. a nested PatchObject key like &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a JSContact card that includes localized version for name, organization and postal address (See PDF for non-ASCII character string).</t>
       <figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork xml:space="preserve">
 ...
 "jscontact_card": {
@@ -1349,6 +1349,7 @@
           <t>Rephrased text of <xref target="security-considerations"/>.</t>
           <t>Removed JSContact properties from examples that are not included in the RDAP profile for JSContact.</t>
           <t>Added a section about the registration of the JSContact profile for RDAP.</t>
+          <t>Minor editorial changes.</t>
         </list></t>
       </section>
     </section>
