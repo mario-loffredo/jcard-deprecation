@@ -173,7 +173,7 @@
         <t>This extension supports the following versioning types as defined in <xref target="I-D.ietf-regext-rdap-versioning"/>:</t>
         <t><list style="none">
           <t>Opaque Versioning: The Opaque Extension Versioning Identifier is &quot;jscontact&quot;.<vspace blankLines='1' /></t>
-          <t>Semantic Versioning: The Semantic Extension Versioning Identifier is &quot;jscontact-0.1&quot;.</t>
+          <t>Semantic Versioning: The Semantic Extension Versioning Identifier is &quot;jscontact-0.2&quot;.</t>
         </list></t>
         <t>Note that this extension identifier's version value may differ from the JSContact version value.  In fact, the former is related to changes in this RDAP extension, while the latter is related to changes in the JSContact specification.</t>
         <t>NOTE: Please change the Semantic Versioning value to &quot;jscontact-1.0&quot; prior to publication as an RFC.</t>
@@ -457,7 +457,7 @@
         "value": "https://example.net/entity/XXXX",
         "rel": "alternate",
         "type": "application/rdap+json",
-        "href": ".../entity/XXXX?versioning=versioning-0.2,jscontact-0.1"
+        "href": ".../entity/XXXX?versioning=versioning-0.2,jscontact-0.2"
       },
       {
         "value": "https://example.net/entity/XXXX",
