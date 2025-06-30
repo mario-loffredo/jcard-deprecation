@@ -670,7 +670,7 @@
       <t>IANA is requested to register the following entries in the the &quot;RDAP Reverse Search Mapping&quot; registry <xref target="RFC9536"/>:</t>
       <t>
         <list style="hanging">
-          <t hangText="Searchable Resource Type:">domains, nameservers, entities</t>
+          <t hangText="Searchable Resource Type:">domains, nameservers, entities, ips, autnums</t>
           <t hangText="Related Resource Type:">entity</t>
           <t hangText="Property:">fn</t>
           <t hangText="Property Path:">$.entities[*].jscontact_card.[name.full,localizations.*.name.full]</t>
