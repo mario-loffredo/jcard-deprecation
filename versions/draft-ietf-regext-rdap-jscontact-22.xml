@@ -1349,6 +1349,7 @@
           <t>Rephrased text of <xref target="security-considerations"/>.</t>
           <t>Removed JSContact properties from examples that are not included in the RDAP profile for JSContact.</t>
           <t>Added a section about the registration of the JSContact profile for RDAP.</t>
+          <t>Added ips and autnums to the searchable resource types of <xref target="rdap-reverse-search-mapping-registry"/>.</t>
           <t>Minor editorial changes.</t>
         </list></t>
       </section>
