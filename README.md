@@ -39,7 +39,6 @@ While the jCard element in the RDAP response is named "vcardArray", its JSContac
       "jscontact_card":{
         "@type": "Card",
         "version": "1.0",
-        "uid": "74b64df3-2d60-56b4-9df3-8594886f4456",
         "language": "en",
         "name": {
           "full": "Joe User",
@@ -133,7 +132,6 @@ While the jCard element in the RDAP response is named "vcardArray", its JSContac
 "jscontact_card": {
   "@type": "Card",
   "version": "1.0",
-  "uid": "7812cafe-336e-5969-988b-ad68f78ae90f",
   "language": "en",
   "name": {
     "full": "Vasya Pupkin"
