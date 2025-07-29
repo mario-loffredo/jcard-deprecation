@@ -38,8 +38,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSContac
       "handle":"XXXX",
       "jscontact_card":{
         "@type": "Card",
-        "version": "1.0",
-        "language": "en",
+        "version": "2.0",
         "name": {
           "full": "Joe User",
           "components": [
@@ -62,12 +61,10 @@ While the jCard element in the RDAP response is named "vcardArray", its JSContac
                { "kind": "postcode", "value": "G1V 2M2" },
                { "kind": "country", "value": "Canada" }
              ],
-             "countryCode": "CA",
-             "coordinates": "geo:46.772673,-71.282945"
+             "countryCode": "CA"
            },
-           "addresses-1": {
+           "1": {
              "full": "123 Maple Ave Vancouver BC 1239"
-             "contexts": { "private": true }
            }
          },
         "phones": {
@@ -131,7 +128,7 @@ While the jCard element in the RDAP response is named "vcardArray", its JSContac
 ...
 "jscontact_card": {
   "@type": "Card",
-  "version": "1.0",
+  "version": "2.0",
   "language": "en",
   "name": {
     "full": "Vasya Pupkin"
