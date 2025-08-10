@@ -126,11 +126,12 @@
       <section anchor="Experiment" title="Experimental Status">
         <t>This document has the Experimental status. This is because many of the issues it seeks to resolve are subjective in nature, and the effectiveness of the approach described in this document is difficult to measure.</t>
 
-        <t>A future update to this document may promote it to the Standards Track if either or both of the following conditions are met, within 3 years of the publication date of this document:</t>
+        <t>It is expected that the information gathered from this experiment will be used in a future revision of this specification intended for Proposed Standard.  This experiment is to collect the following information after 3 years following the publication of this document:</t>
 
         <ol>
-          <li>More than 25% of those RDAP server operators who operate in a policy regime that permits deployment (such as country-code top-level domain registries, and regional internet registries), do so.</li>
-          <li>More than 25% of known open-source RDAP clients listed at <xref target="RDAP-BOOK"/> implement this extension.</li>
+          <li>The number of server implementations implementing this specification.</li>
+          <li>The number of RDAP services for INRs and DNRs able to provide JSContact information.</li>
+          <li>The number of open-source clients information listed at <xref target="RDAP-BOOK"/> capable of interpetting JSContact information.</li>
         </ol>
       </section>
       
@@ -1386,6 +1387,7 @@
       </section>
       <section title="Change from 22 to 23">
         <t><list style="numbers">
+          <t>Revised the &quot;Experimental Status&quot; section.</t>
           <t>Revised the registration of the JSContact profile for RDAP.</t>
           <t>Added the handling and registration of noJcard extension identifier.</t>
           <t>Changed the notice used in the transaction process by changing the &quot;title&quot; property into &quot;type&quot; and registered the values in the &quot;RDAP JSON Values&quot; registry.</t>
