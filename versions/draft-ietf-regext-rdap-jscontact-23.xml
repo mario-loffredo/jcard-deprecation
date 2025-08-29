@@ -110,7 +110,7 @@
       <section anchor="Rationale" title="Rationale">
         <t>According to the feedback from RDAP Pilot Working Group <xref target="RDAP-PILOT-WG"/>,
         a group of RDAP server implementers representing registries and registrars of generic
-        TLDs, the most commonly raised implementation concern, for both servers and client
+        TLDs, the most commonly raised implementation concern for both servers and client
         implementers, was related to the use of jCard <xref target="RFC7095"/> to represent the
         contact information associated with entities.  Working Group members reported jCard to be
         unintuitive, complicated to implement for both clients and servers, and incompatible
@@ -124,10 +124,9 @@
       </section>
 
       <section anchor="Experiment" title="Experimental Status">
-        <t>This document has the Experimental status. This is because many of the issues it seeks to resolve are subjective in nature, and the effectiveness of the approach described in this document is difficult to measure.</t>
+        <t>This document has the Experimental status. This is because many of the issues it seeks to address are subjective in nature, and the effectiveness of the approach described in this document is difficult to measure.</t>
 
-        <t>It is expected that the information gathered from this experiment will be used in a future revision of this specification intended for Proposed Standard.  This experiment is to collect the following information after 3 years following the publication of this document:</t>
-
+        <t>The following information gathered from this experiment, three years after the publication of this document, is expected to be used in a future revision of this specification for the proposed standard:</t>
         <ol>
           <li>The number of server implementations implementing this specification.</li>
           <li>The number of RDAP services for INRs and DNRs able to provide JSContact information.</li>
@@ -164,11 +163,13 @@
 
     <section anchor="jscontact-profile-for-rdap" title="JSContact Profile for RDAP">
 
-    <t>Since JSContact is a generalized representation of contact data, many of its capabilities are not optimised for use in RDAP responses. This document defines a usage profile for JSContact which simplifies the implementation, whether for clients or servers.  The JSContact profile for RDAP is compliant with the rules described in <xref target="I-D.ietf-calext-jscontact-profiles"/>.  The information needed to register the JSContact profile for RDAP is described in <xref target="jscontact-profile-registry"/>.</t>
+    <t>Since JSContact is a generalized representation of contact data, many of its capabilities are not optimized for use in RDAP responses. This document defines a usage profile for JSContact that simplifies the implementation for both clients and servers.  The JSContact profile for RDAP is compliant with the rules described in <xref target="I-D.ietf-calext-jscontact-profiles"/>.  The information required to register this profile is described in <xref target="jscontact-profile-registry"/>.</t>
+
+    <t>All types mentioned in this section refer to the JSContact specification <xref target="RFC9553"/> (e.g., Card is the JSContact Card type).</t>
 
       <section anchor="extension-identifier" title="Extension Identifier">
-        <t>Entity objects in RDAP responses <bcp14>MAY</bcp14> include a &quot;jscontact_card&quot; property whose value is a JSContact card instead of the &quot;vCardArray&quot; property defined in <xref target="RFC9083"/>.</t>
-        <t>Servers returning the &quot;jscontact_card&quot; property in their response <bcp14>MUST</bcp14> include &quot;jscontact&quot; in the &quot;rdapConformance&quot; array.</t>
+        <t>Entity objects in RDAP responses <bcp14>MAY</bcp14> include a &quot;jscontact_card&quot; member whose value is a Card object instead of the &quot;vCardArray&quot; member defined in <xref target="RFC9083"/>.</t>
+        <t>Servers returning the &quot;jscontact_card&quot; member in their response <bcp14>MUST</bcp14> include the string &quot;jscontact&quot; in the &quot;rdapConformance&quot; array.</t>
       </section>
       <section anchor="extension-version-identifier" title="Extension Version Identifier">
         <t>This extension supports the following versioning types as defined in <xref target="I-D.ietf-regext-rdap-versioning"/>:</t>
@@ -176,42 +177,41 @@
           <t>Opaque Versioning: The Opaque Extension Versioning Identifier is &quot;jscontact&quot;.<vspace blankLines='1' /></t>
           <t>Semantic Versioning: The Semantic Extension Versioning Identifier is &quot;jscontact-0.3&quot;.</t>
         </list></t>
-        <t>Note that this extension identifier's version value may differ from the JSContact version value.  In fact, the former is related to changes in this RDAP extension, while the latter is related to changes in the JSContact specification.</t>
+        <t>Note that this extension identifier's version value may differ from the Card version member value.  In fact, the former is related to changes in this RDAP extension, while the latter is related to changes in the JSContact specification.</t>
         <t>NOTE: Please change the Semantic Versioning value to &quot;jscontact-1.0&quot; prior to publication as an RFC.</t>
       </section>
       <section anchor="jscontact-version" title="Version">
-        <t>The information needed to register the JSContact &quot;version&quot; property value in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
+        <t>The information required to register the Card &quot;version&quot; member value in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
       </section>
       <section anchor="jscontact-kind" title="Kind">
-        <t>The JSContact Card &quot;kind&quot; property value <bcp14>MUST</bcp14> be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
+        <t>The Card &quot;kind&quot; member value <bcp14>MUST</bcp14> be &quot;individual&quot; (default) or &quot;org&quot; to represent an individual or an organization, respectively.</t>
       </section>
       <section anchor="jscontact-language" title="Language">
-        <t>The JSContact Card &quot;language&quot; property <bcp14>SHOULD</bcp14> be set when localizations are specified (i.e. the &quot;localizations&quot; property is not null).</t>
+        <t>The Card &quot;language&quot; member <bcp14>SHOULD</bcp14> be set when localizations are specified (i.e. the &quot;localizations&quot; member is not null).</t>
       </section>
       <section anchor="jscontact-name" title="Name">
-        <t>The JSContact Card &quot;name&quot; property <bcp14>MUST</bcp14> include the &quot;full&quot; member and <bcp14>MAY</bcp14> include the &quot;components&quot; array to specify the name components of an individual.</t>
-        <t>The JSContact &quot;NameComponent&quot; type <bcp14>MUST</bcp14> include only the &quot;kind&quot; and &quot;value&quot; members.</t>
-        <t>The JSContact NameComponent &quot;kind&quot; property value <bcp14>MUST</bcp14> be &quot;given&quot; or &quot;surname&quot; to represent the given name (a.k.a &quot;first name&quot; or &quot;personal name&quot;) and surname (a.k.a &quot;last name&quot; or &quot;family name&quot;) component, respectively.</t>
+        <t>The Card &quot;name&quot; member <bcp14>MUST</bcp14> include the &quot;full&quot; member and <bcp14>MAY</bcp14> include the &quot;components&quot; member to specify the name components of an individual.</t>
+        <t>The NameComponent type <bcp14>MUST</bcp14> include only the &quot;kind&quot; and &quot;value&quot; members.  The &quot;kind&quot; member value <bcp14>MUST</bcp14> be &quot;given&quot; or &quot;surname&quot;.</t>
       </section>
       <section anchor="jscontact-organizations" title="Organizations">
-        <t>The JSContact &quot;Organization&quot; type <bcp14>MUST</bcp14> include only the &quot;org&quot; member.</t>
+        <t>The Organization type <bcp14>MUST</bcp14> include only the &quot;org&quot; member.</t>
       </section>
       <section anchor="jscontact-addresses" title="Addresses">
-        <t>The JSContact &quot;Address&quot; type <bcp14>MUST</bcp14> include at least one between the &quot;full&quot;, "components" and "countryCode" members.</t>
-        <t>The JSContact &quot;AddressComponent&quot; type <bcp14>MUST</bcp14> include only the &quot;kind&quot; and &quot;value&quot; members.</t>
+        <t>The Address type <bcp14>MUST</bcp14> include at least one between the &quot;full&quot;, "components" and "countryCode" members.</t>
+        <t>The AddressComponent type <bcp14>MUST</bcp14> include only the &quot;kind&quot; and &quot;value&quot; members.  The &quot;kind&quot; member value <bcp14>MUST</bcp14> be &quot;name&quot;, &quot;locality&quot;, &quot;region&quot; or &quot;postcode&quot;.</t>
       </section>
       <section anchor="jscontact-emails" title="Emails">
-        <t>The JSContact &quot;EmailAddress&quot; type <bcp14>MUST</bcp14> include only the &quot;address&quot; member.</t>
+        <t>The EmailAddress type <bcp14>MUST</bcp14> include only the &quot;address&quot; member.</t>
       </section>
       <section anchor="jscontact-phones" title="Phones">
-        <t>The JSContact &quot;Phone&quot; type <bcp14>MUST</bcp14> include only the &quot;number&quot; and &quot;features&quot; members.</t>
-        <t>The JSContact &quot;PhoneFeature&quot; type value <bcp14>MUST</bcp14> be &quot;voice&quot; or &quot;fax&quot; to represent the voice phone and fax numbers, respectively.</t>
+        <t>The Phone type <bcp14>MUST</bcp14> include the &quot;number&quot; member and <bcp14>MAY</bcp14> include the &quot;features&quot; member.</t>
+        <t>The PhoneFeature type value <bcp14>MUST</bcp14> be &quot;voice&quot; or &quot;fax&quot;.  When the &quot;features&quot; member is missing, the phone number is assumed to be a voice number.</t>
       </section>
       <section anchor="jscontact-links" title="Links">
-        <t>The JSContact &quot;Link&quot; type <bcp14>MUST</bcp14> include only the &quot;kind&quot; and &quot;uri&quot; members.</t>
+        <t>The Link type <bcp14>MUST</bcp14> include the &quot;uri&quot; member and <bcp14>MAY</bcp14> include the &quot;kind&quot; member.  The &quot;kind&quot; member value <bcp14>MUST</bcp14> be &quot;contact&quot;.</t>
       </section>
       <section anchor="map-keys" title="Map Keys">
-        <t>Since most of the JSContact collections are represented as maps, map keys must be defined.  A JSContact map key <bcp14>MUST</bcp14> comply with the definition of the Id type (see Section 1.4.1 of <xref target="RFC9553"/>).  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following Id values related to string values and labels defined in <xref target="RFC5733"/>:
+        <t>Since most of the JSContact collections are represented as maps, map keys must be defined.  A JSContact map key <bcp14>MUST</bcp14> comply with the definition of the Id type (see Section 1.4.1 of <xref target="RFC9553"/>).  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following keys related to string values and labels defined in <xref target="RFC5733"/>:
           <list style="symbols">
             <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element.  If both internationalised and localized forms exist, this key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
             <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element.  If both internationalised and localized forms exist, this key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
@@ -222,15 +222,15 @@
         </t>
         <t>Additional keys of the &quot;links&quot; map that <bcp14>MUST</bcp14> be used to represent contact links which result from converting jCard &quot;uri&quot; and &quot;contact-uri&quot; properties are:
           <list style="symbols">
-            <t>&quot;url&quot; used for the unique or preferred contact url (e.g. a web site).  The &quot;kind&quot; property of the JSContact &quot;Link&quot; object <bcp14>MUST</bcp14> NOT be set;<vspace blankLines='1'/></t>
-            <t>&quot;contact-uri&quot; used for the contact uri as defined in <xref target="RFC8605"/>.  The &quot;kind&quot; property of the JSContact &quot;Link&quot; object <bcp14>MUST</bcp14> be set to &quot;contact&quot;.</t>
+            <t>&quot;url&quot; used for the unique or preferred contact url (e.g. a web site).  The &quot;kind&quot; member of the Link object <bcp14>MUST NOT</bcp14> be set;<vspace blankLines='1'/></t>
+            <t>&quot;contact-uri&quot; used for the contact uri as defined in <xref target="RFC8605"/>.  The &quot;kind&quot; member of the Link object <bcp14>MUST</bcp14> be set to &quot;contact&quot;.</t>
           </list>
         </t>
-        <t>The information needed to register the JSContact Id values in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
-        <t>An unregistered Id value used for the aforementioned maps <bcp14>SHOULD</bcp14> be set to a sequential number (e.g. &quot;1&quot;, &quot;2&quot;).</t>
+        <t>The information required to register the JSContact Id values in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
+        <t>An unregistered Id value used for the above-mentioned maps <bcp14>SHOULD</bcp14> be set to a sequential number (e.g. &quot;1&quot;, &quot;2&quot;).  These keys <bcp14>SHOULD</bcp14> remain stable until the associated contact information is changed. Any gaps in the numbering <bcp14>MAY</bcp14> only occur when redaction is applied.</t>
       </section>
       <section anchor="localizations" title="Localizations">
-      <t>If present, the localized versions of name, organization, postal address and email <bcp14>MUST</bcp14> be added to the &quot;localizations&quot; map.  With reference to the definition of localization in <xref target="RFC9553"/>, an RDAP response with JSContact content <bcp14>MUST</bcp14> expand all localizations (i.e. a nested PatchObject key like &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a JSContact card that includes localized version for name, organization and postal address (See PDF for non-ASCII character string).</t>
+      <t>If present, the localized versions of name, organization, postal address and email <bcp14>MUST</bcp14> be added to the &quot;localizations&quot; map.  With reference to the definition of localization in <xref target="RFC9553"/>, an RDAP response with JSContact content <bcp14>MUST</bcp14> expand all localizations (i.e. a nested PatchObject key like &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a Card that includes localized version for name, organization and postal address (See PDF for non-ASCII character string).</t>
       <figure anchor="localizations-example" title="Example of handling localizations in JSContact"><artwork xml:space="preserve">
 ...
 "jscontact_card": {
@@ -249,7 +249,6 @@
     "addr": {
       "components": [
         { "kind": "name", "value": "1 Street" },
-        { "kind": "postOfficeBox", "value": "01001" },
         { "kind": "locality", "value": "Kyiv" }
       ],
       "countryCode": "UA"
@@ -261,7 +260,6 @@
         "addr": {
           "components": [
            { "kind": "name", "value": "1, Улица" },
-           { "kind": "postOfficeBox", "value": "01001" },
            { "kind": "locality", "value": "Киев" }
           ],
           "countryCode": "UA"
@@ -283,7 +281,7 @@
     </section>
 
     <section anchor="jscard-example-sec" title="Example of using JSContact in RDAP response">
-      <t>The following is an example of an RDAP entity including a JSContact card.</t>
+      <t>The following is an example of an RDAP entity including a Card.</t>
 
 <figure anchor="jscard-example" title="Example of using JSContact in RDAP response"><artwork xml:space="preserve">
    {
@@ -299,8 +297,8 @@
         "name": {
           "full": "Joe User",
           "components": [
-            { "kind": "surname", "value": "User" },
-            { "kind": "given", "value": "Joe" }
+            { "kind": "given", "value": "Joe" },
+            { "kind": "surname", "value": "User" }
           ]
         },
         "organizations": {
@@ -312,10 +310,10 @@
            "addr": {
              "components": [
                { "kind": "name", "value": "Main Street 1" },
-               { "kind": "locality", "value": "Ludwigshafen am Rhein" },
+               { "kind": "locality",
+                 "value": "Ludwigshafen am Rhein" },
                { "kind": "region", "value": "Rhineland-Palatinate" },
-               { "kind": "postcode", "value": "67067" },
-               { "kind": "country", "value": "Germany" }
+               { "kind": "postcode", "value": "67067" }
              ],
              "countryCode": "DE"
            },
@@ -325,7 +323,6 @@
          },
         "phones": {
           "voice": {
-            "features": { "voice": true },
             "number": "tel:+49-1522-3433333"
           },
           "fax": {
@@ -380,7 +377,7 @@
     </section>
     </section>
     <section anchor="request-for-jscontact" title="Request for JSContact">
-      <t>The client MAY request the server to include the &quot;jscontact_card&quot; property in the RDAP response by using only one of the following HTTP elements:</t>
+      <t>The client MAY request the server to include the &quot;jscontact_card&quot; member in the RDAP response by using only one of the following HTTP elements:</t>
       <t><list style="symbols">
         <t>the &quot;versioning&quot; query parameter as defined in <xref target="I-D.ietf-regext-rdap-versioning"/>;<vspace blankLines='1'/></t>
         <t>the RDAP media type's &quot;extensions&quot; parameter as defined in <xref target="I-D.ietf-regext-rdap-x-media-type"/>.</t>
@@ -399,19 +396,19 @@
 
         <t>RDAP allows servers to communicate service information to clients through notices.
           According to Section 4.3 of <xref target="RFC9083"/>, an RDAP response may contain one or more notice objects. Each notice may include a set of link objects, which can be used to provide clients
-          with references.  These link objects may have a "rel" property which defines
-          the relationship type, as described in <xref target="RFC8288"/>, Section 4.  The transition
-          process outlined in this document uses a link relation type, namely &quot;alternate&quot;, described in <xref target="RFC8288"/>.</t>
+          with references.  These link objects may have a "rel" member which defines
+          the relationship between resources, as described in Section 4 of <xref target="RFC8288"/>.  The transition
+          process outlined in this document uses the &quot;alternate&quot; link relation type.</t>
 
           <t>The information about the specifications used in the construction of the response is
-            also described by the strings which appear in the "rdapConformance" property of the RDAP
+            also described by the strings that appear in the "rdapConformance" array of the RDAP
             response.</t>
       </section>
 
       <section anchor="jcard-transition-procedure" title="Transition Procedure">
 
         <t>The transition procedure consists of three contiguous stages.
-          During the procedure, the presence of the &quot;jscontact&quot; tag in the rdapConformance array
+          During the procedure, the presence of the string &quot;jscontact&quot; in the &quot;rdapConformance&quot; array
           indicates that JSContact is returned instead of jCard.  The date and time format used to notify
           clients about the stages of this procedure is defined in <xref target="RFC3339" />.</t>
 
@@ -419,15 +416,15 @@
           <t>The procedure described in this document aims to achieve the following goals:</t>
           <t><list style="symbols">
             <t>only one contact representation would be included in the response;<vspace blankLines='1' /></t>
-            <t>the response would always be compliant to <xref target="RFC9083"/> because:
+            <t>the response would always conform to <xref target="RFC9083"/> because:
               <list style="symbols">
-                <t>being the &quot;jscontact_card&quot; property a response extension, its presence would be signaled by the &quot;jscontact&quot; conformance tag;<vspace blankLines='1' /></t>
-                <t>being &quot;vcardArray&quot; property optional in a response, its absence would be allowed;<vspace blankLines='1' /></t>
+                <t>since the &quot;jscontact_card&quot; member is a response extension, its presence would be signaled by the string &quot;jscontact&quot; in the &quot;rdapConformance&quot; array;<vspace blankLines='1' /></t>
+                <t>since &quot;vcardArray&quot; member is optional in a response, its absence would be allowed;<vspace blankLines='1' /></t>
               </list>
             </t>
             <t>clients would be informed about the transition timeline;<vspace blankLines='1' /></t>
-            <t>the backward compatibility would be guaranteed throughout the transition;<vspace blankLines='1' /></t>
-            <t>servers and clients could execute their transitions independently.</t>
+            <t>the backward compatibility would be ensured throughout the transition;<vspace blankLines='1' /></t>
+            <t>servers and clients could perform their transitions independently.</t>
           </list></t>
         </section>
 
@@ -435,22 +432,23 @@
 
             <section anchor="stage1" title="Stage 1: only jCard provided">
               <t>This stage corresponds to providing jCard as the default contact card <xref
-                target="RFC9083" />.  The RDAP server is not able to provide an alternate format for contacts.  The rdapConformance array <bcp14>MUST</bcp14> NOT contain the &quot;jscontact&quot; tag.</t>
+                target="RFC9083" />.  The RDAP server is not able to provide an alternate format for contacts.  The &quot;rdapConformance&quot; array <bcp14>MUST NOT</bcp14> contain the string &quot;jscontact&quot;.</t>
             </section>
 
             <section anchor="stage2" title="Stage 2: jCard sunset">
-              <t>During this stage, the server uses jCard by default, but the RDAP server will
-                return JSContact if the client requests for it through one of the methods described in <xref target="request-for-jscontact" />.
-                The rdapConformance array <bcp14>MUST</bcp14> contain the &quot;jscontact&quot; tag if JSContact is returned.</t>
+              <t>During this stage, the server returns jCard by default, but the RDAP server will
+                return JSContact if the client requests it through one of the methods described in <xref target="request-for-jscontact" />.
+                The &quot;rdapConformance&quot; array <bcp14>MUST</bcp14> contain the string &quot;jscontact&quot; if JSContact is returned.</t>
 
-              <t>From this stage on, the RDAP server <bcp14>MUST</bcp14> include the &quot;jscontact&quot; tag in the rdapConformance array of the help response to signal clients that JSContact can be returned instead of jCard.</t>
+              <t>From this stage onward, the RDAP server <bcp14>MUST</bcp14> include the string &quot;jscontact&quot; in the &quot;rdapConformance&quot; array of the help response to signal clients that JSContact can be returned instead of jCard.</t>
 
-              <t>If JSContact is not requested, the RDAP server <bcp14>SHOULD</bcp14> include a notice whose type property is set to &quot;jCard sunset end&quot;.  This
-                notice contains a description reporting the jCard sunset end date and time, and an
+              <t>If JSContact is not requested, the RDAP server <bcp14>SHOULD</bcp14> include a notice whose type member is set to &quot;jCard sunset end&quot;.  This
+                notice contains a description that reports the jCard sunset end date and time, and an
                 <bcp14>OPTIONAL</bcp14> link to the corresponding JSContact-based response requested via the
-                method the client used to negotiate the extensions (<xref target="request-for-jscontact" />).  If no method was used, the RDAP server includes the links related to both methods (<xref target="stage2-example1" />).</t>
+                method used by the client to negotiate extensions (<xref target="request-for-jscontact" />).  If neither method was used, the RDAP server includes links for both methods (<xref target="stage2-example1" />).</t>
 
-             <figure anchor="stage2-example1" title="jCard sunset - JSContact not requested"><artwork xml:space="preserve">
+             <figure anchor="stage2-example1" title="jCard sunset - JSContact not requested">
+               <artwork xml:space="preserve">
 "notices": [
   {
     "type": "jCard sunset end",
@@ -460,26 +458,29 @@
         "value": "https://example.net/entity/XXXX",
         "rel": "alternate",
         "type": "application/rdap+json",
-        "href": ".../entity/XXXX?versioning=versioning-0.2,jscontact-0.3"
+        "href":
+          ".../entity/XXXX?versioning=versioning-0.2,jscontact-0.3"
       },
       {
         "value": "https://example.net/entity/XXXX",
         "rel": "alternate",
-        "type": "application/rdap+json;extensions=\"rdap_level_0 jscontact\"",
+        "type":
+          "application/rdap+json;extensions=\"rdap_level_0 jscontact\"",
         "href": "https://example.net/entity/XXXX"
       }
     ]
   }
 ]
-</artwork></figure>
+</artwork>
+</figure>
           </section>
 
         <section anchor="stage3" title="Stage 3: jCard deprecation">
-          <t>This stage corresponds to providing JSContact as default format for contact data.  The rdapConformance
-            array always contains &quot;jscontact&quot; tag.  The request for JSContact through any method described in <xref target="request-for-jscontact" />
+          <t>This stage corresponds to providing JSContact as the default format for contact data.  The &quot;rdapConformance&quot;
+            array always contains the string &quot;jscontact&quot;.  The request for JSContact through any method described in <xref target="request-for-jscontact" />
             <bcp14>MUST</bcp14> be ignored.</t>
-          <t>The RDAP server <bcp14>MUST</bcp14> include the &quot;noJcard&quot; tag in the rdapConformance array of the help response to signal clients that jCard is no longer returned.</t>
-          <t>The RDAP server <bcp14>SHOULD</bcp14> also include a notice whose type property is set to &quot;jCard deprecation&quot; whose description reports the verbatim string &quot;jCard has been deprecated&quot; (<xref target="stage3-example1" />).</t>
+          <t>The RDAP server <bcp14>MUST</bcp14> include the string &quot;noJcard&quot; in the &quot;rdapConformance&quot; array of the help response to signal clients that jCard is no longer returned.</t>
+          <t>The RDAP server <bcp14>SHOULD</bcp14> also include a notice whose type member is set to &quot;jCard deprecation&quot; whose description reports the verbatim string &quot;jCard has been deprecated&quot; (<xref target="stage3-example1" />).</t>
           <figure anchor="stage3-example1" title="jCard deprecation - jCard has been deprecated"><artwork xml:space="preserve">
 "notices": [
   {
@@ -607,7 +608,7 @@
 
     <section anchor="rdap-json-values-registry" title="RDAP JSON Values Registry">
 
-      <t>With regard to the fields of the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/>, the &quot;JSContact Version Value&quot; type SHALL be used to register the RDAP values for the JSContact version property while the &quot;JSContact Id Value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="map-keys"/>.</t>
+      <t>With regard to the fields of the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/>, the &quot;JSContact version value&quot; type SHALL be used to register the RDAP values for the Card version member while the &quot;JSContact Id value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="map-keys"/>.</t>
       <t>IANA is requested to register the following values in the &quot;RDAP JSON Values&quot; registry:</t>
 
       <t>
@@ -629,7 +630,7 @@
         </list>
         <list style="hanging">
           <t hangText="Value:">2.0</t>
-          <t hangText="Type:">JSContact Version Value</t>
+          <t hangText="Type:">JSContact version value</t>
           <t hangText="Description:">The JSContact version <xref target="I-D.ietf-calext-jscontact-uid"/> to use in implementing this specification.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
@@ -637,7 +638,7 @@
         </list>
         <list style="hanging">
           <t hangText="Value:">org</t>
-          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Type:">JSContact Id value</t>
           <t hangText="Description:">The key in the JSContact &quot;organizations&quot; map identifiying the contact organization.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
@@ -645,7 +646,7 @@
         </list>
         <list style="hanging">
           <t hangText="Value:">addr</t>
-          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Type:">JSContact Id value</t>
           <t hangText="Description:">The key in the JSContact &quot;addresses&quot; map identifiying the unique or preferred contact postal address.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
@@ -653,7 +654,7 @@
         </list>
         <list style="hanging">
           <t hangText="Value:">email</t>
-          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Type:">JSContact Id value</t>
           <t hangText="Description:">The key in the JSContact &quot;emails&quot; map identifiying the unique or preferred contact email address.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
@@ -661,7 +662,7 @@
         </list>
         <list style="hanging">
           <t hangText="Value:">voice</t>
-          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Type:">JSContact Id value</t>
           <t hangText="Description:">The key in the JSContact &quot;phones&quot; map identifiying the unique or preferred contact voice number.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
@@ -669,7 +670,7 @@
         </list>
         <list style="hanging">
           <t hangText="Value:">fax</t>
-          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Type:">JSContact Id value</t>
           <t hangText="Description:">The key in the JSContact &quot;phones&quot; map identifiying the unique or preferred contact fax number.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
@@ -677,7 +678,7 @@
         </list>
         <list style="hanging">
           <t hangText="Value:">url</t>
-          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Type:">JSContact Id value</t>
           <t hangText="Description:">The key in the JSContact &quot;links&quot; map identifiying the unique or preferred url.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
@@ -685,7 +686,7 @@
         </list>
         <list style="hanging">
           <t hangText="Value:">contact-uri</t>
-          <t hangText="Type:">JSContact Id Value</t>
+          <t hangText="Type:">JSContact Id value</t>
           <t hangText="Description:">The key in the JSContact &quot;links&quot; map identifiying the contact uri as defined in <xref target="RFC8605"/>.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
@@ -701,7 +702,7 @@
           <t hangText="Searchable Resource Type:">domains, nameservers, entities, ips, autnums</t>
           <t hangText="Related Resource Type:">entity</t>
           <t hangText="Property:">fn</t>
-          <t hangText="Property Path:">$.entities[*].jscontact_card.[name.full,localizations.*.name.full]</t>
+          <t hangText="Property Path:">$.entities[*].jscontact_card.[name.full, localizations.*.name.full]</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
           <t hangText="Reference:">This document</t>
@@ -721,195 +722,194 @@
      <section anchor="jscontact-profile-registry" title="JSContact Profile Registry">
        <t>IANA is requested to register the following profile in the &quot;JSContact Profile&quot; registry <xref target="I-D.ietf-calext-jscontact-profiles"/>:</t>
        <dl newline="true">
-         <dt>Profile Name:</dt>
+         <dt>Profile Name: rdap</dt>
          <dd>rdap</dd>
-         <dt>Profile Version:</dt>
+         <dt>Profile Version: 1.0</dt>
          <dd>1.0</dd>
          <dt>Properties:</dt>
-         <dd>
-           <table>
-             <thead>
-               <tr>
-                 <th>Property Name</th>
-                 <th>Property Context</th>
-                 <th>Restricted to be Mandatory</th>
-                 <th>Restricted Enum Values</th>
-                 <th>Restricted PatchObject Keys</th>
-               </tr>
-             </thead>
-             <tbody>
-               <tr>
-                 <td>language</td>
-                 <td>Card</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>kind</td>
-                 <td>Card</td>
-                 <td/>
-                 <td>individual,org</td>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>name</td>
-                 <td>Card</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>full</td>
-                 <td>Name</td>
-                 <td>Mandatory</td>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>components</td>
-                 <td>Name</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>kind</td>
-                 <td>NameComponent</td>
-                 <td/>
-                 <td>given,surname</td>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>value</td>
-                 <td>NameComponent</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>organizations</td>
-                 <td>Card</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>name</td>
-                 <td>Organization</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>addresses</td>
-                 <td>Card</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>full</td>
-                 <td>Address</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>countryCode</td>
-                 <td>Address</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>components</td>
-                 <td>Address</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>kind</td>
-                 <td>AddressComponent</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>value</td>
-                 <td>AddressComponent</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>emails</td>
-                 <td>Card</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>address</td>
-                 <td>EmailAddress</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>phones</td>
-                 <td>Card</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>features</td>
-                 <td>Phone</td>
-                 <td/>
-                 <td>voice,fax</td>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>number</td>
-                 <td>Phone</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>links</td>
-                 <td>Card</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>kind</td>
-                 <td>Link</td>
-                 <td/>
-                 <td>contact</td>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>uri</td>
-                 <td>Link</td>
-                 <td/>
-                 <td/>
-                 <td/>
-               </tr>
-               <tr>
-                 <td>localizations</td>
-                 <td>Card</td>
-                 <td/>
-                 <td/>
-                 <td>Yes</td>
-               </tr>
-             </tbody>
-           </table>
-         </dd>
-       </dl>
+         <dd/>
+     </dl>
+         <table>
+           <thead>
+             <tr>
+               <th>Property Name</th>
+               <th>Property Context</th>
+               <th>Restricted to be Mandatory</th>
+               <th>Restricted Enum Values</th>
+               <th>Restricted PatchObject Keys</th>
+             </tr>
+           </thead>
+           <tbody>
+             <tr>
+               <td>language</td>
+               <td>Card</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>kind</td>
+               <td>Card</td>
+               <td/>
+               <td>individual, org</td>
+               <td/>
+             </tr>
+             <tr>
+               <td>name</td>
+               <td>Card</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>full</td>
+               <td>Name</td>
+               <td>mandatory</td>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>components</td>
+               <td>Name</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>kind</td>
+               <td>NameComponent</td>
+               <td/>
+               <td>given, surname</td>
+               <td/>
+             </tr>
+             <tr>
+               <td>value</td>
+               <td>NameComponent</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>organizations</td>
+               <td>Card</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>name</td>
+               <td>Organization</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>addresses</td>
+               <td>Card</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>full</td>
+               <td>Address</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>countryCode</td>
+               <td>Address</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>components</td>
+               <td>Address</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>kind</td>
+               <td>AddressComponent</td>
+               <td/>
+               <td>name, locality, region, postcode</td>
+               <td/>
+             </tr>
+             <tr>
+               <td>value</td>
+               <td>AddressComponent</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>emails</td>
+               <td>Card</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>address</td>
+               <td>EmailAddress</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>phones</td>
+               <td>Card</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>features</td>
+               <td>Phone</td>
+               <td/>
+               <td>voice, fax</td>
+               <td/>
+             </tr>
+             <tr>
+               <td>number</td>
+               <td>Phone</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>links</td>
+               <td>Card</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>kind</td>
+               <td>Link</td>
+               <td/>
+               <td>contact</td>
+               <td/>
+             </tr>
+             <tr>
+               <td>uri</td>
+               <td>Link</td>
+               <td/>
+               <td/>
+               <td/>
+             </tr>
+             <tr>
+               <td>localizations</td>
+               <td>Card</td>
+               <td/>
+               <td/>
+               <td>Yes</td>
+             </tr>
+           </tbody>
+         </table>
 
        <t>For each registry entry:</t>
        <t><list style="none">
@@ -983,7 +983,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='fn')][3]</t>
         <t hangText="JSContact property:">Name.full</t>
         <t hangText="Reference:">Section 2.2.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[name.full,localizations.*.name.full]</t>
+        <t hangText="Path:">$..jscontact_card.[name.full, localizations.*.name.full]</t>
       </list>
       </t>
       <t>
@@ -993,7 +993,7 @@
           <t hangText="Path:">$..vcardArray[1][?(@[0]=='n')][3][0]</t>
           <t hangText="JSContact property:">&quot;postOfficeBox&quot; NameComponent of Name.components</t>
           <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-          <t hangText="Path:">$..jscontact_card.[name.components[?(@.kind=='surname')].value,localizations.*.name.components[?(@.kind=='surname')].value]</t>
+          <t hangText="Path:">$..jscontact_card.[name.components[?(@.kind=='surname')].value, localizations.*.name.components[?(@.kind=='surname')].value]</t>
         </list>
       </t>
       <t>
@@ -1003,7 +1003,7 @@
           <t hangText="Path:">$..vcardArray[1][?(@[0]=='n')][3][1]</t>
           <t hangText="JSContact property:">&quot;given&quot; NameComponent of Name.components</t>
           <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-          <t hangText="Path:">$..jscontact_card.[name.components[?(@.kind=='given')].value,localizations.*.name.components[?(@.kind=='given')].value]</t>
+          <t hangText="Path:">$..jscontact_card.[name.components[?(@.kind=='given')].value, localizations.*.name.components[?(@.kind=='given')].value]</t>
         </list>
       </t>
       <t>
@@ -1013,7 +1013,7 @@
           <t hangText="Path:">$..vcardArray[1][?(@[0]=='n')]</t>
           <t hangText="JSContact property:">Name</t>
           <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-          <t hangText="Path:">$..jscontact_card.[name,localizations.*.name]</t>
+          <t hangText="Path:">$..jscontact_card.[name, localizations.*.name]</t>
         </list>
       </t>
       <t>
@@ -1023,7 +1023,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='org')][3]</t>
         <t hangText="JSContact property:">Organization.name</t>
         <t hangText="Reference:">Section 2.2.3 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[organizations.org.name,localizations.*.organizations.org.name]</t>
+        <t hangText="Path:">$..jscontact_card.[organizations.org.name, localizations.*.organizations.org.name]</t>
       </list>
       </t>
       <t>
@@ -1053,7 +1053,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='email')][3]</t>
         <t hangText="JSContact property:">Email.address</t>
         <t hangText="Reference:">Section 2.3.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[emails.email.address,localizations.*.emails.email.address]</t>
+        <t hangText="Path:">$..jscontact_card.[emails.email.address, localizations.*.emails.email.address]</t>
       </list>
       </t>
       <t>
@@ -1063,7 +1063,7 @@
           <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][1].label</t>
           <t hangText="JSContact property:">Address.full</t>
           <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-          <t hangText="Path:">$..jscontact_card.[addresses.adr.full,localizations.*.addresses.adr.full]</t>
+          <t hangText="Path:">$..jscontact_card.[addresses.adr.full, localizations.*.addresses.adr.full]</t>
         </list>
       </t>
       <t>
@@ -1073,7 +1073,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][1]</t>
         <t hangText="JSContact property:">&quot;postOfficeBox&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='postOfficeBox')].value,localizations.*.addresses.addr.components[?(@.kind=='postOfficeBox')].value]</t>
+        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='postOfficeBox')].value, localizations.*.addresses.addr.components[?(@.kind=='postOfficeBox')].value]</t>
       </list>
       </t>
       <t>
@@ -1083,7 +1083,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][2]</t>
         <t hangText="JSContact property:">&quot;name&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='name')].value,localizations.*.addresses.addr.components[?(@.kind=='name')].value]</t>
+        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='name')].value, localizations.*.addresses.addr.components[?(@.kind=='name')].value]</t>
       </list>
       </t>
       <t>
@@ -1093,7 +1093,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][3]</t>
         <t hangText="JSContact property:">&quot;locality&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='locality')].value,localizations.*.addresses.addr.components[?(@.kind=='locality')].value]</t>
+        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='locality')].value, localizations.*.addresses.addr.components[?(@.kind=='locality')].value]</t>
       </list>
       </t>
       <t>
@@ -1103,7 +1103,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][4]</t>
         <t hangText="JSContact property:">&quot;region&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='region')].value,localizations.*.addresses.addr.components[?(@.kind=='region')].value]</t>
+        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='region')].value, localizations.*.addresses.addr.components[?(@.kind=='region')].value]</t>
       </list>
       </t>
       <t>
@@ -1113,17 +1113,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][5]</t>
         <t hangText="JSContact property:">&quot;postcode&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='postcode')].value,localizations.*.addresses.addr.components[?(@.kind=='postcode')].value]</t>
-      </list>
-      </t>
-      <t>
-      <list style="hanging">
-        <t hangText="jCard property:">&quot;country name&quot; component of adr</t>
-        <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
-        <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][6]</t>
-        <t hangText="JSContact property:">&quot;country&quot; AddressComponent of Address.components</t>
-        <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='country')].value,localizations.*.addresses.addr.components[?(@.kind=='country')].value]</t>
+        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='postcode')].value, localizations.*.addresses.addr.components[?(@.kind=='postcode')].value]</t>
       </list>
       </t>
       <t>
@@ -1133,7 +1123,7 @@
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][1].cc</t>
         <t hangText="JSContact property:">Address.countryCode</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.[addresses.addr.countryCode,localizations.*.addresses.addr.countryCode]</t>
+        <t hangText="Path:">$..jscontact_card.[addresses.addr.countryCode, localizations.*.addresses.addr.countryCode]</t>
       </list>
       </t>
       <t>
@@ -1143,7 +1133,7 @@
           <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')]</t>
           <t hangText="JSContact property:">Address</t>
           <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-          <t hangText="Path:">$..jscontact_card.[addresses.addr,localizations.*.addresses.addr]</t>
+          <t hangText="Path:">$..jscontact_card.[addresses.addr, localizations.*.addresses.addr]</t>
         </list>
       </t>
       <t>
@@ -1391,9 +1381,9 @@
           <t>Revised the registration of the JSContact profile for RDAP.</t>
           <t>Added the handling and registration of noJcard extension identifier.</t>
           <t>Changed the notice used in the transaction process by changing the &quot;title&quot; property into &quot;type&quot; and registered the values in the &quot;RDAP JSON Values&quot; registry.</t>
-          <t>Changed the naming scheme for map keys other than those predefined.</t>
-          <t>Minor editorial changes.</t>
+          <t>Changed the naming scheme for map keys other than those predefined and clarified that those keys should be stable.</t>
           <t>Updated the "Acknowledgements" section.</t>
+          <t>Minor editorial changes.</t>
         </list></t>
       </section>
     </section>
