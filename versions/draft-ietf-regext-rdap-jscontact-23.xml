@@ -118,7 +118,7 @@
 
         <t>JSContact <xref target="RFC9553"/> provides a simpler and more
         efficient representation for contact information with regard to time and effort saved in processing it.  In addition, similarly to jCard, it provides a means to
-        represent internationalised and unstructured contact information.  Support for internationalised contact information has been
+        represent internationalized and unstructured contact information.  Support for internationalized contact information has been
         recognised being necessary to facilitate the future internationalisation of registration
         data directory services.</t>
       </section>
@@ -213,13 +213,16 @@
       <section anchor="map-keys" title="Map Keys">
         <t>Since most of the JSContact collections are represented as maps, map keys must be defined.  A JSContact map key <bcp14>MUST</bcp14> comply with the definition of the Id type (see Section 1.4.1 of <xref target="RFC9553"/>).  To aid interoperability, RDAP providers <bcp14>MUST</bcp14> use the following keys related to string values and labels defined in <xref target="RFC5733"/>:
           <list style="symbols">
-            <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element.  If both internationalised and localized forms exist, this key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
-            <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element.  If both internationalised and localized forms exist, this key <bcp14>MUST</bcp14> be used for the internationalised form;<vspace blankLines='1' /></t>
-            <t>&quot;email&quot; in the &quot;emails&quot; map when there is a single &lt;contact:email&gt; element.  If both ASCII and SMTPUTF8 forms exist, this key <bcp14>MUST</bcp14> be used for the ASCII form;<vspace blankLines='1' /></t>
+            <t>&quot;org&quot; in the &quot;organizations&quot; map when there is a single &lt;contact:org&gt; element;<vspace blankLines='1'/></t>
+            <t>&quot;addr&quot; in the &quot;addresses&quot; map when there is a single &lt;contact:addr&gt; element;<vspace blankLines='1'/></t>
+            <t>&quot;email&quot; in the &quot;emails&quot; map for the &lt;contact:email&gt; element;<vspace blankLines='1'/></t>
             <t>&quot;voice&quot; in the &quot;phones&quot; map for the &lt;contact:voice&gt; element;<vspace blankLines='1' /></t>
             <t>&quot;fax&quot; in the &quot;phones&quot; map for the &lt;contact:fax&gt; element.</t>
           </list>
         </t>
+
+        <t>In cases where both internationalized and localized versions of organization, postal address, and email exist, the related map <bcp14>MUST</bcp14> include the internationalized version, while the localized version <bcp14>MUST</bcp14> be included in the localizations map, as described in <xref target="localizations"/>.</t>
+
         <t>Additional keys of the &quot;links&quot; map that <bcp14>MUST</bcp14> be used to represent contact links which result from converting jCard &quot;uri&quot; and &quot;contact-uri&quot; properties are:
           <list style="symbols">
             <t>&quot;url&quot; used for the unique or preferred contact url (e.g. a web site).  The &quot;kind&quot; member of the Link object <bcp14>MUST NOT</bcp14> be set;<vspace blankLines='1'/></t>
@@ -227,7 +230,8 @@
           </list>
         </t>
         <t>The information required to register the JSContact Id values in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
-        <t>An unregistered Id value used for the above-mentioned maps <bcp14>SHOULD</bcp14> be set to a sequential number (e.g. &quot;1&quot;, &quot;2&quot;).  These keys <bcp14>SHOULD</bcp14> remain stable until the associated contact information is changed. Any gaps in the numbering <bcp14>MAY</bcp14> only occur when redaction is applied.</t>
+        <t>Any additional key used for the above maps <bcp14>SHOULD</bcp14> conform with the following scheme: &quot;&lt;registered key&gt;-&lt;sequential number&gt;&quot;.  For example, a phones map containing three voice numbers would contain the following keys: "voice", &quot;voice-1&quot;, &quot;voice-2&quot;.</t>
+        <t>The keys <bcp14>SHOULD</bcp14> remain stable until the associated contact information is changed. Any gaps in the numbering <bcp14>MAY</bcp14> only occur when redaction is applied.</t>
       </section>
       <section anchor="localizations" title="Localizations">
       <t>If present, the localized versions of name, organization, postal address and email <bcp14>MUST</bcp14> be added to the &quot;localizations&quot; map.  With reference to the definition of localization in <xref target="RFC9553"/>, an RDAP response with JSContact content <bcp14>MUST</bcp14> expand all localizations (i.e. a nested PatchObject key like &quot;{key1}/{key2}/.../{keyN}&quot; is not allowed).  The following is an elided example of an RDAP entity lookup response including a Card that includes localized version for name, organization and postal address (See PDF for non-ASCII character string).</t>
@@ -313,11 +317,12 @@
                { "kind": "locality",
                  "value": "Ludwigshafen am Rhein" },
                { "kind": "region", "value": "Rhineland-Palatinate" },
-               { "kind": "postcode", "value": "67067" }
+               { "kind": "postcode", "value": "67067" },
+               { "kind": "country", "value": "Germany" }
              ],
              "countryCode": "DE"
            },
-           "1": {
+           "addr-1": {
              "full": "Somewhere Street 1 Mutterstadt 67112 Germany"
            }
          },
@@ -722,9 +727,9 @@
      <section anchor="jscontact-profile-registry" title="JSContact Profile Registry">
        <t>IANA is requested to register the following profile in the &quot;JSContact Profile&quot; registry <xref target="I-D.ietf-calext-jscontact-profiles"/>:</t>
        <dl newline="true">
-         <dt>Profile Name: rdap</dt>
+         <dt>Profile Name:</dt>
          <dd>rdap</dd>
-         <dt>Profile Version: 1.0</dt>
+         <dt>Profile Version:</dt>
          <dd>1.0</dd>
          <dt>Properties:</dt>
          <dd/>
@@ -835,7 +840,7 @@
                <td>kind</td>
                <td>AddressComponent</td>
                <td/>
-               <td>name, locality, region, postcode</td>
+               <td>name, locality, region, postcode, country</td>
                <td/>
              </tr>
              <tr>
@@ -919,9 +924,13 @@
 
    </section>
    </section>
-   <section anchor="security-considerations" title="Security Considerations">
-     <t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required in JSContact version 2.0 <xref target="I-D.ietf-calext-jscontact-uid"/>.  Therefore, with reference to what is described in <xref target="RFC9537"/>, properties can be redacted by Removal Method.</t>
+   <section anchor="privacy-considerations" title="Privacy Considerations">
+     <t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required  in JSContact 1.0 <xref target="RFC9553"/>. JSContact version 2.0 <xref target="I-D.ietf-calext-jscontact-uid"/> makes also uid property optional.  Therefore, with reference to what is described in <xref target="RFC9537"/>, properties can be redacted by Removal Method.</t>
    </section>
+
+    <section anchor="security-considerations" title="Security Considerations">
+      <t>The extension described in this document does not provide any security services beyond those described by <xref target="RFC9083"/>.</t>
+    </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors would like to acknowledge the following individuals for their contributions to this document: Jasdip Singh, Andrew Newton, Marc Blanchet, Rick Wilhelm, Pawel Kowalik and Francesco Donini.</t>
@@ -1114,6 +1123,16 @@
         <t hangText="JSContact property:">&quot;postcode&quot; AddressComponent of Address.components</t>
         <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
         <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='postcode')].value, localizations.*.addresses.addr.components[?(@.kind=='postcode')].value]</t>
+      </list>
+      </t>
+      <t>
+      <list style="hanging">
+        <t hangText="jCard property:">&quot;country name&quot; component of adr</t>
+        <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
+        <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][6]</t>
+        <t hangText="JSContact property:">&quot;country&quot; AddressComponent of Address.components</t>
+        <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
+        <t hangText="Path:">$..jscontact_card.[addresses.addr.components[?(@.kind=='country')].value, localizations.*.addresses.addr.components[?(@.kind=='country')].value]</t>
       </list>
       </t>
       <t>
@@ -1382,6 +1401,7 @@
           <t>Added the handling and registration of noJcard extension identifier.</t>
           <t>Changed the notice used in the transaction process by changing the &quot;title&quot; property into &quot;type&quot; and registered the values in the &quot;RDAP JSON Values&quot; registry.</t>
           <t>Changed the naming scheme for map keys other than those predefined and clarified that those keys should be stable.</t>
+          <t>Revised the &quot;Security Considerations&quot; section and renamed it into &quot;Privacy Considerations&quot;. Added a &quot;Security Considerations&quot; section presenting no substantial implication on scurity.</t>
           <t>Updated the "Acknowledgements" section.</t>
           <t>Minor editorial changes.</t>
         </list></t>
