@@ -55,7 +55,7 @@
   <front>
     <title abbrev="Using JSContact in RDAP">Using JSContact in Registration Data Access Protocol
     (RDAP) JSON Responses</title>
-       
+
     <author fullname="Mario Loffredo" initials="M." surname="Loffredo">
       <organization>IIT-CNR/Registro.it</organization>
       <address>
@@ -91,7 +91,7 @@
     <keyword>RDAP</keyword>
     <keyword>jCard</keyword>
     <keyword>JSContact</keyword>
-    
+
     <abstract>
       <t>This document describes an RDAP extension which represents entity contact information in
       JSON responses using JSContact.</t>
@@ -126,19 +126,19 @@
       <section anchor="Experiment" title="Experimental Status">
         <t>This document has the Experimental status. This is because many of the issues it seeks to address are subjective in nature, and the effectiveness of the approach described in this document is difficult to measure.</t>
 
-        <t>The following information gathered from this experiment, three years after the publication of this document, is expected to be used in a future revision of this specification for the proposed standard:</t>
+        <t>The following information gathered during this experiment may, three years after the publication of this document, be used by a future revision of this document to promote it to the Standards Track:</t>
         <ol>
-          <li>The number of server implementations implementing this specification.</li>
-          <li>The number of RDAP services for INRs and DNRs able to provide JSContact information.</li>
-          <li>The number of open-source clients information listed at <xref target="RDAP-BOOK"/> capable of interpetting JSContact information.</li>
+          <li>The number of server implementations implementing this specification;</li>
+          <li>The number of RDAP services for INRs and DNRs able to provide JSContact information;</li>
+          <li>The number of open-source clients information listed at <xref target="RDAP-BOOK"/> capable of interpreting JSContact information.</li>
         </ol>
       </section>
-      
+
       <section anchor="Conventions" title="Conventions Used in This Document">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
       </section>
     </section>
-      
+
     <section anchor="JSContact" title="JSContact">
       <t>The JSContact specification defines a data model and JSON representation of contact
         information that can be used for data storage and exchange in address book or directory
@@ -510,7 +510,7 @@
     <section anchor="impl-status" title="Implementation Status">
       <t>NOTE: Please remove this section and the reference to RFC 7942 prior to publication as
         an RFC.</t>
-      
+
       <t>This section records the status of known implementations of the protocol defined by
         this specification at the time of posting of this Internet-Draft, and is based on a
         proposal described in RFC 7942 <xref target="RFC7942"/>.  The description of
@@ -521,13 +521,13 @@
         contributors.  This is not intended as, and must not be construed to be, a catalog of
         available implementations or their features.  Readers are advised to note that other
         implementations may exist.</t>
-      
+
       <t>According to RFC 7942, &quot;this will allow reviewers and working groups to assign due
         consideration to documents that have the benefit of running code, which may serve as
         evidence of valuable experimentation and feedback that have made the implemented
         protocols more mature.  It is up to the individual working groups to use this information
         as they see fit&quot;.</t>
-      
+
       <section anchor="registro-it-rdap-server" title="IIT-CNR/Registro.it RDAP Server">
         <t><list style="none">
     	  <t>Responsible Organization: Institute of Informatics and Telematics of National
