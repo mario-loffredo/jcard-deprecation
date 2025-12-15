@@ -163,7 +163,7 @@
 
     <section anchor="jscontact-profile-for-rdap" title="JSContact Profile for RDAP">
 
-    <t>Since JSContact is a generalized representation of contact data, many of its capabilities are not optimized for use in RDAP responses. This document defines a usage profile for JSContact that simplifies the implementation for both clients and servers.  The JSContact profile for RDAP is compliant with the rules described in <xref target="I-D.ietf-calext-jscontact-profiles"/>.  The information required to register this profile is described in <xref target="jscontact-profile-registry"/>.</t>
+    <t>Since JSContact is a generalized representation of contact data, many of its capabilities are not optimized for use in RDAP responses. This document defines a usage profile for JSContact that simplifies the implementation for both clients and servers.  The JSContact profile for RDAP is compliant with the rules described in <xref target="I-D.ietf-calext-jscontact-profiles"/>.  The information required to register this profile is described in <xref target="jscontact-profile-registry"/>.  The profile properties are formally listed in <xref target="jscontact-profile-properties"/>.</t>
 
     <t>All types mentioned in this section refer to the JSContact specification <xref target="RFC9553"/> (e.g., Card is the JSContact Card type).</t>
 
@@ -284,7 +284,200 @@
 </artwork></figure>
     </section>
 
-    <section anchor="jscard-example-sec" title="Example of using JSContact in RDAP response">
+      <section anchor="jscontact-profile-properties" title="Profile Properties">
+        <t>The properties of the JSContact profile registered in the JSContact Profile registry as described in <xref target="jscontact-profile-registry"/> are the following:</t>
+        <table>
+          <thead>
+            <tr>
+              <th>Property Name</th>
+              <th>Property Context</th>
+              <th>Restricted Attributes</th>
+              <th>Restricted Enum Values</th>
+              <th>Restricted PatchObject Keys</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>language</td>
+              <td>Card</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>kind</td>
+              <td>Card</td>
+              <td/>
+              <td>individual, org</td>
+              <td/>
+            </tr>
+            <tr>
+              <td>name</td>
+              <td>Card</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>full</td>
+              <td>Name</td>
+              <td>mandatory</td>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>components</td>
+              <td>Name</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>kind</td>
+              <td>NameComponent</td>
+              <td/>
+              <td>given, surname</td>
+              <td/>
+            </tr>
+            <tr>
+              <td>value</td>
+              <td>NameComponent</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>organizations</td>
+              <td>Card</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>name</td>
+              <td>Organization</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>addresses</td>
+              <td>Card</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>full</td>
+              <td>Address</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>countryCode</td>
+              <td>Address</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>components</td>
+              <td>Address</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>kind</td>
+              <td>AddressComponent</td>
+              <td/>
+              <td>name, locality, region, postcode, country</td>
+              <td/>
+            </tr>
+            <tr>
+              <td>value</td>
+              <td>AddressComponent</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>emails</td>
+              <td>Card</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>address</td>
+              <td>EmailAddress</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>phones</td>
+              <td>Card</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>features</td>
+              <td>Phone</td>
+              <td/>
+              <td>voice, fax</td>
+              <td/>
+            </tr>
+            <tr>
+              <td>number</td>
+              <td>Phone</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>links</td>
+              <td>Card</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>kind</td>
+              <td>Link</td>
+              <td/>
+              <td>contact</td>
+              <td/>
+            </tr>
+            <tr>
+              <td>uri</td>
+              <td>Link</td>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+            <tr>
+              <td>localizations</td>
+              <td>Card</td>
+              <td/>
+              <td/>
+              <td>yes</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <t>For each property:</t>
+        <t><list style="none">
+          <t>the &quot;Restricted Property Type&quot; field is empty;</t>
+          <t>the &quot;Since Profile Version&quot; field is set to &quot;1.0&quot;.</t>
+        </list></t>
+
+        <t>To be consistent with what is stated in Section 2.1 of <xref target="RFC9083"/>, clients <bcp14>SHOULD</bcp14> ignore JSContact properties other than these.</t>
+      </section>
+
+      <section anchor="jscard-example-sec" title="Example of using JSContact in RDAP response">
       <t>The following is an example of an RDAP entity including a Card.</t>
 
 <figure anchor="jscard-example" title="Example of using JSContact in RDAP response"><artwork xml:space="preserve">
@@ -379,6 +572,7 @@
       ]
    }
 </artwork></figure>
+
     </section>
     </section>
     <section anchor="request-for-jscontact" title="Request for JSContact">
@@ -725,204 +919,13 @@
     </section>
 
      <section anchor="jscontact-profile-registry" title="JSContact Profile Registry">
-       <t>IANA is requested to register the following profile in the &quot;JSContact Profile&quot; registry <xref target="I-D.ietf-calext-jscontact-profiles"/>:</t>
-       <dl newline="true">
-         <dt>Profile Name:</dt>
-         <dd>rdap</dd>
-         <dt>Profile Version:</dt>
-         <dd>1.0</dd>
-         <dt>Properties:</dt>
-         <dd/>
-     </dl>
-         <table>
-           <thead>
-             <tr>
-               <th>Property Name</th>
-               <th>Property Context</th>
-               <th>Restricted to be Mandatory</th>
-               <th>Restricted Enum Values</th>
-               <th>Restricted PatchObject Keys</th>
-             </tr>
-           </thead>
-           <tbody>
-             <tr>
-               <td>language</td>
-               <td>Card</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>kind</td>
-               <td>Card</td>
-               <td/>
-               <td>individual, org</td>
-               <td/>
-             </tr>
-             <tr>
-               <td>name</td>
-               <td>Card</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>full</td>
-               <td>Name</td>
-               <td>mandatory</td>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>components</td>
-               <td>Name</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>kind</td>
-               <td>NameComponent</td>
-               <td/>
-               <td>given, surname</td>
-               <td/>
-             </tr>
-             <tr>
-               <td>value</td>
-               <td>NameComponent</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>organizations</td>
-               <td>Card</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>name</td>
-               <td>Organization</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>addresses</td>
-               <td>Card</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>full</td>
-               <td>Address</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>countryCode</td>
-               <td>Address</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>components</td>
-               <td>Address</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>kind</td>
-               <td>AddressComponent</td>
-               <td/>
-               <td>name, locality, region, postcode, country</td>
-               <td/>
-             </tr>
-             <tr>
-               <td>value</td>
-               <td>AddressComponent</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>emails</td>
-               <td>Card</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>address</td>
-               <td>EmailAddress</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>phones</td>
-               <td>Card</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>features</td>
-               <td>Phone</td>
-               <td/>
-               <td>voice, fax</td>
-               <td/>
-             </tr>
-             <tr>
-               <td>number</td>
-               <td>Phone</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>links</td>
-               <td>Card</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>kind</td>
-               <td>Link</td>
-               <td/>
-               <td>contact</td>
-               <td/>
-             </tr>
-             <tr>
-               <td>uri</td>
-               <td>Link</td>
-               <td/>
-               <td/>
-               <td/>
-             </tr>
-             <tr>
-               <td>localizations</td>
-               <td>Card</td>
-               <td/>
-               <td/>
-               <td>Yes</td>
-             </tr>
-           </tbody>
-         </table>
-
-       <t>For each registry entry:</t>
-       <t><list style="none">
-         <t>the &quot;Restricted Property Type&quot; field is empty;</t>
-         <t>the &quot;Since Profile Version&quot; field is set to &quot;1.0&quot;.</t>
-       </list></t>
-
-   </section>
+       <t>IANA is requested to register the following entry in the &quot;JSContact Profile&quot; registry <xref target="I-D.ietf-calext-jscontact-profiles"/>:</t>
+       <list style="hanging">
+         <t hangText="Profile Name:">rdap</t>
+         <t hangText="Profile Version:">1.0</t>
+         <t hangText="Reference:"><xref target="jscontact-profile-properties"/></t>
+       </list>
+     </section>
    </section>
    <section anchor="privacy-considerations" title="Privacy Considerations">
      <t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required  in JSContact 1.0 <xref target="RFC9553"/>. JSContact version 2.0 <xref target="I-D.ietf-calext-jscontact-uid"/> makes also uid property optional.  Therefore, with reference to what is described in <xref target="RFC9537"/>, properties can be redacted by Removal Method.</t>
@@ -1397,7 +1400,7 @@
       <section title="Change from 22 to 23">
         <t><list style="numbers">
           <t>Revised the &quot;Experimental Status&quot; section.</t>
-          <t>Revised the registration of the JSContact profile for RDAP.</t>
+          <t>Revised the registration of the JSContact profile for RDAP.  Added a section that formally lists the profile properties.</t>
           <t>Added the handling and registration of noJcard extension identifier.</t>
           <t>Changed the notice used in the transaction process by changing the &quot;title&quot; property into &quot;type&quot; and registered the values in the &quot;RDAP JSON Values&quot; registry.</t>
           <t>Changed the naming scheme for map keys other than those predefined and clarified that those keys should be stable.</t>
