@@ -163,7 +163,7 @@
 
     <section anchor="jscontact-profile-for-rdap" title="JSContact Profile for RDAP">
 
-    <t>Since JSContact is a generalized representation of contact data, many of its capabilities are not optimized for use in RDAP responses. This document defines a usage profile for JSContact that simplifies the implementation for both clients and servers.  The JSContact profile for RDAP is compliant with the rules described in <xref target="I-D.ietf-calext-jscontact-profiles"/>.  The information required to register this profile is described in <xref target="jscontact-profile-registry"/>.  The profile properties are formally listed in <xref target="jscontact-profile-properties"/>.</t>
+    <t>Since JSContact is a generalized representation of contact data, many of its capabilities are not optimized for use in RDAP responses. This document defines a usage profile for JSContact that simplifies the implementation for both clients and servers.  The JSContact profile for RDAP is compliant with the rules described in <xref target="I-D.ietf-calext-jscontact-profiles"/>.  The profile properties are formally listed in <xref target="jscontact-profile-properties"/>.  The information required to register the profile is described in <xref target="jscontact-profile-registry"/>.</t>
 
     <t>All types mentioned in this section refer to the JSContact specification <xref target="RFC9553"/> (e.g., Card is the JSContact Card type).</t>
 
@@ -921,7 +921,7 @@
      <section anchor="jscontact-profile-registry" title="JSContact Profile Registry">
        <t>IANA is requested to register the following entry in the &quot;JSContact Profile&quot; registry <xref target="I-D.ietf-calext-jscontact-profiles"/>:</t>
        <list style="hanging">
-         <t hangText="Profile Name:">rdap</t>
+         <t hangText="Name:">rdap</t>
          <t hangText="Profile Version:">1.0</t>
          <t hangText="Reference:"><xref target="jscontact-profile-properties"/></t>
        </list>
