@@ -468,12 +468,7 @@
           </tbody>
         </table>
 
-        <t>For each property:</t>
-        <t><list style="none">
-          <t>the &quot;Restricted Property Type&quot; field is empty;</t>
-          <t>the &quot;Since Profile Version&quot; field is set to &quot;1.0&quot;.</t>
-        </list></t>
-
+        <t>For each property, the &quot;Restricted Property Type&quot; field is empty.</t>
         <t>To be consistent with what is stated in Section 2.1 of <xref target="RFC9083"/>, clients <bcp14>SHOULD</bcp14> ignore JSContact properties other than these.</t>
       </section>
 
@@ -922,7 +917,7 @@
        <t>IANA is requested to register the following entry in the &quot;JSContact Profile&quot; registry <xref target="I-D.ietf-calext-jscontact-profiles"/>:</t>
        <list style="hanging">
          <t hangText="Name:">rdap</t>
-         <t hangText="Profile Version:">1.0</t>
+         <t hangText="Profile Version:">1</t>
          <t hangText="Reference:"><xref target="jscontact-profile-properties"/></t>
        </list>
      </section>
