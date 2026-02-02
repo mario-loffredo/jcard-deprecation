@@ -757,10 +757,20 @@
     	  <t>Description: This server is the product RDAP service for all top-level domains on the
           CentralNic registry platform.<vspace blankLines='1' /></t>
     	  <t>Level of Maturity: Production quality.<vspace blankLines='1' /></t>
-    	  <t>Coverage: This implementation includes all of the features described in this
-          specification.<vspace blankLines='1' /></t>
+    	  <t>Coverage: This implementation includes all of the features described in this specification.<vspace blankLines='1' /></t>
     	  <t>Contact Information: support@centralnic.com</t>
     	</list></t>
+      </section>
+
+      <section anchor="icann-rdap" title="ICANN RDAP">
+        <t><list style="none">
+          <t>Responsible Organization: ICANN<vspace blankLines='1' /></t>
+          <t>Location: https://github.com/icann/icann-rdap<vspace blankLines='1' /></t>
+          <t>Description: ICANN RDAP contains an RDAP client, server, and common libraries.<vspace blankLines='1' /></t>
+          <t>Level of Maturity: Mature.<vspace blankLines='1' /></t>
+          <t>Coverage: This implementation includes all of the features described in this specification.<vspace blankLines='1' /></t>
+          <t>Contact Information: globalsupport@icann.org</t>
+        </list></t>
       </section>
 
     </section>
@@ -1391,6 +1401,7 @@
           <t>Changed the status to &quot;Standards Track&quot;.</t>
           <t>Removed the &quot;Experimental Status&quot; section and arranged references accordingly.</t>
           <t>Corrected example in <xref target="stage2-example1"/>.</t>
+          <t>Added <xref target="icann-rdap"/>.</t>
         </list></t>
       </section>
     </section>
