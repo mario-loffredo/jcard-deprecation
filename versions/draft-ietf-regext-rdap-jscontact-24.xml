@@ -768,7 +768,7 @@
           <t>Location: https://github.com/icann/icann-rdap<vspace blankLines='1' /></t>
           <t>Description: ICANN RDAP contains an RDAP client, server, and common libraries.<vspace blankLines='1' /></t>
           <t>Level of Maturity: Mature.<vspace blankLines='1' /></t>
-          <t>Coverage: This implementation includes all of the features described in this specification.<vspace blankLines='1' /></t>
+          <t>Coverage: This implementation includes all of the features described in this specification, except for the semantic versioning extension and reverse search mapping.<vspace blankLines='1' /></t>
           <t>Contact Information: globalsupport@icann.org</t>
         </list></t>
       </section>
