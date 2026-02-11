@@ -779,7 +779,7 @@
 
     <section anchor="rdap-extensions-registry" title="RDAP Extensions Registry">
 
-     <t>IANA is requested to register the following values in the RDAP Extensions Registry:</t>
+     <t>IANA is requested to register the following values in the <xref target="IANA.rdap-extensions">RDAP Extensions Registry</xref>:</t>
 
      <t><list style="none">
        <t>Extension identifier: jscontact<vspace blankLines='1' /></t>
@@ -801,8 +801,8 @@
 
     <section anchor="rdap-json-values-registry" title="RDAP JSON Values Registry">
 
-      <t>With regard to the fields of the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/>, the &quot;JSContact version value&quot; type SHALL be used to register the RDAP values for the Card version member while the &quot;JSContact Id value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="map-keys"/>.</t>
-      <t>IANA is requested to register the following values in the &quot;RDAP JSON Values&quot; registry:</t>
+      <t>With regard to the fields of the <xref target="IANA.rdap-json-values">RDAP JSON Values Registry</xref>, the &quot;JSContact version value&quot; type SHALL be used to register the RDAP values for the Card version member while the &quot;JSContact Id value&quot; type SHALL be used to register the RDAP values for the JSContact Id type as defined in <xref target="map-keys"/>.</t>
+      <t>IANA is requested to register the following values in this registry:</t>
 
       <t>
         <list style="hanging">
@@ -889,7 +889,7 @@
     </section>
     <section anchor="rdap-reverse-search-mapping-registry" title="RDAP Reverse Search Mapping Registry">
 
-      <t>IANA is requested to register the following entries in the &quot;RDAP Reverse Search Mapping&quot; registry <xref target="RFC9536"/>:</t>
+      <t>IANA is requested to register the following entries in the <xref target="IANA.rdap-reverse-search-mapping">RDAP Reverse Search Mapping Registry</xref>:</t>
       <t>
         <list style="hanging">
           <t hangText="Searchable Resource Type:">domains, nameservers, entities, ips, autnums</t>
@@ -953,6 +953,30 @@
       &I-D.ietf-regext-rdap-x-media-type;
       &I-D.ietf-calext-jscontact-profiles;
       &I-D.ietf-calext-jscontact-uid;
+      <reference anchor="IANA.rdap-extensions" target="https://www.iana.org/assignments/rdap-extensions" quoteTitle="true" derivedAnchor="IANA.rdap-extensions">
+        <front>
+          <title>IANA RDAP Extensions Registry</title>
+          <author>
+            <organization showOnFrontPage="true">IANA</organization>
+          </author>
+        </front>
+      </reference>
+      <reference anchor="IANA.rdap-json-values" target="https://www.iana.org/assignments/rdap-json-values" quoteTitle="true" derivedAnchor="IANA.rdap-json-values">
+        <front>
+          <title>IANA RDAP JSON Values Registry</title>
+          <author>
+            <organization showOnFrontPage="true">IANA</organization>
+          </author>
+        </front>
+      </reference>
+      <reference anchor="IANA.rdap-reverse-search-mapping" target="https://www.iana.org/assignments/rdap-reverse-search-mapping" quoteTitle="true" derivedAnchor="IANA.rdap-reverse-search-mapping">
+        <front>
+          <title>IANA RDAP Reverse Search Mapping Registry</title>
+          <author>
+            <organization showOnFrontPage="true">IANA</organization>
+          </author>
+        </front>
+      </reference>
     </references>
 
     <references title="Informative References">
@@ -1402,6 +1426,7 @@
           <t>Removed the &quot;Experimental Status&quot; section and arranged references accordingly.</t>
           <t>Corrected example in <xref target="stage2-example1"/>.</t>
           <t>Added <xref target="icann-rdap"/>.</t>
+          <t>Added references to IANA registries.</t>
         </list></t>
       </section>
     </section>
