@@ -31,6 +31,8 @@
     'http://bib.ietf.org/public/rfc/bibxml/reference.RFC.9553.xml'>
   <!ENTITY RFC9555 PUBLIC ''
     'http://bib.ietf.org/public/rfc/bibxml/reference.RFC.9555.xml'>
+  <!ENTITY I-D.ietf-opsawg-rfc5706bis PUBLIC ''
+          'https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-opsawg-rfc5706bis.xml'>
   <!ENTITY I-D.ietf-regext-rdap-versioning PUBLIC ''
     'https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-regext-rdap-versioning.xml'>
   <!ENTITY I-D.ietf-regext-rdap-x-media-type PUBLIC ''
@@ -164,10 +166,10 @@
         <t>This extension supports the following versioning types as defined in <xref target="I-D.ietf-regext-rdap-versioning"/>:</t>
         <t><list style="none">
           <t>Opaque Versioning: The Opaque Extension Versioning Identifier is &quot;jscontact&quot;.<vspace blankLines='1' /></t>
-          <t>Semantic Versioning: The Semantic Extension Versioning Identifier is &quot;jscontact-0.3&quot;.</t>
+          <t>Point Versioning: The Point Extension Versioning Identifier is &quot;jscontact-0.4&quot;.</t>
         </list></t>
         <t>Note that this extension identifier's version value may differ from the Card version member value.  In fact, the former is related to changes in this RDAP extension, while the latter is related to changes in the JSContact specification.</t>
-        <t>NOTE: Please change the Semantic Versioning value to &quot;jscontact-1.0&quot; prior to publication as an RFC.</t>
+        <t>NOTE: Please change the Point Versioning value to &quot;jscontact-1.0&quot; prior to publication as an RFC.</t>
       </section>
       <section anchor="jscontact-version" title="Version">
         <t>The information required to register the Card &quot;version&quot; member value in the &quot;RDAP JSON Values&quot; registry <xref target="RFC9083"/> is described in <xref target="rdap-json-values-registry"/>.</t>
@@ -563,7 +565,7 @@
       <t>The client MAY request the server to include the &quot;jscontact_card&quot; member in the RDAP response by using only one of the following HTTP elements:</t>
       <t><list style="symbols">
         <t>the &quot;versioning&quot; query parameter as defined in <xref target="I-D.ietf-regext-rdap-versioning"/>;<vspace blankLines='1'/></t>
-        <t>the RDAP media type's &quot;extensions&quot; parameter as defined in <xref target="I-D.ietf-regext-rdap-x-media-type"/>.</t>
+        <t>the RDAP media type's &quot;exts_list&quot; parameter as defined in <xref target="I-D.ietf-regext-rdap-x-media-type"/>.</t>
       </list></t>
       <t>Their usage in the transtion from jCard to JSContact is further explained in <xref target="stage2"/>.</t>
     </section>
@@ -573,7 +575,7 @@
       </section>
   </section>
 
-    <section anchor="transition" title="Transition Considerations">
+    <section anchor="transition-considerations" title="Transition Considerations">
 
       <section anchor="rdap-features-supporting-transition" title="RDAP Features Supporting the Transition Process">
 
@@ -588,14 +590,14 @@
             response.</t>
       </section>
 
-      <section anchor="jcard-transition-procedure" title="Transition Procedure">
+      <section anchor="transition-procedure" title="Transition Procedure">
 
         <t>The transition procedure consists of three contiguous stages.
           During the procedure, the presence of the string &quot;jscontact&quot; in the &quot;rdapConformance&quot; array
           indicates that JSContact is returned instead of jCard.  The date and time format used to notify
           clients about the stages of this procedure is defined in <xref target="RFC3339" />.</t>
 
-        <section anchor="jcard-deprecation-procedure-goals" title="Goals">
+        <section anchor="transition-goals" title="Goals">
           <t>The procedure described in this document aims to achieve the following goals:</t>
           <t><list style="symbols">
             <t>only one contact representation would be included in the response;<vspace blankLines='1' /></t>
@@ -611,11 +613,10 @@
           </list></t>
         </section>
 
-        <section anchor="jcard-deprecation-procedure-stages" title="Transition Stages">
+        <section anchor="transition-stages" title="Transition Stages">
 
             <section anchor="stage1" title="Stage 1: only jCard provided">
-              <t>This stage corresponds to providing jCard as the default contact card <xref
-                target="RFC9083" />.  The RDAP server is not able to provide an alternate format for contacts.  The &quot;rdapConformance&quot; array <bcp14>MUST NOT</bcp14> contain the string &quot;jscontact&quot;.</t>
+              <t>This stage corresponds to providing jCard as the default contact card <xref target="RFC9083" />.  The RDAP server is not able to provide an alternate format for contacts.  The &quot;rdapConformance&quot; array <bcp14>MUST NOT</bcp14> contain the string &quot;jscontact&quot;.</t>
             </section>
 
             <section anchor="stage2" title="Stage 2: jCard sunset">
@@ -642,7 +643,7 @@
         "rel": "alternate",
         "type": "application/rdap+json",
         "href":
-          ".../entity/XXXX?versioning=versioning-0.2,jscontact-0.3"
+          ".../entity/XXXX?versioning=versioning-0.6,jscontact-0.4"
       },
       {
         "value": "https://example.net/entity/XXXX",
@@ -674,7 +675,7 @@
 </artwork></figure>
         </section>
 
-        <section anchor="jcard-deprecation-procedure-length" title="Length">
+        <section anchor="transition-length" title="Length">
           <t>The length of the jCard sunset period is not fixed by this
             specification.  Anyway, RDAP providers are <bcp14>RECOMMENDED</bcp14> to monitor the
             server log to figure out whether the declared time needs to be changed to meet client
@@ -921,9 +922,54 @@
        </list>
      </section>
    </section>
-   <section anchor="privacy-considerations" title="Privacy Considerations">
-     <t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required  in JSContact 1.0 <xref target="RFC9553"/>. JSContact version 2.0 <xref target="I-D.ietf-calext-jscontact-uid"/> makes also uid property optional.  Therefore, with reference to what is described in <xref target="RFC9537"/>, properties can be redacted by Removal Method.</t>
-   </section>
+
+    <section anchor="operational-considerations" title="Operational Considerations">
+      <t>This section describes operational considerations for deploying JSContact in RDAP, taking into account the request mechanisms defined in <xref target="request-for-jscontact"/> and the transition approach described in <xref target="transition-considerations"/>.</t>
+      <section anchor="representation-selection" title="Representation Selection">
+        <t>As described in <xref target="request-for-jscontact"/>, clients can request the &quot;jscontact_card&quot; member using either the &quot;versioning&quot; query parameter or the RDAP media type &quot;exts_list&quot; parameter.</t>
+        <t>Servers are expected to return a representation that is consistent with both the client request and the applicable transition stage defined in <xref target="transition-stages"/>.</t>
+        <t>In particular, jCard is returned in Stage 1, jCard is the default in Stage 2 with JSContact available upon request, and JSContact is the only representation returned in Stage 3.</t>
+        <t>If a request for JSContact cannot be satisfied (e.g., due to unsupported or unknown extension parameters), the request is processed according to general RDAP behavior, and the default representation is returned.</t>
+      </section>
+    <section anchor="rdap-conformance-signaling" title="rdapConformance Signaling">
+      <t>The &quot;rdapConformance&quot; array provides an indication of the representation used, as described in <xref target="extension-identifier"/> and <xref target="transition-procedure"/>.</t>
+      <t>Servers are expected to ensure that the presence or absence of the &quot;jscontact&quot; identifier accurately reflects the response content and is consistent across all endpoints, including help responses as required in <xref target="stage2"/> and <xref target="stage3"/>.</t>
+    </section>
+    <section anchor="data-consistency" title="Data Consistency">
+      <t>JSContact and jCard represent the same information in different ways. As described in <xref target="jcard-jscontact-mapping"/>, mapping between the two formats is not always structurally equivalent.</t>
+      <t>Operators should ensure that both representations are derived from a consistent data source and that the semantic meaning of the data is preserved, even when structural differences exist.</t>
+      <t>Particular attention may be needed for localized dat (<xref target="localizations"/>) and for the use of map keys (<xref target="map-keys"/>), to avoid inconsistencies.</t>
+    </section>
+    <section anchor="transition-monitoring" title="Transition Monitoring">
+      <t>As stated in <xref target="transition-length"/>, the duration of the transition is not fixed.</t>
+      <t>Operators are encouraged to monitor service usage (e.g., server logs) to assess client adoption of JSContact and to determine whether adjustments to the transition timeline are appropriate.</t>
+    </section>
+      <section anchor="caching" title="Caching">
+        <t>Because different representations of the same resource may be returned depending on request parameters (<xref target="request-for-jscontact"/>) and transition stage (<xref target="transition-considerations"/> ), caching mechanisms may need to account for these differences.</t>
+        <t>Operators should consider whether cache keys and intermediaries correctly distinguish between representations to avoid serving unexpected results.</t>
+      </section>
+      <section anchor="error-handling" title="Error Handling">
+        <t>Error handling follows the general RDAP principles defined in <xref target="RFC9083"/> and the extension versioning behavior described in Section 5.1 of <xref target="I-D.ietf-regext-rdap-versioning"/> and Section 3 of <xref target="I-D.ietf-regext-rdap-x-media-type"/>.</t>
+
+        <t>In particular, requests for unsupported or unknown extensions or extension versions do not result in an error response and are instead ignored.</t>
+
+        <t>If a request for JSContact cannot be satisfied, the server behavior is determined by the applicable transition stage defined in Section 4.2.2.  In Stage 2, the server returns the default representation (jCard), while in Stage 3 JSContact is always returned.</t>
+
+        <t>More generally, when extension negotiation does not succeed, servers may return the default representation in accordance with RDAP specifications.</t>
+      </section>
+      <section anchor="interoperability" title="Interoperability">
+        <t>Interoperability issues may arise during the transition due to differences in client support for request mechanisms (<xref target="request-for-jscontact"/>) or interpretation of rdapConformance signaling and notices (<xref target="rdap-features-supporting-transition"/>).</t>
+        <t>Testing with multiple client implementations can help identify and mitigate such issues.</t>
+      </section>
+      <section anchor="operational-resilience" title="Operational Resilience">
+        <t>The transition procedure described in <xref target="transition-procedure"/> allows servers and clients to evolve independently.</t>
+        <t>Operators may adjust deployment strategies, including the duration of transition stages, based on operational experience and client behavior.</t>
+      </section>
+    </section>
+
+    <section anchor="privacy-considerations" title="Privacy Considerations">
+      <t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required  in JSContact 1.0 <xref target="RFC9553"/>. JSContact version 2.0 <xref target="I-D.ietf-calext-jscontact-uid"/> makes also uid property optional.  Therefore, with reference to what is described in <xref target="RFC9537"/>, properties can be redacted by Removal Method.</t>
+    </section>
 
     <section anchor="security-considerations" title="Security Considerations">
       <t>The extension described in this document does not provide any security services beyond those described by <xref target="RFC9083"/>.</t>
@@ -949,6 +995,7 @@
       &RFC9536;
       &RFC9553;
       &RFC9555;
+      &I-D.ietf-opsawg-rfc5706bis;
       &I-D.ietf-regext-rdap-versioning;
       &I-D.ietf-regext-rdap-x-media-type;
       &I-D.ietf-calext-jscontact-profiles;
@@ -1203,7 +1250,7 @@
           <t>Added &quot;Query Parameters&quot; section.</t>
           <t>Updated <xref target="IANA-considerations"/></t>
           <t>Updated <xref target="security-considerations"/></t>
-          <t>Rearranged the description of stage 1 in <xref target="jcard-deprecation-procedure-stages"/></t>
+          <t>Rearranged the description of stage 1 in <xref target="transition-stages"/></t>
           <t>Changed the names of the transition stages 1 and 2</t>
           <t>Corrected examples</t>
           <t>Changed the rdapConformance tag &quot;jscard_level_0&quot; to &quot;jscard&quot;</t>
@@ -1254,7 +1301,7 @@
         <t><list style="numbers">
           <t>Changed the references to Internet Drafts.</t>
           <t>Added an example showing how localizations are treated in JSContact.</t>
-          <t>Changed the position of section &quot;Goals&quot; in <xref target="jcard-transition-procedure"/>.</t>
+          <t>Changed the position of section &quot;Goals&quot; in <xref target="transition-procedure"/>.</t>
           <t>Added three more implementations to <xref target="impl-status"/>.</t>
           <t>Changed the rdapConformance tag &quot;jscard&quot; to &quot;jscard_0&quot;</t>
           <t>Added clarifications addressing the feedback provided by Jasdip Singh about version -03.</t>
@@ -1361,7 +1408,7 @@
           <t>Tagged all BCP14 keywords.</t>
           <t>Changed the example in Figure 2.</t>
           <t>Added <xref target="jscontact-name"/>.</t>
-          <t>Changed <xref target="jcard-deprecation-procedure-length"/> by removing the sentence about the duration of the transition process.</t>
+          <t>Changed <xref target="transition-length"/> by removing the sentence about the duration of the transition process.</t>
         </list></t>
       </section>
       <section title="Change from 18 to 19">
@@ -1376,7 +1423,7 @@
           <t>Removed from <xref target="stage3"/> the &quot;FOR DISCUSSION&quot; item.</t>
           <t>Added to <xref target="stage3"/> a notice signaling the jCard deprecation.</t>
           <t>Changed the fixed literal to redact the URI in <xref target="security-considerations"/>.</t>
-          <t>Removed an informative reference and the first paragraph of <xref target="jcard-transition-procedure"/> including it.</t>
+          <t>Removed an informative reference and the first paragraph of <xref target="transition-procedure"/> including it.</t>
         </list></t>
       </section>
       <section title="Change from 19 to 20">
@@ -1432,6 +1479,9 @@
       <section title="Change from 24 to 25">
         <t><list style="numbers">
           <t>Added &quot;country&quot; to the allowable values listed in <xref target="jscontact-addresses"/> for the &quot;kind&quot; property of the AddressComponent object.</t>
+          <t>Aligned content of <xref target="extension-version-identifier"/> to version -06 of <xref target="I-D.ietf-regext-rdap-versioning"/>.</t>
+          <t>Added <xref target="operational-considerations"/> for compliance with <xref target="I-D.ietf-opsawg-rfc5706bis"/></t>
+          <t>Corrected nits.</t>
         </list></t>
       </section>
     </section>
