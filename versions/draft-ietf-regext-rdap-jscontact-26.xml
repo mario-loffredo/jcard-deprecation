@@ -31,14 +31,14 @@
     'http://bib.ietf.org/public/rfc/bibxml/reference.RFC.9553.xml'>
   <!ENTITY RFC9555 PUBLIC ''
     'http://bib.ietf.org/public/rfc/bibxml/reference.RFC.9555.xml'>
+  <!ENTITY RFC9982 PUBLIC ''
+          'http://bib.ietf.org/public/rfc/bibxml/reference.RFC.9982.xml'>
   <!ENTITY I-D.ietf-opsawg-rfc5706bis PUBLIC ''
           'https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-opsawg-rfc5706bis.xml'>
   <!ENTITY I-D.ietf-regext-rdap-versioning PUBLIC ''
     'https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-regext-rdap-versioning.xml'>
   <!ENTITY I-D.ietf-regext-rdap-x-media-type PUBLIC ''
     'https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-regext-rdap-x-media-type.xml'>
-  <!ENTITY I-D.ietf-calext-jscontact-uid PUBLIC ''
-    'https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-calext-jscontact-uid.xml'>
   <!ENTITY I-D.ietf-calext-jscontact-profiles PUBLIC ''
     'https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-calext-jscontact-profiles.xml'>
         ]>
@@ -825,7 +825,7 @@
         <list style="hanging">
           <t hangText="Value:">2.0</t>
           <t hangText="Type:">JSContact version value</t>
-          <t hangText="Description:">The JSContact version <xref target="I-D.ietf-calext-jscontact-uid"/> to use in implementing this specification.</t>
+          <t hangText="Description:">The JSContact version <xref target="RFC9982"/> to use in implementing this specification.</t>
           <t hangText="Registrant Name:">IETF</t>
           <t hangText="Registrant Contact Information:">iesg@ietf.org</t>
           <t hangText="Reference:">This document</t>
@@ -968,7 +968,7 @@
     </section>
 
     <section anchor="privacy-considerations" title="Privacy Considerations">
-      <t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required  in JSContact 1.0 <xref target="RFC9553"/>. JSContact version 2.0 <xref target="I-D.ietf-calext-jscontact-uid"/> makes also uid property optional.  Therefore, with reference to what is described in <xref target="RFC9537"/>, properties can be redacted by Removal Method.</t>
+      <t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required  in JSContact 1.0 <xref target="RFC9553"/>. JSContact version 2.0 <xref target="RFC9982"/> makes also uid property optional.  Therefore, with reference to what is described in <xref target="RFC9537"/>, properties can be redacted by Removal Method.</t>
     </section>
 
     <section anchor="security-considerations" title="Security Considerations">
@@ -995,10 +995,10 @@
       &RFC9536;
       &RFC9553;
       &RFC9555;
+      &RFC9982;
       &I-D.ietf-regext-rdap-versioning;
       &I-D.ietf-regext-rdap-x-media-type;
       &I-D.ietf-calext-jscontact-profiles;
-      &I-D.ietf-calext-jscontact-uid;
       <reference anchor="IANA.rdap-extensions" target="https://www.iana.org/assignments/rdap-extensions" quoteTitle="true" derivedAnchor="IANA.rdap-extensions">
         <front>
           <title>IANA RDAP Extensions Registry</title>
@@ -1487,6 +1487,7 @@
       <section title="Change from 25 to 26">
         <t><list style="numbers">
           <t>Moved draft-ietf-opsawg-rfc5706bis to Informative References.</t>
+          <t>Updated reference to RFC9982.</t>
         </list></t>
       </section>
     </section>
