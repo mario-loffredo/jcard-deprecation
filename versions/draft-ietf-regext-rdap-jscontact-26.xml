@@ -581,6 +581,10 @@
         <t>the RDAP media type &quot;versioning_list&quot; parameter as defined in <xref target="I-D.ietf-regext-rdap-versioning"/>;<vspace blankLines='1'/></t>
         <t>the RDAP media type &quot;exts_list&quot; parameter as defined in <xref target="I-D.ietf-regext-rdap-x-media-type"/>.</t>
       </list></t>
+      <t>A client <bcp14>MUST NOT</bcp14> request JSContact using both mechanisms in the same request.  If a server receives a request that uses both mechanisms,
+        it <bcp14>MUST</bcp14> process the &quot;versioning_list&quot; parameter and MUST ignore the &quot;exts_list&quot; parameter
+        for the purpose of selecting the contact representation.</t>
+
       <t>Their usage in the transition from jCard to JSContact is further explained in <xref target="stage2"/>.</t>
     </section>
 
@@ -614,16 +618,16 @@
         <section anchor="transition-goals" title="Goals">
           <t>The procedure described in this document aims to achieve the following goals:</t>
           <t><list style="symbols">
-            <t>only one contact representation would be included in the response;<vspace blankLines='1' /></t>
-            <t>the response would always conform to <xref target="RFC9083"/> because:
+            <t>only one contact representation is included in the response;<vspace blankLines='1' /></t>
+            <t>the response always conforms to <xref target="RFC9083"/> because:
               <list style="symbols">
                 <t>since the &quot;jscontact_card&quot; member is a response extension, its presence would be signaled by the string &quot;jscontact&quot; in the &quot;rdapConformance&quot; array;<vspace blankLines='1' /></t>
                 <t>since &quot;vcardArray&quot; member is optional in a response, its absence would be allowed;<vspace blankLines='1' /></t>
               </list>
             </t>
-            <t>clients would be informed about the transition timeline;<vspace blankLines='1' /></t>
-            <t>the backward compatibility would be ensured throughout the transition;<vspace blankLines='1' /></t>
-            <t>servers and clients could perform their transitions independently.</t>
+            <t>clients are informed about the transition timeline;<vspace blankLines='1' /></t>
+            <t>the backward compatibility is maintained throughout the transition;<vspace blankLines='1' /></t>
+            <t>servers and clients can perform their transitions independently.</t>
           </list></t>
         </section>
 
@@ -675,8 +679,8 @@
 
         <section anchor="stage3" title="Stage 3: jCard deprecation">
           <t>This stage corresponds to providing JSContact as the default format for contact data.  The &quot;rdapConformance&quot;
-            array always contains the string &quot;jscontact&quot;.  The request for JSContact through any method described in <xref target="request-for-jscontact" />
-            <bcp14>MUST</bcp14> be ignored.</t>
+            array always contains the string &quot;jscontact&quot;.  Any request for JSContact made through a mechanism described in
+            <xref target="request-for-jscontact" /> <bcp14>MUST NOT</bcp14> affect representation selection; the server <bcp14>MUST</bcp14> return JSContact.</t>
           <t>The RDAP server <bcp14>MUST</bcp14> include the string &quot;noJcard&quot; in the &quot;rdapConformance&quot; array of the help response to signal clients that jCard is no longer returned.</t>
           <t>The RDAP server <bcp14>SHOULD</bcp14> also include a notice whose type member is set to &quot;jCard deprecation&quot; whose description reports the verbatim string &quot;jCard has been deprecated&quot; (<xref target="stage3-example1" />).</t>
           <figure anchor="stage3-example1" title="jCard deprecation - jCard has been deprecated"><artwork xml:space="preserve">
@@ -692,7 +696,7 @@
         <section anchor="transition-length" title="Length">
           <t>The length of the jCard sunset period is not fixed by this
             specification.  However, RDAP providers are <bcp14>RECOMMENDED</bcp14> to monitor the
-            server logs to figure out whether the declared time needs to be changed to meet client
+            server logs to determine whether the declared time needs to be changed to meet client
             requirements.</t>
         </section>
 
@@ -725,7 +729,7 @@
         <t><list style="none">
     	  <t>Responsible Organization: Institute of Informatics and Telematics of National
           Research Council (IIT-CNR)/Registro.it<vspace blankLines='1' /></t>
-    	  <t>Location:https://rdap.pubtest.nic.it/<vspace blankLines='1' /></t>
+    	  <t>Location: https://rdap.pubtest.nic.it/<vspace blankLines='1' /></t>
     	  <t>Description: This implementation includes support for RDAP queries using data from
           the public test environment of .it ccTLD.<vspace blankLines='1' /></t>
     	  <t>Level of Maturity: This is an &quot;alpha&quot; test implementation.<vspace blankLines='1' /></t>
@@ -783,7 +787,7 @@
           <t>Location: https://github.com/icann/icann-rdap<vspace blankLines='1' /></t>
           <t>Description: ICANN RDAP contains an RDAP client, server, and common libraries.<vspace blankLines='1' /></t>
           <t>Level of Maturity: Mature.<vspace blankLines='1' /></t>
-          <t>Coverage: This implementation includes all the features described in this specification, except support for semantic versioning and the provision of reverse search mapping.<vspace blankLines='1' /></t>
+          <t>Coverage: This implementation includes all the features described in this specification, except support for Point Versioning and the provision of reverse search mapping.<vspace blankLines='1' /></t>
           <t>Contact Information: globalsupport@icann.org</t>
         </list></t>
       </section>
@@ -948,8 +952,8 @@
        <t>IANA is requested to register the following entry in the &quot;JSContact Profile&quot; registry <xref target="I-D.ietf-calext-jscontact-profiles"/>:</t>
        <list style="hanging">
          <t hangText="Name:">rdap</t>
-         <t hangText="Profile Version:">1</t>
-         <t hangText="Reference:"><xref target="jscontact-profile-properties"/></t>
+         <t hangText="Version:">1</t>
+         <t hangText="Reference:"><xref target="jscontact-profile-properties"/> of this document</t>
        </list>
      </section>
    </section>
@@ -1004,7 +1008,9 @@
     </section>
 
     <section anchor="privacy-considerations" title="Privacy Considerations">
-      <t>Unlike jCard, the formatted name as well as any other personally identifiable information is not required  in JSContact 1.0 <xref target="RFC9553"/>. JSContact version 2.0 <xref target="RFC9982"/> makes also uid property optional.  Therefore, with reference to what is described in <xref target="RFC9537"/>, properties can be redacted by Removal Method.</t>
+      <t>In vCard, and consequently in jCard, the FN property is mandatory.  In contrast, JSContact does not require a Card to contain the &quot;name&quot;
+        property or other properties containing personally identifiable information.  In addition, JSContact version 2.0 <xref target="RFC9982"/> makes the
+        &quot;uid&quot; property optional.  Consequently, the Removal Method defined in <xref target="RFC9537"/> can be used to redact such properties from an RDAP JSContact Card.</t>
     </section>
 
     <section anchor="security-considerations" title="Security Considerations">
@@ -1161,7 +1167,7 @@
       <list style="hanging">
         <t hangText="jCard property:">tel with type=&quot;voice&quot;</t>
         <t hangText="Reference:">Section 6.4.1 of <xref target="RFC6350"/></t>
-        <t hangText="Path:">$..vcardArray[1][?(@[1].type=='voice')][3]</t>
+        <t hangText="Path:">$..vcardArray[1][?(@[0]=='tel' &amp;&amp; @[1].type=='voice')][3]</t>
         <t hangText="JSContact property:">Phone.number</t>
         <t hangText="Reference:">Section 2.3.3 of <xref target="RFC9553"/></t>
         <t hangText="Path:">$..jscontact_card.phones.voice.number</t>
@@ -1171,7 +1177,7 @@
       <list style="hanging">
         <t hangText="jCard property:">tel with type=&quot;fax&quot;</t>
         <t hangText="Reference:">Section 6.4.1 of <xref target="RFC6350"/></t>
-        <t hangText="Path:">$..vcardArray[1][?(@[1].type=='fax')][3]</t>
+        <t hangText="Path:">$..vcardArray[1][?(@[0]=='tel' &amp;&amp; @[1].type=='fax')][3]</t>
         <t hangText="JSContact property:">Phone.number</t>
         <t hangText="Reference:">Section 2.3.3 of <xref target="RFC9553"/></t>
         <t hangText="Path:">$..jscontact_card.phones.fax.number</t>
@@ -1200,19 +1206,6 @@
           <t hangText="Path:">$..jscontact_card.localizations.*.addresses.adr\<vspace blankLines="0"/>
             .full</t>
         </list>
-      </t>
-      <t>
-      <list style="hanging">
-        <t hangText="jCard property:">&quot;post office box&quot; component of adr</t>
-        <t hangText="Reference:">Section 6.3.1 of <xref target="RFC6350"/></t>
-        <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][3][0]</t>
-        <t hangText="JSContact property:">&quot;postOfficeBox&quot; AddressComponent of Address.components</t>
-        <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-        <t hangText="Path:">$..jscontact_card.addresses.addr.components\<vspace blankLines="0"/>
-          [?(@.kind=='postOfficeBox')].value</t>
-        <t hangText="Path:">$..jscontact_card.localizations.*.addresses.addr\<vspace blankLines="0"/>
-          .components[?(@.kind=='postOfficeBox')].value</t>
-      </list>
       </t>
       <t>
       <list style="hanging">
@@ -1340,7 +1333,7 @@
           <t>Changed the names of the transition stages 1 and 2</t>
           <t>Corrected examples</t>
           <t>Changed the rdapConformance tag &quot;jscard_level_0&quot; to &quot;jscard&quot;</t>
-          <t>Removed the &quot;Best Practices for deprecating a REST API features&quot; section,but added a useful reference.</t>
+          <t>Removed the &quot;Best Practices for deprecating a REST API features&quot; section, but added a useful reference.</t>
         </list></t>
       </section>
       <section title="Change from 01 to 02">
@@ -1459,14 +1452,6 @@
           <t>Added <xref target="rdap-json-values-registry"/>.</t>
         </list></t>
       </section>
-      <section title="Change from 14 to 15">
-        <t><list style="numbers">
-          <t>Corrected <xref target="localizations-example"/>, <xref target="jscard-example"/> and <xref target="jcard-jscontact-mapping"/> to make them compliant with draft-ietf-calext-jscontact-06.</t>
-          <t>Removed mention of JSContact CardGroup object.</t>
-          <t>Renamed and changed <xref target="using-jscontact"/>.</t>
-          <t>Added <xref target="rdap-json-values-registry"/>.</t>
-        </list></t>
-      </section>
       <section title="Change from 15 to 16">
         <t><list style="numbers">
           <t>Replaced JSContact &quot;type&quot; with &quot;kind&quot; in figures.</t>
@@ -1525,7 +1510,7 @@
       <section title="Change from 20 to 21">
         <t><list style="numbers">
           <t>Added the &quot;Experimental Status&quot; section.</t>
-          <t>Changed the controller of IANA registies from IESG to IETF.</t>
+          <t>Changed the controller of IANA registries from IESG to IETF.</t>
           <t>Replaced &quot;rdap-x&quot; with &quot;rdap&quot; in the rdap-x media type.</t>
           <t>Minor editorial changes.</t>
         </list></t>
@@ -1546,9 +1531,9 @@
           <t>Revised the &quot;Experimental Status&quot; section.</t>
           <t>Revised the registration of the JSContact profile for RDAP.  Added a section that formally lists the profile properties.</t>
           <t>Added the handling and registration of noJcard extension identifier.</t>
-          <t>Changed the notice used in the transaction process by changing the &quot;title&quot; property into &quot;type&quot; and registered the values in the &quot;RDAP JSON Values&quot; registry.</t>
+          <t>Changed the notice used in the transition process by changing the &quot;title&quot; property into &quot;type&quot; and registered the values in the &quot;RDAP JSON Values&quot; registry.</t>
           <t>Changed the naming scheme for map keys other than those predefined and clarified that those keys should be stable.</t>
-          <t>Revised the &quot;Security Considerations&quot; section and renamed it into &quot;Privacy Considerations&quot;. Added a &quot;Security Considerations&quot; section presenting no substantial implication on scurity.</t>
+          <t>Revised the &quot;Security Considerations&quot; section and renamed it into &quot;Privacy Considerations&quot;. Added a &quot;Security Considerations&quot; section presenting no substantial implication on security.</t>
           <t>Updated the "Acknowledgements" section.</t>
           <t>Minor editorial changes.</t>
         </list></t>
@@ -1575,17 +1560,23 @@
           <t>Updated the JSContact 2.0 reference from [I-D.ietf-calext-jscontact-uid] to [RFC9982].</t>
           <t>Moved [I-D.ietf-opsawg-rfc5706bis] from the Normative References to the Informative References.</t>
           <t>Revised Section 3.1.1 to prohibit the simultaneous use of "jscontact_card" and "vcardArray" and to require a consistent contact representation within an RDAP response.</t>
-          <t>Revised Section 3.1.2 to define Point Versioning for the extension, including the "jscontact-0.4" Point Extension Version Identifier and the transition to "jscontact-1.0".</t>
+          <t>Revised Section 3.1.2 to define Point Versioning for the extension, including the "jscontact-0.4" Point Extension Version Identifier and its replacement with "jscontact-1.0" upon publication.</t>
           <t>Updated Section 3.1.3 to require the Card "version" member to have the value "2.0".</t>
           <t>Revised Section 3.1.5 to clarify the condition for setting the Card "language" member.</t>
           <t>Corrected the text of Section 3.1.7.</t>
           <t>Revised Section 3.1.12 to allow gaps in map-key numbering when an associated map entry is removed, including as a result of redaction.</t>
           <t>Replaced the table in Section 3.1.14 with a list of the properties of the JSContact profile for RDAP.</t>
           <t>Updated Figure 2 to include "versioning_data" and the Point Versioning information for the "versioning" and "jscontact" extensions.</t>
+          <t>Revised Section 3.2 to prohibit clients from requesting JSContact using both negotiation mechanisms in the same request and to define server behavior when both mechanisms are used.</t>
+          <t>Clarified in Section 4.2.2.3 that a JSContact request received during Stage 3 does not affect representation selection and that the server always returns JSContact.</t>
           <t>Rearranged the IANA registrations in Section 6.3 by separating the reverse-search mappings for non-localized and localized "fn" and "email" properties.</t>
-          <t>Revised the JSONPath expressions in Appendix A, including the paths for localized JSContact properties.</t>
+          <t>Corrected the field names and reference of the JSContact profile registration in Section 6.4.</t>
+          <t>Revised the JSONPath expressions in Appendix A, including the paths for localized JSContact properties and the filters for jCard &quot;tel&quot; properties..</t>
+          <t>Removed from Appendix A the mapping of the jCard &quot;post office box&quot; address component, which is not included in the JSContact profile for RDAP.</t>
           <t>Revised Section 7.5 to define caching requirements for representation selection based on the Accept request header field, including the use of the Vary response header field and Cache-Control directives.</t>
+          <t>Revised Section 8 to clarify how the optionality of JSContact properties allows personally identifiable information to be redacted using the Removal Method.</t>
           <t>Revised Section 9 to add security considerations concerning access control, redaction, data release, caching, and resource limits for JSContact representations.</t>
+          <t>Removed a duplicated change-log entry and corrected the numbering of the subsequent entries.</t>
           <t>Made minor editorial corrections.</t>
         </list></t>
       </section>
