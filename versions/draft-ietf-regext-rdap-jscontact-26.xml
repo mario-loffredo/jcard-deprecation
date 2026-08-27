@@ -66,7 +66,7 @@
       <organization>IIT-CNR/Registro.it</organization>
       <address>
         <postal>
-          <street>Via Moruzzi,1</street>
+          <street>Via Moruzzi, 1</street>
           <city>Pisa</city>
           <country>IT</country>
           <code>56124</code>
@@ -621,12 +621,12 @@
             <t>only one contact representation is included in the response;<vspace blankLines='1' /></t>
             <t>the response always conforms to <xref target="RFC9083"/> because:
               <list style="symbols">
-                <t>since the &quot;jscontact_card&quot; member is a response extension, its presence would be signaled by the string &quot;jscontact&quot; in the &quot;rdapConformance&quot; array;<vspace blankLines='1' /></t>
-                <t>since &quot;vcardArray&quot; member is optional in a response, its absence would be allowed;<vspace blankLines='1' /></t>
+                <t>since the &quot;jscontact_card&quot; member is a response extension, its presence is signaled by the string &quot;jscontact&quot; in the &quot;rdapConformance&quot; array;<vspace blankLines='1' /></t>
+                <t>since the &quot;vcardArray&quot; member is optional in a response, its absence is allowed;<vspace blankLines='1' /></t>
               </list>
             </t>
             <t>clients are informed about the transition timeline;<vspace blankLines='1' /></t>
-            <t>the backward compatibility is maintained throughout the transition;<vspace blankLines='1' /></t>
+            <t>backward compatibility is maintained throughout the transition;<vspace blankLines='1' /></t>
             <t>servers and clients can perform their transitions independently.</t>
           </list></t>
         </section>
@@ -981,7 +981,7 @@
     </section>
       <section anchor="caching" title="Caching">
         <t>During Stage 2, different representations of the same RDAP resource can be returned depending on the RDAP media type parameters included
-          in the Accept request header field.  Servers <bcp14>MUST</bcp14> therefore include &quot;Accept&quot; in the Vary response header field as defined in <xref target="RFC9110"/> when representation selection depends on that field.</t>
+          in the Accept header field.  Servers <bcp14>MUST</bcp14> therefore include &quot;Accept&quot; in the Vary response header field as defined in <xref target="RFC9110"/> when representation selection depends on that field.</t>
 
         <t>Servers <bcp14>SHOULD</bcp14> ensure that the freshness lifetime of a cached response does not extend beyond the announced jCard sunset end date.
         If the caching infrastructure cannot reliably distinguish responses based on the Accept header field, servers <bcp14>SHOULD</bcp14> prevent their
@@ -1188,7 +1188,7 @@
         <t hangText="jCard property:">email</t>
         <t hangText="Reference:">Section 6.4.2 of <xref target="RFC6350"/></t>
         <t hangText="Path:">$..vcardArray[1][?(@[0]=='email')][3]</t>
-        <t hangText="JSContact property:">Email.address</t>
+        <t hangText="JSContact property:">EmailAddress.address</t>
         <t hangText="Reference:">Section 2.3.1 of <xref target="RFC9553"/></t>
         <t hangText="Path:">$..jscontact_card.emails.email.address</t>
         <t hangText="Path:">$..jscontact_card.localizations.*.emails.email\<vspace blankLines="0"/>
@@ -1202,8 +1202,8 @@
           <t hangText="Path:">$..vcardArray[1][?(@[0]=='adr')][1].label</t>
           <t hangText="JSContact property:">Address.full</t>
           <t hangText="Reference:">Section 2.5.1 of <xref target="RFC9553"/></t>
-          <t hangText="Path:">$..jscontact_card.addresses.adr.full</t>
-          <t hangText="Path:">$..jscontact_card.localizations.*.addresses.adr\<vspace blankLines="0"/>
+          <t hangText="Path:">$..jscontact_card.addresses.addr.full</t>
+          <t hangText="Path:">$..jscontact_card.localizations.*.addresses.addr\<vspace blankLines="0"/>
             .full</t>
         </list>
       </t>
@@ -1571,9 +1571,9 @@
           <t>Clarified in Section 4.2.2.3 that a JSContact request received during Stage 3 does not affect representation selection and that the server always returns JSContact.</t>
           <t>Rearranged the IANA registrations in Section 6.3 by separating the reverse-search mappings for non-localized and localized "fn" and "email" properties.</t>
           <t>Corrected the field names and reference of the JSContact profile registration in Section 6.4.</t>
-          <t>Revised the JSONPath expressions in Appendix A, including the paths for localized JSContact properties and the filters for jCard &quot;tel&quot; properties..</t>
+          <t>Revised the JSONPath expressions in Appendix A, including the paths for localized JSContact properties and the filters for jCard &quot;tel&quot; properties.</t>
           <t>Removed from Appendix A the mapping of the jCard &quot;post office box&quot; address component, which is not included in the JSContact profile for RDAP.</t>
-          <t>Revised Section 7.5 to define caching requirements for representation selection based on the Accept request header field, including the use of the Vary response header field and Cache-Control directives.</t>
+          <t>Revised Section 7.5 to define caching requirements for representation selection based on the Accept header field, including the use of the Vary response header field and Cache-Control directives.</t>
           <t>Revised Section 8 to clarify how the optionality of JSContact properties allows personally identifiable information to be redacted using the Removal Method.</t>
           <t>Revised Section 9 to add security considerations concerning access control, redaction, data release, caching, and resource limits for JSContact representations.</t>
           <t>Removed a duplicated change-log entry and corrected the numbering of the subsequent entries.</t>
